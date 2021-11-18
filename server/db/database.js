@@ -11,6 +11,7 @@ const getUserById = function () {
 
   // Test connect to db by changing the sqlString and comment out place holder db return
 
+  // let userId = 1;
   // const sqlString = `SELECT * FROM users WHERE id = $1`;
   // return pool
   //   .query(sqlString, [userId])
@@ -25,6 +26,9 @@ const getUserById = function () {
   // PLACE HOLDER DB RETURN
   return new Promise((res, rej) => {
     return res("I'm a user!");
-  })
+  }).catch(e => {
+    console.error(e);
+    res.send(e);
+  });
 }
 exports.getUserById = getUserById;
