@@ -32,7 +32,6 @@ const getUserById = function () {
 }
 exports.getUserById = getUserById;
 
-
 const getPantryItems = function () {
 
   return new Promise((res, rej) => {
@@ -44,8 +43,6 @@ const getPantryItems = function () {
 exports.getPantryItems = getPantryItems;
 
 const saveGroceryList = function (ingredientObject) {
-
-  console.log("saveGroceryList called")
 
   let userId = 1;
   let meal_list_id = 1;
@@ -65,15 +62,43 @@ const saveGroceryList = function (ingredientObject) {
   //   ingredientId: 1033
   // };
 
-  const sqlString = `INSERT INTO grocery_list_items (meal_list_id, user_id, item_name, quantity, measure) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const sqlString = `INSERT INTO grocery_list_items (meal_list_id, item_name, quantity, measure, spoonacular_item_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
 
   return pool
-    .query(sqlString, [meal_list_id, userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit])
+    .query(sqlString, [meal_list_id, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId])
     .then(res => {
-      console.log(res.rows[0]);
+      console.log("Successfully saved grocery list item.");
       return res.rows[0];
     })
     .catch(e => { console.error(e) });
 
 }
 exports.saveGroceryList = saveGroceryList;
+
+const getRecipesByUser = function (userId) {
+
+  const sqlString = `SELECT spoonacular_id FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      console.log("Successfully retrieved recipes by user id.");
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.getRecipesByUser = getRecipesByUser;
+
+const getGroceryListByUser = function (userId) {
+
+  const sqlString = `SELECT grocery_list_items.id AS grocery_item_id, grocery_list_items.item_name, quantity, measure, spoonacular_item_id FROM grocery_list_items JOIN meal_lists ON meal_list_id = meal_lists.id JOIN users ON user_id = users.id WHERE users.id = $1;`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      console.log("Successfully retrieved groceries by user id.");
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.getGroceryListByUser = getGroceryListByUser;

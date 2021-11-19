@@ -14,10 +14,10 @@ const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 
 // add database query functions here
-const { getUserById, getPantryItems, saveGroceryList } = require("./db/database");
+const { getUserById, getPantryItems, saveGroceryList, getRecipesByUser, getGroceryListByUser } = require("./db/database");
 const pool = new Pool(dbParams);
 pool.connect();
-const db = { getUserById, getPantryItems, saveGroceryList };
+const db = { getUserById, getPantryItems, saveGroceryList, getRecipesByUser, getGroceryListByUser };
 
 app.use(morgan("dev"));
 

@@ -5,10 +5,20 @@ const axios = require('axios');
 module.exports = (db) => {
 
   // user requests to see their own grocery list
-  // http://localhost:4000/api/grocery_list/:id
+  // http://localhost:4000/api/grocery_list/1
   router.get("/:id", (req, res) => {
 
-    res.send("GET to http://localhost:4000/api/grocery_list/:id");
+    let userId = req.params.id;
+
+    db.getGroceryListByUser(userId)
+      .then((results) => {
+        console.log("GET to /grocery_list/:id - Success.");
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
 
   });
 
@@ -24,64 +34,74 @@ module.exports = (db) => {
   // http://localhost:4000/api/grocery_list/1
   router.post("/:id", (req, res) => {
 
-    // db call to return this
-    let arrayOfRecipesForUser = [633884, 637591];
+    let userId = req.params.id;
+    // let arrayOfRecipesForUser = [633884, 637591];
+    let arrayOfRecipesForUser = [];
     let promises = [];
     let itemMeasuremementStrings = [];
-
     let groceryListForDb = [];
 
-    // put all get requests into an array
-    for (let i = 0; i < arrayOfRecipesForUser.length; i++) {
-      promises.push(axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
-    }
-
-    // pass array of promises and the then executes only after all promises resolve
-    Promise.all(promises)
-      .then((responses) => {
-        // push all responses to an array
-        for (const ingredient of responses[0].data.extendedIngredients) {
-          itemMeasuremementStrings.push(ingredient["originalString"]);
+    db.getRecipesByUser(userId)
+      .then((arrayOfSpoonacularIdObjects) => {
+        for (const id of arrayOfSpoonacularIdObjects) {
+          arrayOfRecipesForUser.push(id["spoonacular_id"]);
         }
       })
       .then(() => {
-        axios({
-          method: 'post',
-          url: `https://api.spoonacular.com/mealplanner/shopping-list/compute?apiKey=${process.env.API_KEY}`,
-          data: {
-            "items": itemMeasuremementStrings // pass array of ingredients to be aggregated (type and weight)
-          }
-        }).then((response) => {
-          for (const item of response.data["aisles"]) {
-            // remove items from their aisles into one array
-            groceryListForDb = groceryListForDb.concat(item["items"]);
-          }
-
-          // stores all db calls into promise array
-          promises = [];
-          for (const ingredientObj of groceryListForDb) {
-            promises.push(db.saveGroceryList(ingredientObj))
-          }
-
-          // calls db with all promises
-          Promise.all(promises)
-            .then((result) => {
-              console.log("Successfully added grocery list:", result);
-              res.send("Successfully added items into grocery list.");
-            })
-            .catch(e => {
-              console.error(e);
-              res.send(e)
+        // put all get requests into an array
+        for (let i = 0; i < arrayOfRecipesForUser.length; i++) {
+          promises.push(axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
+        }
+        // pass array of promises and the then executes only after all promises resolve
+        Promise.all(promises)
+          .then((responses) => {
+            // push all responses to an array
+            // console.log("THIS IS THE RESPONSE DATA ", responses[1].id);
+            for (const response of responses) {
+              for (const ingredient of response.data.extendedIngredients) {
+                itemMeasuremementStrings.push(ingredient["originalString"]);
+              }
+            }
+          })
+          .then(() => {
+            axios({
+              method: 'post',
+              url: `https://api.spoonacular.com/mealplanner/shopping-list/compute?apiKey=${process.env.API_KEY}`,
+              data: {
+                "items": itemMeasuremementStrings // pass array of ingredients to be aggregated (type and weight)
+              }
+            }).then((response) => {
+              for (const item of response.data["aisles"]) {
+                // remove items from their aisles into one array
+                groceryListForDb = groceryListForDb.concat(item["items"]);
+              }
+              // stores all db calls into promise array
+              promises = [];
+              for (const ingredientObj of groceryListForDb) {
+                promises.push(db.saveGroceryList(ingredientObj))
+              }
+              // calls db with all promises
+              Promise.all(promises)
+                .then((result) => {
+                  console.log("POST to grocery_list/:id - Success");
+                  res.send(result);
+                })
+                .catch(e => {
+                  console.error(e);
+                  res.send(e)
+                });
+            }, (error) => {
+              console.log(error);
             });
-
-        }, (error) => {
-          console.log(error);
-        });
-      }, (error) => {
-        console.log(error);
+          }, (error) => {
+            console.log(error);
+          });
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
       });
   });
-
   return router;
 };
 
