@@ -9,7 +9,6 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
-
   // http://localhost:4000/api/users
   router.get("/", (req, res) => {
 
@@ -25,6 +24,7 @@ module.exports = (db) => {
 
   // spoonacular test end point to search recipes with keywords
   // http://localhost:4000/api/users/searchRecipes/italian
+  // first recipe is {"id":648279,"title":"Italian Tuna Pasta","image":"https://spoonacular.com/recipeImages/648279-312x231.jpg","imageType":"jpg"}
   router.get("/searchRecipes/:searchTerm", (req, res) => {
 
     let searchTerm = req.params.searchTerm;
@@ -33,6 +33,32 @@ module.exports = (db) => {
       .then((response) => {
         res.send(response.data);
         console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
+  // search recipes by id
+  // documentation: https://spoonacular.com/food-api/docs#Get-Analyzed-Recipe-Instructions
+  // http://localhost:4000/api/users/searchRecipeById/648279
+  router.get("/searchRecipeById/:id", (req, res) => {
+
+    let id = req.params.id;
+
+    axios.get(`https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=${process.env.API_KEY}`)
+      .then((response) => {
+
+        // concern: quantity is not listed by this end point
+
+        let arrayOfIngredients = [];
+        // ingredients are spread out by steps
+        for (const step of response.data[0].steps) {
+          // each step has an array of ingredient objects
+          arrayOfIngredients = arrayOfIngredients.concat(step.ingredients);
+        }
+        // console.log(arrayOfIngredients);
+        res.send(arrayOfIngredients);
       })
       .catch((error) => {
         console.log(error);
@@ -101,6 +127,38 @@ module.exports = (db) => {
       .catch((error) => {
         // console.log(error);
       });
+  });
+
+
+  // takes in a pantry and returns the ids of those items
+  http://localhost:4000/api/users/searchPantry
+  router.get("/searchPantry", (req, res) => {
+
+    db.getPantryItems()
+      .then((pantry) => {
+
+        let ingredientIds = "";
+
+        axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${pantry[0]}`)
+          .then((response) => {
+            console.log(response.data.results[0]);
+            ingredientIds = response.data.results[0].id;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        return ingredientIds;
+      })
+      .then((results) => {
+        res.send(results)
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e);
+      });
+
+
   });
 
 

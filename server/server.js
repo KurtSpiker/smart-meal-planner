@@ -14,10 +14,10 @@ const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 
 // add database query functions here
-const { getUserById } = require("./db/database");
+const { getUserById, getPantryItems } = require("./db/database");
 const pool = new Pool(dbParams);
 pool.connect();
-const db = { getUserById };
+const db = { getUserById, getPantryItems };
 
 app.use(morgan("dev"));
 
@@ -27,9 +27,11 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const recipesRoutes = require("./routes/recipes")
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(db));
+app.use("/api/recipes", recipesRoutes(db));
 
 // Home page
 app.get("/", (req, res) => {
