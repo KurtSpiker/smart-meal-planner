@@ -39,32 +39,6 @@ module.exports = (db) => {
       });
   });
 
-  // search recipes by id
-  // documentation: https://spoonacular.com/food-api/docs#Get-Analyzed-Recipe-Instructions
-  // http://localhost:4000/api/users/searchRecipeById/648279
-  router.get("/searchRecipeById/:id", (req, res) => {
-
-    let id = req.params.id;
-
-    axios.get(`https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=${process.env.API_KEY}`)
-      .then((response) => {
-
-        // concern: quantity is not listed by this end point
-
-        let arrayOfIngredients = [];
-        // ingredients are spread out by steps
-        for (const step of response.data[0].steps) {
-          // each step has an array of ingredient objects
-          arrayOfIngredients = arrayOfIngredients.concat(step.ingredients);
-        }
-        // console.log(arrayOfIngredients);
-        res.send(arrayOfIngredients);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-
   // spoonacular test end point to search recipes using your PANTRY
   // http://localhost:4000/api/users/searchPantry/egg,sausage,bread
   router.get("/searchPantry/:pantryItems", (req, res) => {
