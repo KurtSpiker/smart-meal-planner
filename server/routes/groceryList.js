@@ -33,6 +33,8 @@ module.exports = (db) => {
       promises.push(axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
     }
 
+    console.log("THIS IS A CHANGE!!!!!!!!!!!")
+
     Promise.all(promises)
       .then(responses => console.log(responses));
 
