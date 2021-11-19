@@ -12,7 +12,15 @@ module.exports = (db) => {
 
   });
 
-  // user edits their plan, front end posts to this end point
+  // user creates a new plan
+  http://localhost:4000/api/plan/1
+  router.post("/:id", (req, res) => {
+
+    res.send("POST to  http://localhost:4000/api/plan/:id");
+
+  });
+
+  // user edits their plan
   http://localhost:4000/api/plan/1/edit
   router.post("/:id/edit", (req, res) => {
 
