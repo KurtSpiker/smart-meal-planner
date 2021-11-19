@@ -24,7 +24,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/grocery_list/1
   router.post("/:id", (req, res) => {
 
-    //db call to return this
+    // db call to return this
     let arrayOfRecipesForUser = ["648279", "716429"];
     let promises = [];
     let objectToSendToDb = {};
