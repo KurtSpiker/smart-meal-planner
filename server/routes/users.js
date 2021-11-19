@@ -39,6 +39,26 @@ module.exports = (db) => {
       });
   });
 
+  // https://api.spoonacular.com/recipes/1123/ingredientWidget.json?apiKey=${process.env.API_KEY}
+  // https://api.spoonacular.com/recipes/{id}/ingredientWidget.json?apiKey=181eb90a525e42168305cbc5312e50d2
+  // http://localhost:4000/api/users/searchIngredient/1123/measure/
+  router.get("/searchIngredient/:id/measure", (req, res) => {
+
+    let id = req.params.id;
+
+    axios.get(`https://api.spoonacular.com/recipes/${id}/ingredientWidget.json?apiKey=${process.env.API_KEY}`)
+      .then((response) => {
+        res.send(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
+
+
+
   // spoonacular test end point to search recipes using your PANTRY
   // http://localhost:4000/api/users/searchPantry/egg,sausage,bread
   router.get("/searchPantry/:pantryItems", (req, res) => {
