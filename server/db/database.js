@@ -4,7 +4,7 @@ const pool = new Pool({
   user: 'labber',
   password: 'labber',
   host: 'localhost',
-  database: 'midterm'
+  database: 'final' //change back to midterm for testing
 });
 
 const getUserById = function () {

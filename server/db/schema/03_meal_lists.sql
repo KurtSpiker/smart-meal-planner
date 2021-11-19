@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS meal_lists CASCADE;
+CREATE TABLE meal_lists (
+  id SERIAL PRIMARY KEY NOT NULL,
+  day_of_week VARCHAR(255) NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  spoonacular_id INTEGER NOT NULL,
+  meal VARCHAR(255) NOT NULL
+);
