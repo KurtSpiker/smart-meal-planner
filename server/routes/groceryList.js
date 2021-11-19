@@ -33,29 +33,20 @@ module.exports = (db) => {
       promises.push(axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
     }
 
-    console.log("THIS IS A CHANGE!!!!!!!!!!!")
-
     Promise.all(promises)
-      .then(responses => console.log(responses));
-
-    // axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[0]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
-    //   .then((response) => {
-    //     // console.log(response.data.extendedIngredients);
-    //     for (const ingredient of response.data.extendedIngredients) {
-    //       // if that item doesnt exist yet, create it
-    //       if (!objectToSendToDb[ingredient["id"]]) {
-    //         objectToSendToDb[ingredient["id"]] = { name: ingredient["name"], amount: ingredient["amount"], unit: ingredient["unit"] };
-    //       }
-    //       // if that item already exists in the object, add to existing
-    //       if (objectToSendToDb[ingredient["id"]]) {
-    //         objectToSendToDb[ingredient["id"]]["amount"] = objectToSendToDb[ingredient["id"]]["amount"] + ingredient["amount"];
-    //       }
-    //     }
-    //     console.log(objectToSendToDb)
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+      .then((responses) => {
+        for (const ingredient of responses[0].data.extendedIngredients) {
+          // if that item doesnt exist yet, create it
+          if (!objectToSendToDb[ingredient["id"]]) {
+            objectToSendToDb[ingredient["id"]] = { name: ingredient["name"], amount: ingredient["amount"], unit: ingredient["unit"] };
+          }
+          // if that item already exists in the object, add to existing
+          if (objectToSendToDb[ingredient["id"]]) {
+            objectToSendToDb[ingredient["id"]]["amount"] = objectToSendToDb[ingredient["id"]]["amount"] + ingredient["amount"];
+          }
+        }
+        console.log(objectToSendToDb);
+      });
   });
 
   return router;
