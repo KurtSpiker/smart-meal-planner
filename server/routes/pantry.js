@@ -12,7 +12,7 @@ module.exports = (db) => {
 
   });
 
-  // user edits their pantry
+  // user edits their pantry (quantity only?)
   // http://localhost:4000/api/pantry/1/edit
   router.post("/:id/edit", (req, res) => {
 
@@ -20,12 +20,21 @@ module.exports = (db) => {
 
   });
 
+  // concern: there is no standardized measurmenet for all ingredients, how will edit work?
   // user adds an item to their pantry
   // http://localhost:4000/api/pantry/1
   router.post("/:id", (req, res) => {
 
-    res.send("POST to http://localhost:4000/api/pantry/:id");
+    let ingredient = "banana";
 
+    axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
+      .then((response) => {
+        console.log("SAVING...", response.data.results[0].name + " " + response.data.results[0].id);
+        res.send("Saved to DB");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
 
   // user deletes an item off their pantry

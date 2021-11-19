@@ -20,7 +20,7 @@ module.exports = (db) => {
 
   });
 
-  // user makes a new grocery list? or add items in?
+  // generate a grocery list based on user recipes
   // http://localhost:4000/api/grocery_list/1
   router.post("/:id", (req, res) => {
 
