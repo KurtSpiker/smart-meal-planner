@@ -20,7 +20,7 @@ module.exports = (db) => {
 
   });
 
-  // concern: there is no standardized measurmenet for all ingredients, how will edit work?
+  // concern: there is no standardized measurement for all ingredients, how will edit work?
   // user adds an item to their pantry
   // http://localhost:4000/api/pantry/1
   router.post("/:id", (req, res) => {

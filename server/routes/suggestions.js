@@ -4,7 +4,7 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
-  // frontend -> server -> for suggested recipes based on pantry
+  // frontend -> server -> api for suggested recipes based on pantry
   // http://localhost:4000/api/suggestions
   router.get("/", (req, res) => {
 
