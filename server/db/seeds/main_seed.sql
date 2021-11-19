@@ -1,0 +1,16 @@
+INSERT INTO users (id, name) VALUES (1, 'John Bob');
+INSERT INTO users (id, name) VALUES (2, 'Mary Li');
+INSERT INTO users (id, name) VALUES (3, 'Josh Miller');
+INSERT INTO users (id, name) VALUES (4, 'Angela Martin');
+INSERT INTO pantry_ingredients (id, item_name, user_id, spoonacular_ingredient_id, quantity, measure) VALUES (1, 'banana', 1, 9040, 2, '');
+INSERT INTO pantry_ingredients (id, item_name, user_id, spoonacular_ingredient_id, quantity, measure) VALUES (2, 'tomato', 1, 11529, 5), '';
+INSERT INTO pantry_ingredients (id, item_name, user_id, spoonacular_ingredient_id, quantity, measure) VALUES (3, 'spaghettini', 1, 12520420, 500, 'grams');
+INSERT INTO pantry_ingredients (id, item_name, user_id, spoonacular_ingredient_id, quantity, measure) VALUES (4, 'chocolate milk', 2, 1102, 100, 'ml');
+INSERT INTO pantry_ingredients (id, item_name, user_id, spoonacular_ingredient_id, quantity, measure) VALUES (5, 'eggs', 2, 1123, 12, '');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (1, 'monday', 1, 646545, 'breakfast');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (2, 'monday', 1, 649141, 'lunch');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (3, 'monday', 1, 633876, 'dinner');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (4, 'tuesday', 2, 636078, 'breakfast');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (5, 'tuesday', 2, 633876, 'lunch');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (6, 'tuesday', 2, 654830, 'dinner');
+INSERT INTO meal_lists (id, day_of_week, user_id, spoonacular_id, meal) VALUES (7, 'wednesday', 3, 636231, 'breakfast');

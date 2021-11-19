@@ -25,11 +25,11 @@ module.exports = (db) => {
   router.post("/:id", (req, res) => {
 
     // db call to return this
-    let arrayOfRecipesForUser = [633884, 637591, 644885, 633752, 654928];
+    let arrayOfRecipesForUser = [633884, 637591];
     let promises = [];
     let itemMeasuremementStrings = [];
 
-    let groceryListToReturn = [];
+    let groceryListForDb = [];
 
     // put all get requests into an array
     for (let i = 0; i < arrayOfRecipesForUser.length; i++) {
@@ -54,15 +54,25 @@ module.exports = (db) => {
         }).then((response) => {
           for (const item of response.data["aisles"]) {
             // remove items from their aisles into one array
-            groceryListToReturn = groceryListToReturn.concat(item["items"]);
+            groceryListForDb = groceryListForDb.concat(item["items"]);
           }
 
-          // db call here to update user's grocery list
-          for (const grocery in groceryListToReturn) {
-            console.log(groceryListToReturn[grocery]);
+          // stores all db calls into promise array
+          promises = [];
+          for (const ingredientObj of groceryListForDb) {
+            promises.push(db.saveGroceryList(ingredientObj))
           }
 
-          res.send("finished fetching")
+          // calls db with all promises
+          Promise.all(promises)
+            .then((result) => {
+              console.log("Successfully added grocery list:", result);
+              res.send("Successfully added items into grocery list.");
+            })
+            .catch(e => {
+              console.error(e);
+              res.send(e)
+            });
 
         }, (error) => {
           console.log(error);
@@ -70,29 +80,6 @@ module.exports = (db) => {
       }, (error) => {
         console.log(error);
       });
-  });
-
-
-  // generate a grocery list based on user recipes using shopping list
-  // http://localhost:4000/api/grocery_list/1/shopping
-  router.post("/:id/shopping", (req, res) => {
-
-    axios({
-      method: 'post',
-      url: `https://api.spoonacular.com/mealplanner/shopping-list/compute?apiKey=${process.env.API_KEY}`,
-      data: {
-        "items": [
-          "4 lbs tomatoes",
-          "10 tomatoes",
-          "20 Tablespoons Olive Oil",
-          "6 tbsp Olive Oil"
-        ]
-      }
-    }).then((response) => {
-      console.log(response.data);
-    }, (error) => {
-      console.log(error);
-    });
   });
 
   return router;
