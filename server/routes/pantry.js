@@ -21,7 +21,7 @@ module.exports = (db) => {
   });
 
   // user adds an item to their pantry
-  http://localhost:4000/api/pantry/1
+  // http://localhost:4000/api/pantry/1
   router.post("/:id", (req, res) => {
 
     res.send("POST to http://localhost:4000/api/pantry/:id");
@@ -29,10 +29,10 @@ module.exports = (db) => {
   });
 
   // user deletes an item off their pantry
-  http://localhost:4000/api/pantry/1/pantry_ingredient/9040
-  router.post("/pantry/:pantryId/pantry_ingredient/:ingredientId", (req, res) => {
+  // http://localhost:4000/api/pantry/1/pantry_ingredient/9040
+  router.delete("/:pantryId/pantry_ingredient/:ingredientId", (req, res) => {
 
-    res.send("DELETE to http://localhost:4000/api/pantry/:pantryId/pantry_ingredient/:ingredientId");
+    res.send("DELETE to http://localhost:4000/api/pantry/:pantryId/pantry_ingredient/:ingredientId/");
 
   });
 

@@ -13,7 +13,7 @@ module.exports = (db) => {
   });
 
   // user creates a new plan
-  http://localhost:4000/api/plan/1
+  // http://localhost:4000/api/plan/1
   router.post("/:id", (req, res) => {
 
     res.send("POST to  http://localhost:4000/api/plan/:id");
@@ -21,7 +21,7 @@ module.exports = (db) => {
   });
 
   // user edits their plan
-  http://localhost:4000/api/plan/1/edit
+  // http://localhost:4000/api/plan/1/edit
   router.post("/:id/edit", (req, res) => {
 
     res.send("POST to  http://localhost:4000/api/plan/:id/edit");
@@ -29,16 +29,14 @@ module.exports = (db) => {
   });
 
   // user adds a specific recipe to their specific plan
-  http://localhost:4000/api/plan/1/recipe/648279
-  router.post("/plan/:planId/recipe/:recipeId", (req, res) => {
-
+  // http://localhost:4000/api/plan/1/recipe/648279
+  router.post("/:planId/recipe/:recipeId", (req, res) => {
     res.send("POST to  http://localhost:4000/api/plan/:planId/recipe/:recipeId");
-
   });
 
   // user delete a specific recipe from their specific plan
-  http://localhost:4000/api/plan/1/recipe/648279
-  router.delete("/plan/:planId/recipe/:recipeId", (req, res) => {
+  // http://localhost:4000/api/plan/1/recipe/648279
+  router.delete("/:planId/recipe/:recipeId", (req, res) => {
 
     res.send("DELETE to  http://localhost:4000/api/plan/:planId/recipe/:recipeId");
 
