@@ -27,14 +27,15 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
-const recipesRoutes = require("./routes/recipes")
-const planRoutes = require("./routes/plan")
+const recipesRoutes = require("./routes/recipes");
+const planRoutes = require("./routes/plan");
+const pantryRoutes = require("./routes/pantry")
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(db));
 app.use("/api/recipes", recipesRoutes(db));
 app.use("/api/plan", planRoutes(db));
-
+app.use("/api/pantry", pantryRoutes(db));
 
 // Home page
 app.get("/", (req, res) => {

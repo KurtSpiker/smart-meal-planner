@@ -8,7 +8,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes
   router.get("/", (req, res) => {
 
-    res.send("GET to http://localhost:4000/api/recipes")
+    res.send("GET to http://localhost:4000/api/recipes");
 
   });
 
@@ -17,7 +17,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes/648279
   router.get("/:id", (req, res) => {
 
-    res.send("GET to http://localhost:4000/api/recipes/:id")
+    res.send("GET to http://localhost:4000/api/recipes/:id");
 
   });
 

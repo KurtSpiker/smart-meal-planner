@@ -16,7 +16,7 @@ module.exports = (db) => {
   http://localhost:4000/api/plan/1/edit
   router.post("/:id/edit", (req, res) => {
 
-    res.send("POST to  http://localhost:4000/api/plan/:id/edit")
+    res.send("POST to  http://localhost:4000/api/plan/:id/edit");
 
   });
 
@@ -24,7 +24,7 @@ module.exports = (db) => {
   http://localhost:4000/api/plan/1/recipe/648279
   router.post("/plan/:planId/recipe/:recipeId", (req, res) => {
 
-    res.send("POST to  http://localhost:4000/api/plan/:planId/recipe/:recipeId")
+    res.send("POST to  http://localhost:4000/api/plan/:planId/recipe/:recipeId");
 
   });
 
@@ -32,7 +32,7 @@ module.exports = (db) => {
   http://localhost:4000/api/plan/1/recipe/648279
   router.delete("/plan/:planId/recipe/:recipeId", (req, res) => {
 
-    res.send("DELETE to  http://localhost:4000/api/plan/:planId/recipe/:recipeId")
+    res.send("DELETE to  http://localhost:4000/api/plan/:planId/recipe/:recipeId");
 
   });
 
