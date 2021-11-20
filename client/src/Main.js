@@ -10,28 +10,26 @@ import {
 import Home from "./Home";
 import Stuff from "./Stuff";
 import Contact from "./Contact";
- 
+import LinkDrawer from "./LinkDrawer"
+import { AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography, Box, Drawer, ListItem, ListItemIcon, List, ListItemText } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 class Main extends Component {
   render() {
     return (
-      <BrowserRouter>
-          <div>
-            <h1>Smart Meal Planner</h1>
-            <ul className="header">
-              <li><NavLink to="/">Home</NavLink></li>
-              <li><Link to="/stuff">Stuff</Link></li>
-              <li><NavLink to="/contact">Contact</NavLink></li>
-            </ul>
-            <div className="content">
-                <Routes>
-                  <Route exact path="/" element={<Home/>}/>
-                  <Route exact path="/stuff" element={<Stuff/>}/>
-                  <Route exact path="/contact" element={<Contact/>}/>
-                </Routes>
-                <Outlet />
-            </div>
+      <div>
+        <BrowserRouter>
+          <div className="content">
+            <Routes>
+              <Route exact path="/" element={<Home/>}/>
+              <Route exact path="/stuff" element={<Stuff/>}/>
+              <Route exact path="/contact" element={<Contact/>}/>
+            </Routes>
+            <Outlet/>
           </div>
-      </BrowserRouter>
+          <LinkDrawer>
+          </LinkDrawer>
+        </BrowserRouter>
+      </div>
     );
   }
 }

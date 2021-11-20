@@ -1,6 +1,6 @@
 body {
   background-image: linear-gradient(to bottom right,#f9968B, #f27348, #26474e, #76cdcd, #2cced2);
-  padding: 20px;
+  
   margin: 0;
 }
 h1, h2, p, ul, li {
@@ -25,6 +25,9 @@ ul.header li a {
 .content {
   background-color: #FFF;
   padding: 20px;
+  padding-left: 350px;
+  height: 95vh;
+  background-image: linear-gradient(to bottom right,#f9968B, #f27348, #26474e);
 }
 .content h2 {
   padding: 0;
@@ -32,4 +35,7 @@ ul.header li a {
 }
 .content li {
   margin-bottom: 10px;
+}
+.rotate {
+  transform: rotate(-90deg);
 }
