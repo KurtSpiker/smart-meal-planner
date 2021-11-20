@@ -22,7 +22,7 @@ class LinkDrawer extends Component {
               direction="column"
               justifyContent="space-between"
               alignItems="flex-end"
-              paddingRight={5}
+              paddingRight={4}
               marginTop={20}
             >
               <Button component={Link} to={"/DayMeals"}>
