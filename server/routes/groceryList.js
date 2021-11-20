@@ -27,7 +27,7 @@ module.exports = (db) => {
   router.post("/:id/edit", (req, res) => {
 
     // will be from req.body
-    let data = { userId: 1, itemDbId: 1, name: "some stuff i named", quantity: 10, measure: "ml", week: 1, week: 1 };
+    let data = { userId: 1, itemDbId: 1, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
     db.editGroceryList(data)
       .then((results) => {
@@ -108,7 +108,7 @@ module.exports = (db) => {
             Promise.all(promises)
               .then((responses) => {
                 // push all responses to an array
-                // console.log("THIS IS THE RESPONSE DATA ", responses[1].id);
+                // console.log("THIS IS A SINGLE RESPONSE DATA ", responses[1].id);
                 for (const response of responses) {
                   for (const ingredient of response.data.extendedIngredients) {
                     itemMeasuremementStrings.push(ingredient["originalString"]);

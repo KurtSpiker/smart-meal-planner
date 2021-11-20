@@ -122,44 +122,39 @@ const editGroceryList = function (data) {
 
   let sqlString = `UPDATE grocery_list_items SET `;
   let counter = 0;
+  let sqlStringArray = [];
   let arrayToPass = [];
 
   if (data.name) {
     counter++;
-    sqlString = sqlString + `item_name = $${counter}`;
+    sqlStringArray.push(`item_name = $${counter}`);
     arrayToPass.push(data.name);
-
-    if (data.quantity || data.measure) {
-      sqlString = sqlString + ",";
-    }
   }
 
   if (data.quantity) {
     counter++;
-    sqlString = sqlString + ` quantity = $${counter}`;
+    sqlStringArray.push(`quantity = $${counter}`);
     arrayToPass.push(data.quantity);
-
-    if (data.measure) {
-      sqlString = sqlString + ",";
-    }
   }
 
   if (data.measure) {
     counter++;
-    sqlString = sqlString + ` measure = $${counter}`;
+    sqlStringArray.push(`measure = $${counter}`);
     arrayToPass.push(data.measure);
   }
+
+  sqlString = sqlString + sqlStringArray.join(", ");
 
   counter++;
   sqlString = sqlString + ` WHERE user_id = $${counter} `;
   arrayToPass.push(data.userId);
 
   counter++;
-  sqlString = sqlString + `AND id = $${counter}`;
+  sqlString = sqlString + ` AND id = $${counter}`;
   arrayToPass.push(data.itemDbId);
 
   counter++;
-  sqlString = sqlString + `AND week = $${counter}`;
+  sqlString = sqlString + ` AND week = $${counter}`;
   arrayToPass.push(data.week);
 
   return pool
@@ -325,40 +320,35 @@ const editPantryItem = function (data) {
 
   let sqlString = `UPDATE pantry_ingredients SET `;
   let counter = 0;
+  let sqlStringArray = [];
   let arrayToPass = [];
-
-  if (data.quantity) {
-    counter++;
-    sqlString = sqlString + `quantity = $${counter}`;
-    arrayToPass.push(data.quantity);
-
-    if (data.name || data.measure) {
-      sqlString = sqlString + ",";
-    }
-  }
 
   if (data.name) {
     counter++;
-    sqlString = sqlString + ` item_name = $${counter}`;
+    sqlStringArray.push(`item_name = $${counter}`);
     arrayToPass.push(data.name);
+  }
 
-    if (data.measure) {
-      sqlString = sqlString + ",";
-    }
+  if (data.quantity) {
+    counter++;
+    sqlStringArray.push(`quantity = $${counter}`);
+    arrayToPass.push(data.quantity);
   }
 
   if (data.measure) {
     counter++;
-    sqlString = sqlString + ` measure = $${counter}`;
+    sqlStringArray.push(`measure = $${counter}`);
     arrayToPass.push(data.measure);
   }
+
+  sqlString = sqlString + sqlStringArray.join(", ");
 
   counter++;
   sqlString = sqlString + ` WHERE user_id = $${counter} `;
   arrayToPass.push(data.userId);
 
   counter++;
-  sqlString = sqlString + `AND id = $${counter}`;
+  sqlString = sqlString + ` AND id = $${counter}`;
   arrayToPass.push(data.itemDbId);
 
   return pool
