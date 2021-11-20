@@ -14,7 +14,7 @@ export default function DayMealsItem(props) {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-          <img src="/https://mui.com/static/images/grid/complex.jpg" />
+          <img style={{width:"100%"}} src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format&dpr=2" />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
@@ -27,7 +27,7 @@ export default function DayMealsItem(props) {
                 Recipe Title Prop
               </Typography>
               <ButtonBase sx={{ cursor: 'pointer' }} variant="body2" color="text.secondary">
-                Recipe Details
+                Recipe Details Link
               </ButtonBase>
             </Grid>
           
