@@ -41,6 +41,24 @@ module.exports = (db) => {
   });
 
 
+  // user deletes a grocery list item
+  // http://localhost:4000/api/grocery_list/1/delete
+  router.delete("/:id/delete", (req, res) => {
+
+    // will be from req.body
+    let data = { userId: req.params.id, id: 2, week: 1 };
+
+    db.deleteGroceryListItem(data)
+      .then((results) => {
+        console.log("POST to /grocery_list/:id/delete - Success.");
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  });
+
   // user adds a grocery list item
   // http://localhost:4000/api/grocery_list/1/add
   router.post("/:id/add", (req, res) => {
@@ -112,7 +130,7 @@ module.exports = (db) => {
                   // stores all db calls into promise array
                   promises = [];
                   for (const ingredientObj of groceryListForDb) {
-                    promises.push(db.saveGroceryList(ingredientObj, userId, week))
+                    promises.push(db.generateGroceryList(ingredientObj, userId, week))
                   }
                   // calls db with all promises
                   Promise.all(promises)
