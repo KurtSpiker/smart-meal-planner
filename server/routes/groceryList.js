@@ -27,7 +27,7 @@ module.exports = (db) => {
   router.post("/:id/edit", (req, res) => {
 
     // will be from req.body
-    let data = { userId: req.params.id, quantity: 10, week: 1 };
+    let data = { userId: 1, itemDbId: 1, name: "some stuff i named", quantity: 10, measure: "ml", week: 1, week: 1 };
 
     db.editGroceryList(data)
       .then((results) => {

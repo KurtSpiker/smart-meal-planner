@@ -8,6 +8,7 @@ const pool = new Pool({
 });
 
 
+
 const getUserDetails = function (userId) {
 
   const sqlString = `SELECT * FROM users WHERE id = $1`;
@@ -25,6 +26,7 @@ const getUserDetails = function (userId) {
 
 }
 exports.getUserDetails = getUserDetails;
+
 
 
 const getUserById = function () {
@@ -53,6 +55,7 @@ const getUserById = function () {
 exports.getUserById = getUserById;
 
 
+
 const getPantryItems = function () {
 
   return new Promise((res, rej) => {
@@ -62,6 +65,7 @@ const getPantryItems = function () {
   });
 }
 exports.getPantryItems = getPantryItems;
+
 
 
 const generateGroceryList = function (ingredientObject, userId, week) {
@@ -94,6 +98,7 @@ const generateGroceryList = function (ingredientObject, userId, week) {
 exports.generateGroceryList = generateGroceryList;
 
 
+
 const getGroceryListByUser = function (userId) {
 
   const sqlString = `SELECT * FROM grocery_list_items WHERE user_id = $1;`;
@@ -109,19 +114,64 @@ const getGroceryListByUser = function (userId) {
 exports.getGroceryListByUser = getGroceryListByUser;
 
 
+
 const editGroceryList = function (data) {
 
-  const sqlString = `UPDATE grocery_list_items SET quantity = $1 WHERE user_id = $2 AND id = $3`;
+  // EXPECTED DATA OBJECT
+  // data = { userId: 1, itemDbId: 1, name: "some stuff i named", quantity: 10, measure: "ml", week: 1, week: 1 };
+
+  let sqlString = `UPDATE grocery_list_items SET `;
+  let counter = 0;
+  let arrayToPass = [];
+
+  if (data.name) {
+    counter++;
+    sqlString = sqlString + `item_name = $${counter}`;
+    arrayToPass.push(data.name);
+
+    if (data.quantity || data.measure) {
+      sqlString = sqlString + ",";
+    }
+  }
+
+  if (data.quantity) {
+    counter++;
+    sqlString = sqlString + ` quantity = $${counter}`;
+    arrayToPass.push(data.quantity);
+
+    if (data.measure) {
+      sqlString = sqlString + ",";
+    }
+  }
+
+  if (data.measure) {
+    counter++;
+    sqlString = sqlString + ` measure = $${counter}`;
+    arrayToPass.push(data.measure);
+  }
+
+  counter++;
+  sqlString = sqlString + ` WHERE user_id = $${counter} `;
+  arrayToPass.push(data.userId);
+
+  counter++;
+  sqlString = sqlString + `AND id = $${counter}`;
+  arrayToPass.push(data.itemDbId);
+
+  counter++;
+  sqlString = sqlString + `AND week = $${counter}`;
+  arrayToPass.push(data.week);
 
   return pool
-    .query(sqlString, [data.quantity, data.userId, data.groceryListId])
+    .query(sqlString, arrayToPass)
     .then(res => {
-      console.log(`Successfully edited grocery entry ${data.groceryListId} for user ${data.userId}.`)
+      console.log(`Successfully edited grocery entry ${data.itemDbId} for user ${data.userId}.`)
       return res.rows[0];
     })
     .catch(e => { console.error(e) });
 }
 exports.editGroceryList = editGroceryList;
+
 
 
 const addGroceryListItem = function (data) {
@@ -139,6 +189,7 @@ const addGroceryListItem = function (data) {
 exports.addGroceryListItem = addGroceryListItem;
 
 
+
 const deleteGroceryList = function (userId, week) {
 
   const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND week = $2 AND spoonacular_item_id IS NOT NULL`;
@@ -152,6 +203,7 @@ const deleteGroceryList = function (userId, week) {
     .catch(e => { console.error(e) });
 }
 exports.deleteGroceryList = deleteGroceryList;
+
 
 
 const deleteGroceryListItem = function (data) {
@@ -169,6 +221,7 @@ const deleteGroceryListItem = function (data) {
 exports.deleteGroceryListItem = deleteGroceryListItem;
 
 
+
 const getRecipesByUser = function (userId, week) {
 
   const sqlString = `SELECT spoonacular_id FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2`;
@@ -176,12 +229,13 @@ const getRecipesByUser = function (userId, week) {
   return pool
     .query(sqlString, [userId, week])
     .then(res => {
-      console.log(`Successfully retrieved recipes by user ${userId}.`);
+      console.log(`Successfully retrieved recipes for user ${userId}.`);
       return res.rows;
     })
     .catch(e => { console.error(e) });
 }
 exports.getRecipesByUser = getRecipesByUser;
+
 
 
 const addRecipesForUser = function (data) {
@@ -199,6 +253,7 @@ const addRecipesForUser = function (data) {
 exports.addRecipesForUser = addRecipesForUser;
 
 
+
 const deleteRecipesForUser = function (data) {
 
   const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4 AND spoonacular_id = $5`;
@@ -213,3 +268,105 @@ const deleteRecipesForUser = function (data) {
 }
 exports.deleteRecipesForUser = deleteRecipesForUser;
 
+
+
+const getPantryByUser = function (userId) {
+
+  const sqlString = `SELECT * FROM pantry_ingredients WHERE user_id = $1`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      console.log(`Successfully retrieved pantry items for user ${userId}.`);
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.getPantryByUser = getPantryByUser;
+
+
+
+const deletePantryItem = function (data) {
+
+  const sqlString = `DELETE FROM pantry_ingredients WHERE user_id = $1 AND id = $2`;
+
+  return pool
+    .query(sqlString, [data.userId, data.itemDbId])
+    .then(res => {
+      console.log(`Successfully deleted pantry item for user ${data.userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.deletePantryItem = deletePantryItem;
+
+
+
+const addPantryItem = function (data) {
+
+  const sqlString = `INSERT INTO pantry_ingredients (user_id, item_name, quantity, measure) VALUES ($1, $2, $3, $4) RETURNING *`;
+
+  return pool
+    .query(sqlString, [data.userId, data.name, data.quantity, data.measure])
+    .then(res => {
+      console.log(`Successfully saved grocery list item ${data.name} for user ${data.userId}.`);
+      return res.rows[0];
+    })
+    .catch(e => { console.error(e) });
+}
+exports.addPantryItem = addPantryItem;
+
+
+
+const editPantryItem = function (data) {
+
+  // EXPECTING OBJECT
+  // let data = { userId: 1, itemDbId: 1, name: "apple juice", quantity: 500, measure: "ml" };
+
+  let sqlString = `UPDATE pantry_ingredients SET `;
+  let counter = 0;
+  let arrayToPass = [];
+
+  if (data.quantity) {
+    counter++;
+    sqlString = sqlString + `quantity = $${counter}`;
+    arrayToPass.push(data.quantity);
+
+    if (data.name || data.measure) {
+      sqlString = sqlString + ",";
+    }
+  }
+
+  if (data.name) {
+    counter++;
+    sqlString = sqlString + ` item_name = $${counter}`;
+    arrayToPass.push(data.name);
+
+    if (data.measure) {
+      sqlString = sqlString + ",";
+    }
+  }
+
+  if (data.measure) {
+    counter++;
+    sqlString = sqlString + ` measure = $${counter}`;
+    arrayToPass.push(data.measure);
+  }
+
+  counter++;
+  sqlString = sqlString + ` WHERE user_id = $${counter} `;
+  arrayToPass.push(data.userId);
+
+  counter++;
+  sqlString = sqlString + `AND id = $${counter}`;
+  arrayToPass.push(data.itemDbId);
+
+  return pool
+    .query(sqlString, arrayToPass)
+    .then(res => {
+      console.log(`Successfully edited pantry item entry ${data.itemDbId} for user ${data.userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.editPantryItem = editPantryItem;

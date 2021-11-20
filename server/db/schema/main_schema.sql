@@ -8,7 +8,7 @@ CREATE TABLE pantry_ingredients (
   id SERIAL PRIMARY KEY NOT NULL,
   item_name VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  spoonacular_ingredient_id INTEGER NOT NULL,
+  spoonacular_ingredient_id INTEGER,
   quantity NUMERIC DEFAULT 0,
   measure VARCHAR(255)
 );
