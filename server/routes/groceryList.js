@@ -78,7 +78,7 @@ module.exports = (db) => {
               // stores all db calls into promise array
               promises = [];
               for (const ingredientObj of groceryListForDb) {
-                promises.push(db.saveGroceryList(ingredientObj))
+                promises.push(db.saveGroceryList(ingredientObj, userId))
               }
               // calls db with all promises
               Promise.all(promises)
