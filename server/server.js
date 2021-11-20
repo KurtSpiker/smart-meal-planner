@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 4000;
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+
+//cookie parser to get login id
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
@@ -14,10 +16,10 @@ const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 
 // add database query functions here
-const { getUserById, getPantryItems, saveGroceryList, getRecipesByUser, getGroceryListByUser } = require("./db/database");
+const { getUserById, getPantryItems, saveGroceryList, getRecipesByUser, getGroceryListByUser, editGroceryList, deleteGroceryList, getUserDetails } = require("./db/database");
 const pool = new Pool(dbParams);
 pool.connect();
-const db = { getUserById, getPantryItems, saveGroceryList, getRecipesByUser, getGroceryListByUser };
+const db = { getUserById, getPantryItems, saveGroceryList, getRecipesByUser, getGroceryListByUser, editGroceryList, deleteGroceryList, getUserDetails };
 
 app.use(morgan("dev"));
 

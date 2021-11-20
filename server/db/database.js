@@ -7,6 +7,26 @@ const pool = new Pool({
   database: 'final' //change back to midterm for testing
 });
 
+
+const getUserDetails = function (userId) {
+
+  const sqlString = `SELECT * FROM users WHERE id = $1`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      if (res.rows.length === 0) {
+        return null;
+      }
+      console.log(`Successfully retrieved information for user ${userId}.`)
+      return res.rows[0];
+    })
+    .catch(e => { console.error(e) });
+
+}
+exports.getUserDetails = getUserDetails;
+
+
 const getUserById = function () {
 
   // Test connect to db by changing the sqlString and comment out place holder db return
@@ -32,6 +52,7 @@ const getUserById = function () {
 }
 exports.getUserById = getUserById;
 
+
 const getPantryItems = function () {
 
   return new Promise((res, rej) => {
@@ -41,6 +62,7 @@ const getPantryItems = function () {
   });
 }
 exports.getPantryItems = getPantryItems;
+
 
 const saveGroceryList = function (ingredientObject, userId) {
 
@@ -64,13 +86,30 @@ const saveGroceryList = function (ingredientObject, userId) {
   return pool
     .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId])
     .then(res => {
-      console.log("Successfully saved grocery list item.");
+      console.log(`Successfully saved grocery list item ${ingredientObject.name} for user ${userId}.`);
       return res.rows[0];
+    })
+    .catch(e => { console.error(e) });
+}
+exports.saveGroceryList = saveGroceryList;
+
+
+const deleteGroceryList = function (userId) {
+
+  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      console.log(`Successfully deleted entire grocery list of user ${userId} to repopulate.`)
+      return res.rows;
     })
     .catch(e => { console.error(e) });
 
 }
-exports.saveGroceryList = saveGroceryList;
+exports.deleteGroceryList = deleteGroceryList;
+
+
 
 const getRecipesByUser = function (userId) {
 
@@ -79,12 +118,13 @@ const getRecipesByUser = function (userId) {
   return pool
     .query(sqlString, [userId])
     .then(res => {
-      console.log("Successfully retrieved recipes by user id.");
+      console.log(`Successfully retrieved recipes by user ${userId}.`);
       return res.rows;
     })
     .catch(e => { console.error(e) });
 }
 exports.getRecipesByUser = getRecipesByUser;
+
 
 const getGroceryListByUser = function (userId) {
 
@@ -93,22 +133,25 @@ const getGroceryListByUser = function (userId) {
   return pool
     .query(sqlString, [userId])
     .then(res => {
-      console.log("Successfully retrieved groceries by user id.");
+      console.log(`Successfully retrieved groceries by user ${userId}.`);
       return res.rows;
     })
     .catch(e => { console.error(e) });
 }
 exports.getGroceryListByUser = getGroceryListByUser;
 
-const editGroceryList = function () {
 
-  const sqlString = `UPDATE grocery_list_items SET title = $1, description = $2 WHERE id = $3`;
+const editGroceryList = function (data) {
+
+  const sqlString = `UPDATE grocery_list_items SET quantity = $1 WHERE user_id = $2 AND id = $3`;
 
   return pool
-    .query(sqlString, [map.title, map.description, map.id])
+    .query(sqlString, [data.quantity, data.userId, data.groceryListId])
     .then(res => {
+      console.log(`Successfully edited grocery entry ${data.groceryListId} for user ${data.userId}.`)
       return res.rows[0];
     })
     .catch(e => { console.error(e) });
 }
 exports.editGroceryList = editGroceryList;
+

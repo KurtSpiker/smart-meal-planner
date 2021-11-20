@@ -1,6 +1,7 @@
 //THIS IS JUST A TEST ROUTE
 
-// Attention: Only the first query parameter is prefixed with a ? (question mark), all subsequent ones will be prefixed with a & (ampersand). That is // how URLs work and nothing related to our API. Here's a full example with two parameters apiKey and includeNutrition:
+// Attention: Only the first query parameter is prefixed with a ? (question mark), all subsequent ones will be prefixed with a & (ampersand). That is
+// how URLs work and nothing related to our API. Here's a full example with two parameters apiKey and includeNutrition:
 // https://api.spoonacular.com/recipes/716429/information?apiKey=YOUR-API-KEY&includeNutrition=true..
 
 const express = require('express');
@@ -9,6 +10,7 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
+  // ROUTE TO TEST DATABASE LINK
   // http://localhost:4000/api/users
   router.get("/", (req, res) => {
 
@@ -21,6 +23,34 @@ module.exports = (db) => {
         res.send(e);
       });
   });
+
+  //------------------------------------------------------------------------------------------------
+  // logs in user and returns their information
+  // http://localhost:4000/api/users/login/1
+  router.get("/login/:id", (req, res) => {
+
+    res.cookie('user_id', req.params.id);
+    const userId = req.cookies["user_id"];
+
+    db.getUserDetails(userId)
+      .then((userDetails) => {
+        console.log("GET to users/login/:id - Success.");
+        res.send(userDetails);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+
+  });
+
+  // logs out user
+  // http://localhost:4000/api/users/logout
+  router.get("/logout", (req, res) => {
+    res.clearCookie('user_id');
+    res.send("cleared cookie");
+  })
+  //---------------------------------------------------------------------------------------------------
 
   // spoonacular test end point to search recipes with keywords
   // http://localhost:4000/api/users/searchRecipes/italian
@@ -55,9 +85,6 @@ module.exports = (db) => {
         console.log(error);
       });
   });
-
-
-
 
   // spoonacular test end point to search recipes using your PANTRY
   // http://localhost:4000/api/users/searchPantry/egg,sausage,bread
@@ -123,7 +150,6 @@ module.exports = (db) => {
       });
   });
 
-
   // takes in a pantry and returns the ids of those items
   http://localhost:4000/api/users/searchPantry
   router.get("/searchPantry", (req, res) => {
@@ -151,10 +177,7 @@ module.exports = (db) => {
         console.error(e);
         res.send(e);
       });
-
-
   });
-
 
   return router;
 };
