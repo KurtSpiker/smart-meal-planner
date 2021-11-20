@@ -20,7 +20,6 @@ module.exports = (db) => {
       });
   });
 
-
   // searching for a specific recipe using its spoonacular id
   // http://localhost:4000/api/recipes/648279
   router.get("/:id", (req, res) => {
