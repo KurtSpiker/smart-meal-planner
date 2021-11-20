@@ -15,21 +15,35 @@ module.exports = (db) => {
 
     // get data from front end
     let data = { numberToDisplay: 10, ignorePantry: true, ranking: 1 }
+    let userId = 1;
 
     // get pantry items from db
-    let commaSeperatedPantry = "apple,spaghetti,tomato,orange,lemon,rice,chocolate,broccoli,asparagus,avocado";
+    let pantryArray = [];
     let numberToDisplay = `&number=${data.numberToDisplay}`;
     let ignorePantry = `&ignorePantry=${data.ignorePantry}`;
-    let ranking = `&ranking=${ranking}`;
+    let ranking = `&ranking=${data.ranking}`;
 
-    axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${commaSeperatedPantry}${numberToDisplay}${ignorePantry}${ranking}`)
-      .then((response) => {
-        res.send(response.data);
-        console.log("GET to /suggestions/:id/delete - Success.");
+    db.getPantryByUser(userId)
+      .then((results) => {
+        for (const pantryItem of results) {
+          pantryArray.push(pantryItem.item_name)
+        }
+
+        axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryArray.join(",")}${numberToDisplay}${ignorePantry}${ranking}`)
+          .then((response) => {
+            res.send(response.data);
+            console.log("GET to /suggestions - Success.");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(e => {
+        console.error(e);
+        res.send(e)
       });
+
   });
 
   return router;

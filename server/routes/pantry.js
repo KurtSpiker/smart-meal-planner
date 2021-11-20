@@ -39,7 +39,7 @@ module.exports = (db) => {
   });
 
   // user adds an item to their pantry
-  // http://localhost:4000/api/pantry/1 [data.userId, data.name, data.quantity, data.measure])
+  // http://localhost:4000/api/pantry/1
   router.post("/:id", (req, res) => {
 
     let data = { userId: req.params.id, name: "apple juice", quantity: 500, measure: "ml" };
