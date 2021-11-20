@@ -18,7 +18,8 @@ CREATE TABLE meal_lists (
   day_of_week VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   spoonacular_id INTEGER NOT NULL,
-  meal VARCHAR(255) NOT NULL
+  meal VARCHAR(255) NOT NULL,
+  week INTEGER NOT NULL
 );
 DROP TABLE IF EXISTS grocery_list_items CASCADE;
 CREATE TABLE grocery_list_items (
@@ -27,5 +28,6 @@ CREATE TABLE grocery_list_items (
   item_name VARCHAR(255) NOT NULL,
   quantity NUMERIC DEFAULT 0,
   measure VARCHAR(255),
-  spoonacular_item_id INTEGER NOT NULL
+  spoonacular_item_id INTEGER,
+  week INTEGER NOT NULL
 );
