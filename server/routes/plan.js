@@ -31,7 +31,9 @@ module.exports = (db) => {
   // user adds a specific recipe to their specific plan
   // http://localhost:4000/api/plan/1/recipe/648279
   router.post("/:planId/recipe/:recipeId", (req, res) => {
+
     res.send("POST to  http://localhost:4000/api/plan/:planId/recipe/:recipeId");
+    
   });
 
   // user delete a specific recipe from their specific plan

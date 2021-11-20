@@ -4,17 +4,28 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
+  // ranking ->	Whether to maximize used ingredients (1) or minimize missing ingredients (2) first.
+  // display -> The maximum number of recipes to return (between 1 and 100). Defaults to 10.
+  // ignorePantry -> 	Whether to ignore typical pantry items, such as water, salt, flour, etc.
+
+  // https://api.spoonacular.com/recipes/findByIngredients?apiKey=3cb5c5c2b8a042d9b6818458a9ad1bbc&ingredients=apples,flour,sugar&number=2
   // frontend -> server -> api for suggested recipes based on pantry
   // http://localhost:4000/api/suggestions
   router.get("/", (req, res) => {
 
-    // get pantry items from db
-    let pantryItems = "apple,spaghetti,tomato,orange,lemon,rice,chocolate,broccoli,asparagus,avocado"
+    // get data from front end
+    let data = { numberToDisplay: 10, ignorePantry: true, ranking: 1 }
 
-    axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryItems}`)
+    // get pantry items from db
+    let commaSeperatedPantry = "apple,spaghetti,tomato,orange,lemon,rice,chocolate,broccoli,asparagus,avocado";
+    let numberToDisplay = `&number=${data.numberToDisplay}`;
+    let ignorePantry = `&ignorePantry=${data.ignorePantry}`;
+    let ranking = `&ranking=${ranking}`;
+
+    axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${commaSeperatedPantry}${numberToDisplay}${ignorePantry}${ranking}`)
       .then((response) => {
         res.send(response.data);
-        console.log(response.data);
+        console.log("GET to /suggestions/:id/delete - Success.");
       })
       .catch((error) => {
         console.log(error);
