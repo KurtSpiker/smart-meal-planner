@@ -31,7 +31,7 @@ class LinkDrawer extends Component {
               <Button component={Link} to={"/"}>
                 Recipes
               </Button>
-              <Button component={Link} to={"/contact"} >
+              <Button component={Link} to={"/PantryList"} >
                 Pantry
               </Button>
               <Button component={Link} to={"/GroceryList"}>

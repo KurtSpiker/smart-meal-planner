@@ -4,7 +4,7 @@ import { Grid, Typography, Paper, IconButton, ButtonBase} from '@mui/material';
 import Counter from './Counter';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const GroceryListItem = function(props) {
+const IngredientItem = function(props) {
 
   return (
     <Grid container padding="10px">
@@ -34,7 +34,7 @@ const GroceryListItem = function(props) {
 };
 
  
-export default GroceryListItem;
+export default IngredientItem;
 
 
 

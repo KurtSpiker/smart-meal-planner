@@ -5,7 +5,9 @@ import { action } from "@storybook/addon-actions";
 import DayMealsItem from '../components/DayMealsItem'
 import DayMeals from '../components/DayMeals'
 import GroceryList from '../components/GroceryList'
-import GroceryListItem from '../components/GroceryListItem'
+import PantryList from '../components/PantryList'
+import IngredientList from '../components/IngredientList'
+import IngredientItem from '../components/IngredientItem'
 import Counter from '../components/Counter'
 
 storiesOf("DayMealsItem", module)
@@ -16,5 +18,9 @@ storiesOf("DayMeals", module)
 
 storiesOf("GroceryList", module)
   .add("Base", () => <GroceryList />)
-  .add("GroceryListItem", () => <GroceryListItem />)
+  .add("IngredientList", () => <IngredientList />)
+  .add("IngredientItem", () => <IngredientItem />)
   .add("Counter", () => <Counter />)
+
+storiesOf("PantryList", module)
+  .add("Base", () => <PantryList />)

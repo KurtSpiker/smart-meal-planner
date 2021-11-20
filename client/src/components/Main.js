@@ -9,6 +9,7 @@ import DayMeals from "./DayMeals"
 import Contact from "./Contact";
 import LinkDrawer from "./LinkDrawer"
 import GroceryList from "./GroceryList";
+import PantryList from "./PantryList";
 class Main extends Component {
   render() {
     return (
@@ -18,7 +19,7 @@ class Main extends Component {
             <Routes>
               <Route exact path="/GroceryList" element={<GroceryList/>}/>
               <Route exact path="/DayMeals" element={<DayMeals/>}/>
-              <Route exact path="/contact" element={<Contact/>}/>
+              <Route exact path="/PantryList" element={<PantryList/>}/>
             </Routes>
             <Outlet/>
           </div>
