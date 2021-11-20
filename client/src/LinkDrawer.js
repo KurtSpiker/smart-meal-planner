@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import { AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography, Box, Drawer, ListItem, ListItemIcon, List, ListItemText } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Grid, Toolbar, Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 import Logo from './FIO_transparent.png'
 import {
-  Route,
-  NavLink,
-  BrowserRouter,
-  Routes,
-  Outlet,
   Link
 } from "react-router-dom";
 class LinkDrawer extends Component {
@@ -19,7 +13,7 @@ class LinkDrawer extends Component {
           <Grid container paddingLeft={4}>
             <Grid item>
               <div>
-                <img src={Logo} width="250"/>
+                <img src={Logo} alt="logo" width="250"/>
               </div>
             </Grid>
           </Grid>
