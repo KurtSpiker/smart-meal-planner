@@ -1,5 +1,5 @@
 body {
-  background-image: linear-gradient(to bottom right,#f9968B, #f27348, #26474e, #76cdcd, #2cced2);
+
   
   margin: 0;
 }
@@ -27,7 +27,7 @@ ul.header li a {
   padding: 20px;
   padding-left: 350px;
   height: 95vh;
-  background-image: linear-gradient(to bottom right,#f9968B, #f27348, #26474e);
+  
 }
 .content h2 {
   padding: 0;
