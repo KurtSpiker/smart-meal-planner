@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Path2D></Path2D>
+    
   </React.StrictMode>,
   document.getElementById('root')
 
