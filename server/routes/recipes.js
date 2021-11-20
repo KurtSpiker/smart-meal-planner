@@ -37,5 +37,38 @@ module.exports = (db) => {
 
   });
 
+  // adding a recipe to user's meal list
+  // http://localhost:4000/api/recipes/649141
+  router.post("/:id", (req, res) => {
+
+    let userId = 1;
+    let data = { userId, week: 1, day: "monday", meal: "breakfast", spoonacularId: req.params.id };
+
+    db.addRecipesForUser(data)
+      .then((result) => {
+        console.log("POST to /recipes/:id - Success.");
+        res.send(result)
+      }).catch((error) => {
+        console.log(error);
+      });
+
+  });
+
+  // deleting a recipe from a user's meal list
+  // http://localhost:4000/api/recipes/649141
+  router.delete("/:id", (req, res) => {
+
+    let userId = 1;
+    let data = { userId, week: 1, day: "monday", meal: "breakfast", spoonacularId: req.params.id };
+
+    db.deleteRecipesForUser(data)
+      .then((result) => {
+        console.log("DELETE to /recipes/:id - Success.");
+        res.send(result);
+      }).catch((error) => {
+        console.log(error);
+      });
+  });
+
   return router;
 };

@@ -139,8 +139,6 @@ const addGroceryListItem = function (data) {
 exports.addGroceryListItem = addGroceryListItem;
 
 
-
-
 const deleteGroceryList = function (userId, week) {
 
   const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND week = $2`;
@@ -171,4 +169,33 @@ const getRecipesByUser = function (userId, week) {
 }
 exports.getRecipesByUser = getRecipesByUser;
 
+
+const addRecipesForUser = function (data) {
+
+  const sqlString = `INSERT INTO meal_lists (user_id, spoonacular_id, week, day_of_week, meal) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+
+  return pool
+    .query(sqlString, [data.userId, data.spoonacularId, data.week, data.day, data.meal])
+    .then(res => {
+      console.log(`Successfully added recipe ${data.spoonacularId} for user ${data.userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.addRecipesForUser = addRecipesForUser;
+
+
+const deleteRecipesForUser = function (data) {
+
+  const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4 AND spoonacular_id = $5`;
+
+  return pool
+    .query(sqlString, [data.userId, data.week, data.day, data.meal, data.spoonacularId])
+    .then(res => {
+      console.log(`Successfully deleted recipe of user ${data.userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.deleteRecipesForUser = deleteRecipesForUser;
 
