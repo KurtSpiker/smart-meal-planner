@@ -89,7 +89,7 @@ const generateGroceryList = function (ingredientObject, userId, week) {
   const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link, auto_generated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
 
   return pool
-    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl], true)
+    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl, true])
     .then(res => {
       console.log(`Successfully generated grocery list item ${ingredientObject.name} for user ${userId}.`);
       return res.rows[0];
@@ -172,8 +172,6 @@ exports.editGroceryList = editGroceryList;
 
 const addGroceryListItem = function (data) {
 
-  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link, measure) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-
   let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link `;
   let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageUrl];
 
@@ -230,7 +228,7 @@ exports.deleteGroceryListItem = deleteGroceryListItem;
 
 const getRecipesByUser = function (userId, week) {
 
-  const sqlString = `SELECT spoonacular_id FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2`;
+  const sqlString = `SELECT meal_lists.id AS meal_list_id, day_of_week, user_id, spoonacular_id, meal, week FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2`;
 
   return pool
     .query(sqlString, [userId, week])

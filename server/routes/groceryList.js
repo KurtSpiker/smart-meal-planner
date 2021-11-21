@@ -45,7 +45,7 @@ module.exports = (db) => {
   router.delete("/:id/delete", (req, res) => {
 
     // will be from req.body
-    let data = { userId: req.params.id, id: 2, week: 1 };
+    let data = { userId: req.params.id, id: 1, week: 1 };
 
     db.deleteGroceryListItem(data)
       .then((results) => {
@@ -63,7 +63,7 @@ module.exports = (db) => {
   router.post("/:id/add", (req, res) => {
 
     // will be from req.body
-    let data = { userId: req.params.id, name: "apples", quantity: 10, measure: "", week: 1, imageUrl: "someImageUrl.png" };
+    let data = { userId: req.params.id, name: "apples", quantity: 10, week: 1, imageUrl: "someImageUrl.png" };
 
     db.addGroceryListItem(data)
       .then((results) => {

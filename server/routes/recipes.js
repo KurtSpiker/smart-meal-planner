@@ -75,7 +75,7 @@ module.exports = (db) => {
       .then((result) => {
 
         console.log("POST to /recipes/:id - Success.");
-        res.send(result)
+        res.send(result);
       }).catch((error) => {
         console.log(error);
       });
@@ -98,8 +98,8 @@ module.exports = (db) => {
       });
   });
 
-
-  http://localhost:4000/api/recipes/mealList/:id
+  // gets users recipe schedule by the week
+  // http://localhost:4000/api/recipes/mealList/1
   router.get("/mealList/:id", (req, res) => {
 
     let userId = 1;
