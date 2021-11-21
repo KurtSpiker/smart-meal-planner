@@ -40,7 +40,6 @@ module.exports = (db) => {
       });
   });
 
-
   // user deletes a grocery list item
   // http://localhost:4000/api/grocery_list/1/delete
   router.delete("/:id/delete", (req, res) => {

@@ -25,10 +25,38 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
 
     let recipeId = req.params.id;
+    let ingredientArray = [];
+    let title = "";
+    let time = 0;
+    let servings = 0;
+    let sourceUrl = "";
+    let image = "";
+    let summary = "";
+    let instructions = [];
+
 
     axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
       .then((response) => {
-        res.send(response.data);
+
+        for (const ingredient of response.data.extendedIngredients) {
+          ingredientArray.push(ingredient["originalString"]);
+        }
+
+        title = response.data.title;
+        time = response.data.readyInMinutes;
+        servings = response.data.servings;
+        sourceUrl = response.data.sourceUrl;
+        image = response.data.image;
+        summary = response.data.summary;
+        servings = response.data.servings;
+
+        for (const instruction of response.data.analyzedInstructions[0].steps) {
+          instructions.push(instruction.step);
+        }
+
+        let objectToSend = { recipeId, ingredientArray, title, time, servings, sourceUrl, image, summary, instructions };
+
+        res.send(objectToSend);
         console.log("GET to /recipes/:id - Success.");
       })
       .catch((error) => {
@@ -45,6 +73,7 @@ module.exports = (db) => {
 
     db.addRecipesForUser(data)
       .then((result) => {
+
         console.log("POST to /recipes/:id - Success.");
         res.send(result)
       }).catch((error) => {
