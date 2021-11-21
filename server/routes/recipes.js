@@ -13,7 +13,7 @@ module.exports = (db) => {
     axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}&query=${searchTerm}`)
       .then((response) => {
         res.send(response.data);
-        console.log(response.data);
+        console.log("GET to /recipes - Success.");
       })
       .catch((error) => {
         console.log(error);
@@ -29,12 +29,11 @@ module.exports = (db) => {
     axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
       .then((response) => {
         res.send(response.data);
-        console.log(response.data);
+        console.log("GET to /recipes/:id - Success.");
       })
       .catch((error) => {
         console.log(error);
       });
-
   });
 
   // adding a recipe to user's meal list
@@ -64,6 +63,22 @@ module.exports = (db) => {
     db.deleteRecipesForUser(data)
       .then((result) => {
         console.log("DELETE to /recipes/:id - Success.");
+        res.send(result);
+      }).catch((error) => {
+        console.log(error);
+      });
+  });
+
+
+  http://localhost:4000/api/recipes/mealList/:id
+  router.get("/mealList/:id", (req, res) => {
+
+    let userId = 1;
+    let week = req.params.id
+
+    db.getRecipesByUser(userId, week)
+      .then((result) => {
+        console.log("GET to /recipes/mealList/:id - Success.");
         res.send(result);
       }).catch((error) => {
         console.log(error);

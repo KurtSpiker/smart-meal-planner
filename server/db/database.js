@@ -172,10 +172,10 @@ exports.editGroceryList = editGroceryList;
 
 const addGroceryListItem = function (data) {
 
-  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, week) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, week, image_link) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
   return pool
-    .query(sqlString, [data.userId, data.name, data.quantity, data.measure, data.week])
+    .query(sqlString, [data.userId, data.name, data.quantity, data.measure, data.week, data.imageUrl])
     .then(res => {
       console.log(`Successfully saved grocery list item ${data.name} for user ${data.userId}.`);
       return res.rows[0];
@@ -231,6 +231,7 @@ const getRecipesByUser = function (userId, week) {
     .catch(e => { console.error(e) });
 }
 exports.getRecipesByUser = getRecipesByUser;
+
 
 
 

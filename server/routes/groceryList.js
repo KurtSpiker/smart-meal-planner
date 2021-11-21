@@ -64,7 +64,7 @@ module.exports = (db) => {
   router.post("/:id/add", (req, res) => {
 
     // will be from req.body
-    let data = { userId: req.params.id, name: "apples", quantity: 10, measure: "", week: 1 };
+    let data = { userId: req.params.id, name: "apples", quantity: 10, measure: "", week: 1, imageUrl: "someImageUrl.png" };
 
     db.addGroceryListItem(data)
       .then((results) => {
