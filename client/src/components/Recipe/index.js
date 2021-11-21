@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Paper, Card, CardMedia, CardHeader } from '@mui/material'
 import RecipeList from './RecipeList'
 import { recipe } from '../../sampleRecipe'
-import { AccessTimeIcon, RestaurantIcon }  from '@mui/icons-material';
+//import { AccessTimeIcon, RestaurantIcon }  from '@mui/icons-material';
 
 
 
@@ -27,10 +27,10 @@ export default function Recipe() {
           />
           <Grid container>
             <Grid item>
-              <RestaurantIcon />
+              Restaurant Icon
             </Grid>
             <Grid item>
-              <AccesTimeIcon />
+              Time Icon
             </Grid>
           </Grid>
         </Grid>
