@@ -10,7 +10,8 @@ CREATE TABLE pantry_ingredients (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   spoonacular_ingredient_id INTEGER,
   quantity NUMERIC DEFAULT 0,
-  measure VARCHAR(255)
+  measure VARCHAR(255),
+  image_link VARCHAR(255)
 );
 DROP TABLE IF EXISTS meal_lists CASCADE;
 CREATE TABLE meal_lists (
@@ -29,5 +30,6 @@ CREATE TABLE grocery_list_items (
   quantity NUMERIC DEFAULT 0,
   measure VARCHAR(255),
   spoonacular_item_id INTEGER,
-  week INTEGER NOT NULL
+  week INTEGER NOT NULL,
+  image_link VARCHAR(255)
 );

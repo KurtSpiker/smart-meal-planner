@@ -4,6 +4,23 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
+  // search for ingredient item before adding it in pantry
+  // http://localhost:4000/api/pantry/searchIngredient/banana
+  router.get("/searchIngredient/:id", (req, res) => {
+
+    let ingredient = req.params.id;
+
+    axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
+      .then((response) => {
+        res.send(response.data);
+        console.log("GET to /pantry/searchIngredient/:id - Success.");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  });
+
   // user clicks on pantry and front end requests those items from server
   // http://localhost:4000/api/pantry/1
   router.get("/:id", (req, res) => {
@@ -42,7 +59,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/pantry/1
   router.post("/:id", (req, res) => {
 
-    let data = { userId: req.params.id, name: "apple juice", quantity: 500, measure: "ml" };
+    let data = { userId: req.params.id, name: "apple juice", quantity: 500, measure: "ml", spoonacularId: 12345, imageLink: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/2311311/5d527098b97f5abb7cc54619bcb3c7fe_large.png&width=256&type=webp&quality=80' };
 
     db.addPantryItem(data)
       .then((results) => {

@@ -82,13 +82,14 @@ const generateGroceryList = function (ingredientObject, userId, week) {
   //   pantryItem: false,
   //   aisle: 'Cheese',
   //   cost: 52.68,
-  //   ingredientId: 1033
+  //   ingredientId: 1033,
+  //   imageUrl: 'thyme.jpg'
   // };
 
-  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
 
   return pool
-    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week])
+    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl])
     .then(res => {
       console.log(`Successfully saved grocery list item ${ingredientObject.name} for user ${userId}.`);
       return res.rows[0];
@@ -299,10 +300,13 @@ exports.deletePantryItem = deletePantryItem;
 
 const addPantryItem = function (data) {
 
-  const sqlString = `INSERT INTO pantry_ingredients (user_id, item_name, quantity, measure) VALUES ($1, $2, $3, $4) RETURNING *`;
+  // EXPECT DATA OBJECT
+  // data = { userId: req.params.id, name: "apple juice", quantity: 500, measure: "ml", spoonacularId: 12345, imageLink: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/2311311/5d527098b97f5abb7cc54619bcb3c7fe_large.png&width=256&type=webp&quality=80' };
+
+  const sqlString = `INSERT INTO pantry_ingredients (user_id, item_name, quantity, measure, spoonacular_ingredient_id, image_link) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
   return pool
-    .query(sqlString, [data.userId, data.name, data.quantity, data.measure])
+    .query(sqlString, [data.userId, data.name, data.quantity, data.measure, data.spoonacularId, data.imageLink])
     .then(res => {
       console.log(`Successfully saved grocery list item ${data.name} for user ${data.userId}.`);
       return res.rows[0];

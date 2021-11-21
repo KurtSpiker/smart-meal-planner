@@ -127,21 +127,43 @@ module.exports = (db) => {
                     // remove items from their aisles into one array
                     groceryListForDb = groceryListForDb.concat(item["items"]);
                   }
-                  // stores all db calls into promise array
-                  promises = [];
-                  for (const ingredientObj of groceryListForDb) {
-                    promises.push(db.generateGroceryList(ingredientObj, userId, week))
+
+                  let promises = [];
+                  for (const ingredient of groceryListForDb) {
+                    promises.push(axios.get(`https://api.spoonacular.com/food/ingredients/${ingredient.ingredientId}/information?apiKey=${process.env.API_KEY}`))
                   }
-                  // calls db with all promises
+
                   Promise.all(promises)
                     .then((result) => {
-                      console.log("POST to grocery_list/:id - Success.");
-                      res.send(result);
+
+                      for (let i = 0; i < groceryListForDb.length; i++) {
+                        groceryListForDb[i].imageUrl = result[i].data.image;
+                      }
+
+
+                      // stores all db calls into promise array
+                      promises = [];
+                      for (const ingredientObj of groceryListForDb) {
+                        promises.push(db.generateGroceryList(ingredientObj, userId, week))
+                      }
+                      // calls db with all promises
+                      Promise.all(promises)
+                        .then((result) => {
+                          console.log("POST to grocery_list/:id - Success.");
+                          res.send(result);
+                        })
+                        .catch(e => {
+                          console.error(e);
+                          res.send(e)
+                        });
+
+
                     })
                     .catch(e => {
                       console.error(e);
                       res.send(e)
                     });
+
                 }, (error) => {
                   console.log(error);
                 });
