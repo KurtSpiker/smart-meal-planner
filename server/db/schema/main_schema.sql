@@ -31,5 +31,6 @@ CREATE TABLE grocery_list_items (
   measure VARCHAR(255),
   spoonacular_item_id INTEGER,
   week INTEGER NOT NULL,
-  image_link VARCHAR(255)
+  image_link VARCHAR(255),
+  auto_generated boolean DEFAULT false
 );

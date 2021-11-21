@@ -86,12 +86,12 @@ const generateGroceryList = function (ingredientObject, userId, week) {
   //   imageUrl: 'thyme.jpg'
   // };
 
-  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link, auto_generated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
 
   return pool
-    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl])
+    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl], true)
     .then(res => {
-      console.log(`Successfully saved grocery list item ${ingredientObject.name} for user ${userId}.`);
+      console.log(`Successfully generated grocery list item ${ingredientObject.name} for user ${userId}.`);
       return res.rows[0];
     })
     .catch(e => { console.error(e) });
@@ -198,10 +198,10 @@ exports.addGroceryListItem = addGroceryListItem;
 
 const deleteGroceryList = function (userId, week) {
 
-  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND week = $2 AND spoonacular_item_id IS NOT NULL`;
+  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND week = $2 AND auto_generated = $3`;
 
   return pool
-    .query(sqlString, [userId, week])
+    .query(sqlString, [userId, week, true])
     .then(res => {
       console.log(`Successfully deleted pregenerated grocery list for user ${userId} to repopulate.`)
       return res.rows;
