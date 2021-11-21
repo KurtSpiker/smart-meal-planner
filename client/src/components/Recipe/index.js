@@ -1,9 +1,9 @@
 import React from 'react'
-import { Grid, Paper, Card, CardMedia, CardHeader } from '@mui/material'
+import { Grid, Card, CardHeader } from '@mui/material'
 import RecipeList from './RecipeList'
 import { recipe } from '../../sampleRecipe'
-//import { AccessTimeIcon, RestaurantIcon }  from '@mui/icons-material';
-
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 
 export default function Recipe() {
@@ -22,16 +22,23 @@ export default function Recipe() {
         <Grid container>
           <CardHeader 
             title={recipe.title}
-            subheader="Breakfast, Lunch, Dinner"
-            sx={{textAlign: "center"}}
+            subheader="Meal Type Prop"
+            sx={{textAlign: "center", margin: "auto"}}
           />
+          <Grid container justifyContent="space-evenly">
+            <Grid item>
+              <span>
+                <AccessTimeIcon/>
+                <p>{recipe.readyInMinutes} minutes</p>
+              </span>
+            </Grid>
+            <Grid item>
+              <RestaurantIcon />
+              <p>{recipe.servings} servings</p>
+            </Grid>
+          </Grid>
           <Grid container>
-            <Grid item>
-              Restaurant Icon
-            </Grid>
-            <Grid item>
-              Time Icon
-            </Grid>
+            <RecipeList recipeItems={recipeItems} />
           </Grid>
         </Grid>
       </Card>
