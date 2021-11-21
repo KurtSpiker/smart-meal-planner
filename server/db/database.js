@@ -172,10 +172,20 @@ exports.editGroceryList = editGroceryList;
 
 const addGroceryListItem = function (data) {
 
-  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, week, image_link) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link, measure) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+
+  let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link `;
+  let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageUrl];
+
+  if (data.measure) {
+    sqlString = sqlString + `, measure) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    sqlStringArray.push(data.measure);
+  } else {
+    sqlString = sqlString + `) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  }
 
   return pool
-    .query(sqlString, [data.userId, data.name, data.quantity, data.measure, data.week, data.imageUrl])
+    .query(sqlString, sqlStringArray)
     .then(res => {
       console.log(`Successfully saved grocery list item ${data.name} for user ${data.userId}.`);
       return res.rows[0];
