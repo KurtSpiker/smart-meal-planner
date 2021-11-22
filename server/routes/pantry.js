@@ -4,47 +4,7 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
-  // search for ingredient item before adding it in pantry
-  // http://localhost:4000/api/pantry/searchIngredient/banana
-  router.get("/searchIngredient/:id", (req, res) => {
-    let ingredient = req.params.id;
-
-    axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
-      .then((response) => {
-        res.send(response.data);
-        console.log("GET to /pantry/searchIngredient/:id - Success.");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-
-  // get ingredient information by its spoonacular id
-  // add &amount=1 to the end of the link for more information
-  // http://localhost:4000/api/pantry/searchIngredientById/19400
-  router.get("/searchIngredientById/:id", (req, res) => {
-
-    let id = req.params.id;
-
-
-    axios.get(`https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${process.env.API_KEY}`)
-      .then((response) => {
-        let objectToReturn = {
-          id: response.data.id,
-          ingredientName: response.data.name,
-          possibleUnits: response.data.possibleUnits,
-          imageURL: response.data.image
-        }
-        res.send(objectToReturn);
-        console.log("GET to /pantry/searchIngredientById/:id - Success.");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-
-
-  // user clicks on pantry and front end requests those items from server
+  // user wants to see their pantry and front end requests those items from server
   // http://localhost:4000/api/pantry
   router.get("/", (req, res) => {
 
