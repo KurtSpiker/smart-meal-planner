@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Typography, TextField, Autocomplete} from '@mui/material';
 import IngredientList from "./IngredientList";
 
