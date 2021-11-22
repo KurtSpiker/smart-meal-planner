@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import Apple from './Apple.png'
-import { Grid, Typography, Paper, IconButton, ButtonBase} from '@mui/material';
+import { Grid, Paper, IconButton, ButtonBase} from '@mui/material';
 import Counter from './Counter';
 import DeleteIcon from '@mui/icons-material/Delete';
 

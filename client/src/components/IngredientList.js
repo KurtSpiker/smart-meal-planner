@@ -1,7 +1,5 @@
-import React, { Component } from "react";
-import Apple from './Apple.png'
-import { Grid, Typography, Paper} from '@mui/material';
-import ButtonBase from '@mui/material/ButtonBase';
+import React from "react";
+import { Grid, Typography } from '@mui/material';
 import IngredientItem from "./IngredientItem";
 
 
