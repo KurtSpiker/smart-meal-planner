@@ -4,45 +4,81 @@ const axios = require('axios');
 
 module.exports = (db) => {
 
-  // user clicks on pantry and front end requests those items from server
-  // http://localhost:4000/api/pantry/1
-  router.get("/:id", (req, res) => {
+  // user wants to see their pantry and front end requests those items from server
+  // http://localhost:4000/api/pantry
+  router.get("/", (req, res) => {
 
-    res.send("GET to http://localhost:4000/api/pantry/:id");
+    let userId = 1; // const userId = req.cookies["user_id"];
 
+    db.getPantryByUser(userId)
+      .then((results) => {
+        console.log("GET to /pantry - Success.");
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
   });
 
-  // user edits their pantry (quantity only?)
-  // http://localhost:4000/api/pantry/1/edit
-  router.post("/:id/edit", (req, res) => {
+  // user edits their pantry
+  // http://localhost:4000/api/pantry/edit/1
+  router.post("/edit/:id", (req, res) => {
 
-    res.send("POST to http://localhost:4000/api/pantry/:id/edit");
+    let userId = 1; // const userId = req.cookies["user_id"];
+    let itemDbId = req.params.id;
 
+    let data = { userId, itemDbId, name: "apple juice", quantity: 121 };
+
+    db.editPantryItem(data)
+      .then((results) => {
+        console.log("POST to /pantry/edit/:id - Success.");
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
   });
 
-  // concern: there is no standardized measurement for all ingredients, how will edit work?
   // user adds an item to their pantry
-  // http://localhost:4000/api/pantry/1
+  // http://localhost:4000/api/pantry/9016
   router.post("/:id", (req, res) => {
 
-    let ingredient = "banana";
+    let spoonacularId = req.params.id;
+    let userId = 1;
 
-    axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
-      .then((response) => {
-        console.log("SAVING...", response.data.results[0].name + " " + response.data.results[0].id);
-        res.send("Saved to DB");
+    let data = { userId, name: "apple juice", quantity: 500, measure: "ml", spoonacularId, imageLink: "apple-juice.jpg" };
+
+    db.addPantryItem(data)
+      .then((results) => {
+        console.log("POST to /pantry/:id - Success.");
+        res.send(results);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(e => {
+        console.error(e);
+        res.send(e)
       });
   });
 
   // user deletes an item off their pantry
-  // http://localhost:4000/api/pantry/1/pantry_ingredient/9040
-  router.delete("/:pantryId/pantry_ingredient/:ingredientId", (req, res) => {
+  // http://localhost:4000/api/pantry/1
+  router.delete("/:id", (req, res) => {
 
-    res.send("DELETE to http://localhost:4000/api/pantry/:pantryId/pantry_ingredient/:ingredientId/");
+    let userId = 1; // const userId = req.cookies["user_id"];
+    let itemDbId = req.params.id;
 
+    let data = { userId, itemDbId };
+
+    db.deletePantryItem(data)
+      .then((results) => {
+        console.log("DELETE to /pantry/:id - Success.");
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
   });
 
   return router;
