@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Card, CardHeader } from '@mui/material'
-import RecipeList from './RecipeList'
-import RecipeInstructions from './RecipeInstructions'
+import RecipeIngredientsList from './RecipeIngredientsList'
+import InstructionsList from './InstructionsList'
 import { recipe } from '../../sampleRecipe'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
@@ -10,6 +10,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 export default function Recipe() {
   
   const recipeItems = recipe.ingredientArray
+  const instructionItems = recipe.instructions
 
   return (
     <Grid container justifyContent="center">
@@ -25,7 +26,7 @@ export default function Recipe() {
             <Grid item>
               <span>
                 <AccessTimeIcon/>
-                <p>{recipe.readyInMinutes} minutes</p>
+                <p>{recipe.time} minutes</p>
               </span>
             </Grid>
             <Grid item>
@@ -34,10 +35,10 @@ export default function Recipe() {
             </Grid>
           </Grid>
           <Grid container>
-            <RecipeList recipeItems={recipeItems} />
+            <RecipeIngredientsList recipeItems={recipeItems} />
           </Grid>
           <Grid container>
-            <RecipeInstructions />
+            <InstructionsList instructionItems={instructionItems}/>
           </Grid>
           
         </Grid>

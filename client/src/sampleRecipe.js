@@ -14,7 +14,7 @@
     "image": "https://spoonacular.com/recipeImages/633876-556x370.jpg",
     "summary": "If you want to add more <b>Mediterranean</b> recipes to your recipe box, Baked Ziti might be a recipe you should try. One portion of this dish contains about <b>23g of protein</b>, <b>19g of fat</b>, and a total of <b>376 calories</b>. This recipe serves 8. For <b>$1.49 per serving</b>, this recipe <b>covers 15%</b> of your daily requirements of vitamins and minerals. It works well as a main course. 1 person has tried and liked this recipe. It is brought to you by Foodista. Head to the store and pick up ziti, ricotta cheese, mozzarella cheese, and a few other things to make it today. From preparation to the plate, this recipe takes around <b>around 45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 50%</b>, which is good. Users who liked this recipe also liked <a href=\"https://spoonacular.com/recipes/baked-ziti-79436\">Baked Ziti</a>, <a href=\"https://spoonacular.com/recipes/baked-ziti-24026\">Baked Ziti</a>, and <a href=\"https://spoonacular.com/recipes/baked-ziti-38782\">Baked Ziti</a>.",
     "instructions": [
-        "Preheat oven to 35",
+        "Preheat oven to 350",
         "Boil ziti or other pasta, i.e. rigatoni, penne, farfalle, rotini, following package directions, drain and place in a large bowl.",
         "To ricotta, add salt and pepper (about 1tsp each), dried parsley and blend.",
         "Mix all the ricotta cheese and half of the mozzarella with the ziti.",

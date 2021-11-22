@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Stack } from '@mui/material';
-import RecipeListItem from './RecipeListItem'
+import ListItem from './ListItem'
 
 
 export default function RecipeList(props) {
@@ -23,7 +23,7 @@ export default function RecipeList(props) {
           {
             recipeItems.map((item) => {
                 let ingredient = item;
-                return <RecipeListItem ingredientItem={ingredient} />;
+                return <ListItem listItem={ingredient} />;
               })
           }
         </Stack>
