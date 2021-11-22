@@ -3,7 +3,7 @@ import { Grid, Typography } from '@mui/material';
 
 import DayMealsItem from './DayMealsItem'
 
-import '../index.css';
+import '../../index.css';
 
 export default function DayMeals(props) {
 
