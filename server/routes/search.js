@@ -5,14 +5,16 @@ const axios = require('axios');
 module.exports = (db) => {
 
   // search for ingredient item before adding it in pantry
-  // http://localhost:4000/api/search/ingredientTerm/banana
-  router.get("/ingredientTerm/:id", (req, res) => {
-    let ingredient = req.params.id;
+  // http://localhost:4000/api/search/ingredientTerm
+  router.get("/ingredientTerm", (req, res) => {
+
+    let data = { searchTerm: "banana bread" }
+    let ingredient = data.searchTerm.split(" ").join("-");
 
     axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
       .then((response) => {
         res.send(response.data);
-        console.log("GET to /search/ingredientTerm/:id - Success.");
+        console.log("GET to /search/ingredientTerm - Success.");
       })
       .catch((error) => {
         console.log(error);

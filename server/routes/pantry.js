@@ -48,7 +48,7 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
     let userId = 1;
 
-    let data = { userId, name: "apple juice", quantity: 500, measure: "ml", spoonacularId, imageLink: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/2311311/5d527098b97f5abb7cc54619bcb3c7fe_large.png&width=256&type=webp&quality=80' };
+    let data = { userId, name: "apple juice", quantity: 500, measure: "ml", spoonacularId, imageLink: "apple-juice.jpg" };
 
     db.addPantryItem(data)
       .then((results) => {

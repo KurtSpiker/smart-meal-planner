@@ -245,10 +245,12 @@ exports.getRecipesByUser = getRecipesByUser;
 
 const addRecipesForUser = function (data) {
 
+  // data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
+
   const sqlString = `INSERT INTO meal_lists (user_id, spoonacular_id, week, day_of_week, meal, meal_name, image_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
 
   return pool
-    .query(sqlString, [data.userId, data.spoonacularId, data.week, data.day, data.meal])
+    .query(sqlString, [data.userId, data.spoonacularId, data.week, data.day, data.meal, data.mealName, data.imageUrl])
     .then(res => {
       console.log(`Successfully added recipe ${data.spoonacularId} for user ${data.userId}.`)
       return res.rows;
@@ -310,7 +312,7 @@ exports.deletePantryItem = deletePantryItem;
 const addPantryItem = function (data) {
 
   // EXPECT DATA OBJECT
-  // data = { userId: req.params.id, name: "apple juice", quantity: 500, measure: "ml", spoonacularId: 12345, imageLink: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/2311311/5d527098b97f5abb7cc54619bcb3c7fe_large.png&width=256&type=webp&quality=80' };
+  // data = { userId, name: "apple juice", quantity: 500, measure: "ml", spoonacularId, imageLink: "apple-juice.jpg" };
 
   const sqlString = `INSERT INTO pantry_ingredients (user_id, item_name, quantity, measure, spoonacular_ingredient_id, image_link) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
