@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { formatMealDays } = require("./routesHelpers");
 
 module.exports = (db) => {
 
@@ -119,8 +120,10 @@ module.exports = (db) => {
     db.getRecipesByUser(userId, week)
       .then((result) => {
         console.log("GET to /recipes/mealList/:id - Success.");
-        res.send(result);
-        console.log(result)
+
+        res.send(formatMealDays(result));
+        console.log(formatMealDays(result))
+        // console.log(result)
       }).catch((error) => {
         console.log(error);
       });
