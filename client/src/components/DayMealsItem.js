@@ -30,7 +30,6 @@ export default function DayMealsItem(props) {
                 Recipe Details Link
               </ButtonBase>
             </Grid>
-          
         </Grid>
       </Grid>
     </Paper>

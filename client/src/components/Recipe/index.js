@@ -10,11 +10,6 @@ export default function Recipe() {
 
   const recipeItems = recipe.extendedIngredients
 
-  let sample =[]
-  recipeItems.map((item) => {
-    return sample.push(item.name);
-  });
-
   return (
     <Grid container justifyContent="center">
       <img src={recipe.image} alt="recipe" width="100%"/>
