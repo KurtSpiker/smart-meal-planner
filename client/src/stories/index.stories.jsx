@@ -14,7 +14,7 @@ import IngredientList from '../components/IngredientList'
 import IngredientItem from '../components/IngredientItem'
 import Counter from '../components/Counter'
 
-const recipeItems = recipe.extendedIngredients
+const recipeItems = ["tomatoes", "onions", "carrots"]
 
 storiesOf("DayMealsItem", module)
   .add("Base", () => <DayMealsItem />)

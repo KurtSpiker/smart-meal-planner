@@ -9,7 +9,7 @@ export default function RecipeListItem(props) {
   return (
     <Grid container>
       <Grid>
-        {ingredientItem}
+        <li>{ingredientItem}</li>
       </Grid>
     </Grid>
   );

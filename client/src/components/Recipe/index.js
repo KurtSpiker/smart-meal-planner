@@ -1,14 +1,15 @@
 import React from 'react'
 import { Grid, Card, CardHeader } from '@mui/material'
 import RecipeList from './RecipeList'
+import RecipeInstructions from './RecipeInstructions'
 import { recipe } from '../../sampleRecipe'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 
 export default function Recipe() {
-
-  const recipeItems = recipe.extendedIngredients
+  
+  const recipeItems = recipe.ingredientArray
 
   return (
     <Grid container justifyContent="center">
@@ -35,6 +36,10 @@ export default function Recipe() {
           <Grid container>
             <RecipeList recipeItems={recipeItems} />
           </Grid>
+          <Grid container>
+            <RecipeInstructions />
+          </Grid>
+          
         </Grid>
       </Card>
     </Grid>
