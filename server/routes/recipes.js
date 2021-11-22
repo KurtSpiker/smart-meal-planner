@@ -33,6 +33,7 @@ module.exports = (db) => {
     let image = "";
     let summary = "";
     let instructions = [];
+    let dieteryRestrictions = {};
 
     // https://api.spoonacular.com/recipes/633876/information?apiKey=8ba6b2219e2341128994d3733eb5e7fc&includeNutrition=false
     axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
@@ -54,7 +55,13 @@ module.exports = (db) => {
           instructions.push(instruction.step);
         }
 
-        let objectToSend = { recipeId, ingredientArray, title, time, servings, sourceUrl, image, summary, instructions };
+        dieteryRestrictions.vegetarian = response.data.vegetarian;
+        dieteryRestrictions.vegan = response.data.vegan;
+        dieteryRestrictions.vegetarian = response.data.vegetarian;
+        dieteryRestrictions.glutenFree = response.data.glutenFree;
+        dieteryRestrictions.dairyFree = response.data.dairyFree;
+
+        let objectToSend = { recipeId, dieteryRestrictions, ingredientArray, title, time, servings, sourceUrl, image, summary, instructions };
 
         res.send(objectToSend);
         console.log("GET to /recipes/:id - Success.");
@@ -113,6 +120,7 @@ module.exports = (db) => {
       .then((result) => {
         console.log("GET to /recipes/mealList/:id - Success.");
         res.send(result);
+        console.log(result)
       }).catch((error) => {
         console.log(error);
       });
