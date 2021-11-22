@@ -20,7 +20,7 @@ import Counter from '../components/Counter'
 
 const recipeItems = recipe.ingredientArray
 
-storiesOf("WeekMeals", module)
+storiesOf("WeekPlan", module)
   .add("Base", () => <WeekPlan />)
   .add("DayMeals", () => <DayMeals meals={weekRecipes.monday} dayOfWeek="Monday"/>)
   .add("Show", () => <Show meal={weekRecipes.monday.breakfast} mealType={"breakfast"}/>)

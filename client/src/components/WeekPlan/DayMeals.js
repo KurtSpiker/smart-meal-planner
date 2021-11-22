@@ -7,7 +7,7 @@ export default function DayMeals(props) {
   const { meals, dayOfWeek } = props;
   
   return (
-    <Grid>
+    <Grid sx={{paddingBottom: "20px"}}>
       <Grid>
         <Typography align="center" variant="h4" component="div">
           {dayOfWeek}
