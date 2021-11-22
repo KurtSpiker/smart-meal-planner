@@ -1,8 +1,10 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { recipe } from '../sampleRecipe'
+import { weekRecipes } from "../sampleWeekRecipes";
 
-import DayMealsItem from '../components/WeekPlan/DayMealsItem'
+import Show from '../components/WeekPlan/Show'
+import Load from '../components/WeekPlan/Load'
 import DayMeals from '../components/WeekPlan/DayMeals'
 import WeekPlan from '../components/WeekPlan/index.js'
 import Recipe from '../components/Recipe/'
@@ -18,8 +20,9 @@ const recipeItems = recipe.ingredientArray
 
 storiesOf("WeekMeals", module)
   .add("Base", () => <WeekPlan />)
-  .add("DayMeals", () => <DayMeals />)
-  .add("DayMealsItem", () => <DayMealsItem />)
+  .add("DayMeals", () => <DayMeals meals={weekRecipes.monday} dayOfWeek="Monday"/>)
+  .add("Show", () => <Show meal={weekRecipes.monday.breakfast} mealType={"breakfast"}/>)
+  .add("Load", () => <Load />)
 
 storiesOf("Recipe", module)
   .add("Base", () => <Recipe />)
