@@ -48,13 +48,18 @@ module.exports = (db) => {
         for (const item of itemsToPay) {
           item.amount = item.measures.metric.amount;
           item.measure = item.measures.metric.unit;
+
+          let newCost = item.cost / 100;
+          item.cost = newCost;
+
           delete item.measures;
           delete item.pantryItem;
           delete item.aisle;
         }
 
         objectToSend.arrayOfItems = itemsToPay;
-        objectToSend.priceTotal = cost;
+        objectToSend.priceTotal = cost / 100;
+
         res.send(objectToSend);
         console.log("GET to /payment - Success.");
       })
