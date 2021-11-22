@@ -85,8 +85,8 @@ module.exports = (db) => {
 
 
   // generate a grocery list based on user recipes
-  // http://localhost:4000/api/grocery_list/1
-  router.post("/:id", (req, res) => {
+  // http://localhost:4000/api/grocery_list/1/test
+  router.post("/:id/test", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
     let week = req.params.id;
@@ -185,5 +185,91 @@ module.exports = (db) => {
         res.send(e)
       }); // <-brace for deleting user entries's catch block
   });
+
+  // generate a grocery list based on user recipes
+  // http://localhost:4000/api/grocery_list/1
+  router.post("/:id", (req, res) => {
+
+    let userId = 1; // const userId = req.cookies["user_id"];
+    let week = req.params.id;
+    let promises = [];
+
+    db.deleteGroceryList(userId, week)
+      .then(() => {
+        return db.getRecipesByUser(userId, week);
+      })
+      .then((arrayOfSpoonacularIdObjects) => {
+        let arrayOfRecipesForUser = [];
+        for (const id of arrayOfSpoonacularIdObjects) {
+          arrayOfRecipesForUser.push(id["spoonacular_id"]);
+        }
+
+        return arrayOfRecipesForUser
+      })
+      .then((arrayOfRecipesForUser) => {
+
+        // put all get requests into an array
+        for (let i = 0; i < arrayOfRecipesForUser.length; i++) {
+          promises.push(axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
+        }
+
+        // pass array of promises
+        return Promise.all(promises);
+
+      })
+      .then((responses) => {
+        let itemMeasuremementStrings = [];
+        // push all responses to an array
+        // console.log("THIS IS A SINGLE RESPONSE DATA ", responses[1].id);
+        for (const response of responses) {
+          for (const ingredient of response.data.extendedIngredients) {
+            itemMeasuremementStrings.push(ingredient["originalString"]);
+          }
+        }
+        return itemMeasuremementStrings;
+      })
+      .then((itemMeasuremementStrings) => {
+
+        return axios({
+          method: 'post',
+          url: `https://api.spoonacular.com/mealplanner/shopping-list/compute?apiKey=${process.env.API_KEY}`,
+          data: {
+            "items": itemMeasuremementStrings // pass array of ingredients to be aggregated (type and weight)
+          }
+        })
+
+      })
+      .then((response) => {
+        let groceryListForDb = [];
+        for (const item of response.data["aisles"]) {
+          // remove items from their aisles into one array
+          groceryListForDb = groceryListForDb.concat(item["items"]);
+        }
+        return groceryListForDb;
+      })
+      .then((groceryListForDb) => {
+
+        let promises = [];
+        for (const ingredient of groceryListForDb) {
+          promises.push(axios.get(`https://api.spoonacular.com/food/ingredients/${ingredient.ingredientId}/information?apiKey=${process.env.API_KEY}`))
+        }
+        // stores all db calls into promise array
+        promises = [];
+        for (const ingredientObj of groceryListForDb) {
+          promises.push(db.generateGroceryList(ingredientObj, userId, week))
+        }
+        // calls db with all promises
+        return Promise.all(promises);
+      })
+      .then((result) => {
+        console.log("POST to grocery_list/:id - Success.");
+        res.send(result);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  });
+
   return router;
 };

@@ -122,8 +122,8 @@ module.exports = (db) => {
         console.log("GET to /recipes/mealList/:id - Success.");
 
         res.send(formatMealDays(result));
-        console.log(formatMealDays(result))
-        // console.log(result)
+        console.log("GET to recipes/mealList/:id - Success.");
+        // console.log(formatMealDays(result))
       }).catch((error) => {
         console.log(error);
       });
