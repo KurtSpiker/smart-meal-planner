@@ -172,14 +172,14 @@ exports.editGroceryList = editGroceryList;
 
 const addGroceryListItem = function (data) {
 
-  let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link `;
-  let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageUrl];
+  let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link, spoonacular_item_id `;
+  let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageUrl, data.spoonacularId];
 
   if (data.measure) {
-    sqlString = sqlString + `, measure) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    sqlString = sqlString + `, measure) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
     sqlStringArray.push(data.measure);
   } else {
-    sqlString = sqlString + `) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    sqlString = sqlString + `) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
   }
 
   return pool
@@ -215,7 +215,7 @@ const deleteGroceryListItem = function (data) {
   const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND id = $2 AND week = $3`;
 
   return pool
-    .query(sqlString, [data.userId, data.id, data.week])
+    .query(sqlString, [data.userId, data.itemDbId, data.week])
     .then(res => {
       console.log(`Successfully deleted grocery list item for user ${data.userId}.`)
       return res.rows;
@@ -228,7 +228,7 @@ exports.deleteGroceryListItem = deleteGroceryListItem;
 
 const getRecipesByUser = function (userId, week) {
 
-  const sqlString = `SELECT meal_lists.id AS meal_list_id, day_of_week, user_id, spoonacular_id, meal, week FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2`;
+  const sqlString = `SELECT meal_name, meal_lists.id AS meal_list_id, day_of_week, user_id, spoonacular_id, meal, week, image_link FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2`;
 
   return pool
     .query(sqlString, [userId, week])
@@ -245,7 +245,7 @@ exports.getRecipesByUser = getRecipesByUser;
 
 const addRecipesForUser = function (data) {
 
-  const sqlString = `INSERT INTO meal_lists (user_id, spoonacular_id, week, day_of_week, meal) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const sqlString = `INSERT INTO meal_lists (user_id, spoonacular_id, week, day_of_week, meal, meal_name, image_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
 
   return pool
     .query(sqlString, [data.userId, data.spoonacularId, data.week, data.day, data.meal])

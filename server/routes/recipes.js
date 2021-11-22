@@ -69,7 +69,7 @@ module.exports = (db) => {
   router.post("/:id", (req, res) => {
 
     let userId = 1;
-    let data = { userId, week: 1, day: "monday", meal: "breakfast", spoonacularId: req.params.id };
+    let data = { userId, week: 1, day: "monday", meal: "breakfast", spoonacularId: req.params.id, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
 
     db.addRecipesForUser(data)
       .then((result) => {

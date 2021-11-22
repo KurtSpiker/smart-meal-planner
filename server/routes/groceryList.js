@@ -5,14 +5,14 @@ const axios = require('axios');
 module.exports = (db) => {
 
   // user requests to see their own grocery list
-  // http://localhost:4000/api/grocery_list/1
-  router.get("/:id", (req, res) => {
+  // http://localhost:4000/api/grocery_list
+  router.get("/", (req, res) => {
 
-    let userId = req.params.id;
+    let userId = 1; // const userId = req.cookies["user_id"];
 
     db.getGroceryListByUser(userId)
       .then((results) => {
-        console.log("GET to /grocery_list/:id - Success.");
+        console.log("GET to /grocery_list - Success.");
         res.send(results);
       })
       .catch(e => {
@@ -23,15 +23,16 @@ module.exports = (db) => {
   });
 
   // user edits their grocery list
-  // http://localhost:4000/api/grocery_list/1/edit
-  router.post("/:id/edit", (req, res) => {
+  // http://localhost:4000/api/grocery_list/edit/1
+  router.post("/edit/:id", (req, res) => {
 
-    // will be from req.body
-    let data = { userId: 1, itemDbId: 1, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
+    let itemDbId = req.params.id;
+    let userId = 1;// const userId = req.cookies["user_id"];
+    let data = { userId, itemDbId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
     db.editGroceryList(data)
       .then((results) => {
-        console.log("POST to /grocery_list/:id/edit - Success.");
+        console.log("POST to /grocery_list/edit/:id - Success.");
         res.send(results);
       })
       .catch(e => {
@@ -41,15 +42,18 @@ module.exports = (db) => {
   });
 
   // user deletes a grocery list item
-  // http://localhost:4000/api/grocery_list/1/delete
-  router.delete("/:id/delete", (req, res) => {
+  // http://localhost:4000/api/grocery_list/delete/1
+  router.delete("/delete/:id", (req, res) => {
 
     // will be from req.body
-    let data = { userId: req.params.id, id: 1, week: 1 };
+    let userId = 1;// const userId = req.cookies["user_id"];
+    let itemDbId = req.params.id;
+
+    let data = { userId, itemDbId, week: 1 };
 
     db.deleteGroceryListItem(data)
       .then((results) => {
-        console.log("POST to /grocery_list/:id/delete - Success.");
+        console.log("DELETE to /grocery_list/delete/:id - Success.");
         res.send(results);
       })
       .catch(e => {
@@ -59,15 +63,18 @@ module.exports = (db) => {
   });
 
   // user adds a grocery list item
-  // http://localhost:4000/api/grocery_list/1/add
-  router.post("/:id/add", (req, res) => {
+  // http://localhost:4000/api/grocery_list/add/9003
+  router.post("/add/:id", (req, res) => {
+
+    let userId = 1; // const userId = req.cookies["user_id"];
+    let spoonacularId = req.params.id;
 
     // will be from req.body
-    let data = { userId: req.params.id, name: "apples", quantity: 10, week: 1, imageUrl: "someImageUrl.png" };
+    let data = { userId, name: "apples", quantity: 10, week: 1, imageUrl: "apple.jpg", spoonacularId };
 
     db.addGroceryListItem(data)
       .then((results) => {
-        console.log("POST to /grocery_list/:id/add - Success.");
+        console.log("POST to /grocery_list/add/:id - Success.");
         res.send(results);
       })
       .catch(e => {
@@ -81,9 +88,8 @@ module.exports = (db) => {
   // http://localhost:4000/api/grocery_list/1
   router.post("/:id", (req, res) => {
 
-    let userId = req.params.id;
-    let week = 1;
-    // let arrayOfRecipesForUser = [633884, 637591];
+    let userId = 1; // const userId = req.cookies["user_id"];
+    let week = req.params.id;
     let arrayOfRecipesForUser = [];
     let promises = [];
     let itemMeasuremementStrings = [];
