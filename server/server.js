@@ -35,6 +35,7 @@ const pantryRoutes = require("./routes/pantry");
 const groceryList = require("./routes/groceryList");
 const suggestions = require("./routes/suggestions");
 const search = require("./routes/search");
+const payment = require("./routes/payment");
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(db));
@@ -43,6 +44,7 @@ app.use("/api/pantry", pantryRoutes(db));
 app.use("/api/grocery_list", groceryList(db));
 app.use("/api/suggestions", suggestions(db));
 app.use("/api/search", search(db));
+app.use("/api/payment", payment(db));
 
 // Home page
 app.get("/", (req, res) => {

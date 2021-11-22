@@ -25,25 +25,30 @@ module.exports = (db) => {
 
     db.getPantryByUser(userId)
       .then((results) => {
+
         for (const pantryItem of results) {
           pantryArray.push(pantryItem.item_name)
         }
 
-        axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryArray.join(",")}${numberToDisplay}${ignorePantry}${ranking}`)
-          .then((response) => {
-            res.send(response.data);
-            console.log("GET to /suggestions - Success.");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        return axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryArray.join(",")}${numberToDisplay}${ignorePantry}${ranking}`);
 
+      })
+      .then((response) => {
+        let arrayOfRecipes = [];
+        for (const res of response.data) {
+          arrayOfRecipes.push({ id: res.id, title: res.title, image: res.image });
+        }
+        console.log(arrayOfRecipes)
+        return arrayOfRecipes;
+      })
+      .then((arrayOfRecipes) => {
+        res.send(arrayOfRecipes);
+        console.log("GET to /suggestions - Success.");
       })
       .catch(e => {
         console.error(e);
         res.send(e)
       });
-
   });
 
   // generates a random food joke. this is my greatest creation.
@@ -61,68 +66,7 @@ module.exports = (db) => {
         console.error(e);
         res.send(e)
       });
-
   });
 
-
-  // user requests to see their own grocery list
-  // http://localhost:4000/api/suggestions/payment
-  router.get("/payment", (req, res) => {
-
-    let userId = 1; // const userId = req.cookies["user_id"];
-    let cost = 0;
-    let objectToSend = {};
-
-    db.getGroceryListByUser(userId)
-      .then((results) => {
-        return results;
-      })
-      .then((results) => {
-
-        let arrayOfItems = [];
-        for (const item of results) {
-          arrayOfItems.push(item.quantity + " " + item.measure + " " + item.item_name);
-        }
-        return arrayOfItems;
-      })
-      .then((arrayOfItems) => {
-
-        axios({
-          method: 'post',
-          url: `https://api.spoonacular.com/mealplanner/shopping-list/compute?apiKey=${process.env.API_KEY}`,
-          data: {
-            "items": arrayOfItems // pass array of ingredients to be aggregated (type and weight)
-          }
-        })
-          .then((results) => {
-
-            let itemsToPay = [];
-            cost = results.data.cost;
-
-            for (const result of results.data["aisles"]) {
-              // remove items from their aisles into one array
-              itemsToPay = itemsToPay.concat(result["items"]);
-            }
-
-            for (const item of itemsToPay) {
-              item.amount = item.measures.metric.amount;
-              item.measure = item.measures.metric.unit;
-              delete item.measures;
-              delete item.pantryItem;
-              delete item.aisle;
-            }
-
-            objectToSend.arrayOfItems = itemsToPay;
-            objectToSend.priceTotal = cost;
-            res.send(objectToSend);
-            console.log("GET to /suggestions/payment - Success.");
-          })
-
-      })
-      .catch(e => {
-        console.error(e);
-        res.send(e)
-      });
-  });
   return router;
 };
