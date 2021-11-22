@@ -5,6 +5,8 @@ import { weekRecipes } from "../sampleWeekRecipes";
 
 import Show from '../components/WeekPlan/Show'
 import Load from '../components/WeekPlan/Load'
+import Add from '../components/WeekPlan/Add'
+import Confirm from '../components/WeekPlan/Confirm'
 import DayMeals from '../components/WeekPlan/DayMeals'
 import WeekPlan from '../components/WeekPlan/index.js'
 import Recipe from '../components/Recipe/'
@@ -23,6 +25,8 @@ storiesOf("WeekMeals", module)
   .add("DayMeals", () => <DayMeals meals={weekRecipes.monday} dayOfWeek="Monday"/>)
   .add("Show", () => <Show meal={weekRecipes.monday.breakfast} mealType={"breakfast"}/>)
   .add("Load", () => <Load />)
+  .add("Add", () => <Add />)
+  .add("Confirm", () => <Confirm />)
 
 storiesOf("Recipe", module)
   .add("Base", () => <Recipe />)
