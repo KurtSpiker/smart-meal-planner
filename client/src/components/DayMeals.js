@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
-import DayMealsItem from '../components/DayMealsItem'
+import DayMealsItem from './DayMealsItem'
 
 import '../index.css';
 
@@ -9,16 +9,18 @@ export default function DayMeals(props) {
 
   
   return (
-    <main>
-      <div align="center">Day of the Week Prop</div>
-      <div>
+    <Grid>
+        <Grid>
+          <Typography align="center" variant="h4" component="div">
+            Day of Week Prop
+          </Typography>
+        </Grid>
         <Grid marginTop={0} container spacing={2} columns={3} wrap={"nowrap"}>
           <DayMealsItem />
           <DayMealsItem />
           <DayMealsItem />
         </Grid>
-      </div>
-    </main>
+    </Grid>
   );
 
 };
