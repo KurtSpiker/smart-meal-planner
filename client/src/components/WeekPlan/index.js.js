@@ -6,10 +6,12 @@ import { weekRecipes } from '../../sampleWeekRecipes';
 
 
 export default function WeekMeals() {
+  const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return(
     <Stack>
-      <DayMeals meals={weekRecipes.monday} dayOfWeek="Monday"/>
-      
+      {daysOfWeek.map((day) => {
+        return (<DayMeals meals={weekRecipes[day] ? weekRecipes[day] : {}} dayOfWeek={day}/>)
+      })}
     </Stack>
   );
 };

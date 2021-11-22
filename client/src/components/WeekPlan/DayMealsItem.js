@@ -11,11 +11,13 @@ export default function DayMealsItem(props) {
 
   return (
     <Grid container justifyContent="center">
-      {/* <Show
+      {
+      meal? (
+      <Show
         meal={meal}
         mealType={mealType}
-      />   */}
-      <Add />
+      />):(<Add/>)
+      }  
     </Grid>
   );
 };
