@@ -1,19 +1,16 @@
 import React from 'react'
-import { Grid, Paper, Card, CardMedia, CardHeader } from '@mui/material'
-import RecipeList from './RecipeList'
+import { Grid, Card, CardHeader } from '@mui/material'
+import RecipeIngredientsList from './RecipeIngredientsList'
+import InstructionsList from './InstructionsList'
 import { recipe } from '../../sampleRecipe'
-//import { AccessTimeIcon, RestaurantIcon }  from '@mui/icons-material';
-
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 
 export default function Recipe() {
-
-  const recipeItems = recipe.extendedIngredients
-
-  let sample =[]
-  recipeItems.map((item) => {
-    return sample.push(item.name);
-  });
+  
+  const recipeItems = recipe.ingredientArray
+  const instructionItems = recipe.instructions
 
   return (
     <Grid container justifyContent="center">
@@ -22,17 +19,28 @@ export default function Recipe() {
         <Grid container>
           <CardHeader 
             title={recipe.title}
-            subheader="Breakfast, Lunch, Dinner"
-            sx={{textAlign: "center"}}
+            subheader="Meal Type Prop"
+            sx={{textAlign: "center", margin: "auto"}}
           />
-          <Grid container>
+          <Grid container justifyContent="space-evenly">
             <Grid item>
-              Restaurant Icon
+              <span>
+                <AccessTimeIcon/>
+                <p>{recipe.time} minutes</p>
+              </span>
             </Grid>
             <Grid item>
-              Time Icon
+              <RestaurantIcon />
+              <p>{recipe.servings} servings</p>
             </Grid>
           </Grid>
+          <Grid container>
+            <RecipeIngredientsList recipeItems={recipeItems} />
+          </Grid>
+          <Grid container>
+            <InstructionsList instructionItems={instructionItems}/>
+          </Grid>
+          
         </Grid>
       </Card>
     </Grid>
