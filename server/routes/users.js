@@ -87,22 +87,6 @@ module.exports = (db) => {
       });
   });
 
-  // spoonacular test end point to search recipes using your PANTRY
-  // http://localhost:4000/api/users/searchPantry/egg,sausage,bread
-  router.get("/searchPantry/:pantryItems", (req, res) => {
-
-    let pantryItems = req.params.pantryItems;
-
-    axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryItems}`)
-      .then((response) => {
-        res.send(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-
   // spoonacular test end point to search ingredient
   // http://localhost:4000/api/users/searchIngredient/banana
   // the first result is {"id":9040,"name":"banana","image":"bananas.jpg"}
@@ -110,21 +94,6 @@ module.exports = (db) => {
 
     let ingredient = req.params.ingredient;
     axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
-      .then((response) => {
-        res.send(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-
-  // gives you a snickers bar
-  // http://localhost:4000/api/users/searchProductById/22347
-  router.get("/searchProductById/:id", (req, res) => {
-
-    let id = req.params.id;
-    axios.get(`https://api.spoonacular.com/food/products/${id}?apiKey=${process.env.API_KEY}`)
       .then((response) => {
         res.send(response.data);
         console.log(response.data);
