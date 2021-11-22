@@ -46,5 +46,23 @@ module.exports = (db) => {
 
   });
 
+  // generates a random food joke. this is my greatest creation.
+  // http://localhost:4000/api/suggestions/joke
+  router.get("/joke", (req, res) => {
+
+    let number = Math.floor(Math.random() * 57 + 1);
+
+    db.generateJoke(number)
+      .then((results) => {
+        console.log("GET to /suggestions/joke - Success.");
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+
+  });
+
   return router;
 };

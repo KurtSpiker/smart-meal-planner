@@ -373,3 +373,19 @@ const editPantryItem = function (data) {
     .catch(e => { console.error(e) });
 }
 exports.editPantryItem = editPantryItem;
+
+
+
+const generateJoke = function (number) {
+
+  const sqlString = `SELECT joke FROM jokes WHERE id = $1`;
+
+  return pool
+    .query(sqlString, [number])
+    .then(res => {
+      console.log(`Successfully generated joke.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.generateJoke = generateJoke;

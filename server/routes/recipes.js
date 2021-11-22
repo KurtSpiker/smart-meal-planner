@@ -34,7 +34,7 @@ module.exports = (db) => {
     let summary = "";
     let instructions = [];
 
-
+    // https://api.spoonacular.com/recipes/633876/information?apiKey=8ba6b2219e2341128994d3733eb5e7fc&includeNutrition=false
     axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
       .then((response) => {
 

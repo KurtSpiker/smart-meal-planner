@@ -34,3 +34,8 @@ CREATE TABLE grocery_list_items (
   image_link VARCHAR(255),
   auto_generated boolean DEFAULT false
 );
+DROP TABLE IF EXISTS jokes CASCADE;
+CREATE TABLE jokes (
+  id SERIAL PRIMARY KEY NOT NULL,
+  joke VARCHAR(255)
+);
