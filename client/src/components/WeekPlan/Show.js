@@ -1,9 +1,10 @@
 import React from 'react';
-import {Grid, Box, Stack, Typography, Button, ButtonBase } from '@mui/material';
+import {Grid, Box, Stack, Typography, IconButton, ButtonBase } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function DayMealsItem(props) {
   
-  const { meal, mealType } = props
+  const { meal, mealType, onRemove } = props
 
   return (
     <Grid container>
@@ -13,17 +14,21 @@ export default function DayMealsItem(props) {
         </ButtonBase>
       </Grid>
       
-      <Stack justifyContent="center" alignItems="center" sx={{paddingLeft: "5%"}}>   
+      <Stack justifyContent="center" alignItems="center" sx={{margin: "auto"}}>   
         <Typography variant="subtitle1" component="div">
           {mealType}
         </Typography>
         <Typography variant="body2">
           {meal.meal_name}
         </Typography>
-        <Button variant="outlined">
-          Recipe Details
-        </Button>
       </Stack>
+
+      <Grid item>
+        <IconButton onClick={onRemove}>
+          <DeleteIcon />
+        </IconButton>
+        
+      </Grid>
   
     </Grid>
   );

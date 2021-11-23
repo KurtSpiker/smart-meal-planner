@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 
 export default function useMealsItemMode(modeInit) {
   
   const [mode, setMode] = useState(modeInit);
   const [history, setHistory] = useState(modeInit)
-  let updatedHistory = [...history];
+  let updatedHistory = [history];
 
   const transition = (modeInit, replace = false) => {
     if(replace) {
@@ -22,9 +22,10 @@ export default function useMealsItemMode(modeInit) {
 
   //this function gets called to traverse backward in the application mode pannels
   const back = () => {
-    
+    console.log(updatedHistory)
     if (updatedHistory.length > 1) {
       updatedHistory.pop();
+      console.log(updatedHistory)
       setHistory(updatedHistory);
       return setMode(updatedHistory.slice(-1)[0]);
     }

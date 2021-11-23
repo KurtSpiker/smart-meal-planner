@@ -3,8 +3,6 @@ import { Stack } from '@mui/material';
 import DayMeals from './DayMeals';
 import { weekRecipes } from '../../sampleWeekRecipes';
 
-
-
 export default function WeekPlan() {
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return(

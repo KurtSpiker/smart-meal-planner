@@ -1,7 +1,9 @@
 import React from 'react';
 import { Grid, Button, Typography } from '@mui/material';
 
-export default function Load() {
+export default function Confirm(props) {
+
+  const { onConfirm, onCancel } = props
   return (
     <Grid >
       <Grid container justifyContent="center">
@@ -9,10 +11,10 @@ export default function Load() {
       </Grid>
       <Grid container justifyContent="space-evenly">
         <Grid item>
-          <Button variant="outlined">Confirm</Button>
+          <Button variant="outlined" onClick={onConfirm}>Confirm</Button>
         </Grid>
         <Grid item>
-        <Button variant="outlined">Cancel</Button>
+        <Button variant="outlined" onClick={onCancel}>Cancel</Button>
         </Grid>
       </Grid>
     </Grid>
