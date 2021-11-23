@@ -8,7 +8,7 @@ export default function WeekPlan() {
   return(
     <Stack>
       {daysOfWeek.map((day) => {
-        return (<DayMeals meals={weekRecipes[day] ? weekRecipes[day] : {}} dayOfWeek={day}/>)
+        return (<DayMeals key={day} meals={weekRecipes[day] ? weekRecipes[day] : {}} dayOfWeek={day}/>)
       })}
     </Stack>
   );

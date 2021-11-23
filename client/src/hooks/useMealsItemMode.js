@@ -4,8 +4,8 @@ import { useState } from 'react'
 export default function useMealsItemMode(modeInit) {
   
   const [mode, setMode] = useState(modeInit);
-  const [history, setHistory] = useState(modeInit)
-  let updatedHistory = [history];
+  const [history, setHistory] = useState([modeInit])
+  let updatedHistory = [...history];
 
   const transition = (modeInit, replace = false) => {
     if(replace) {
@@ -13,6 +13,7 @@ export default function useMealsItemMode(modeInit) {
     } 
     
     if (!replace) {
+      //this is pushing an array into the array. fix this bug
       updatedHistory.push(modeInit);
     }
     

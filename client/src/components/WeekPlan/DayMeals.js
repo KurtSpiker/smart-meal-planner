@@ -17,7 +17,7 @@ export default function DayMeals(props) {
         {
           mealTypes.map((mealType) => {
             return (
-              <Grid item xs={4}>
+              <Grid key={mealType} item xs={4}>
                 <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
                   <DayMealsItem meal={meals[mealType]} mealType={mealType}/>
                 </Paper>
