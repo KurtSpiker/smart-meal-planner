@@ -8,12 +8,12 @@ import {
 class LinkDrawer extends Component {
   render() {
     return (
-      <Drawer variant="permanent" anchor="left" sx={{ width: 290, [`& .MuiDrawer-paper`]: { width: 300, boxSizing: 'border-box', backgroundColor: '#ff9800' }}}>
+      <Drawer variant="permanent" anchor="left" sx={{ [`& .MuiDrawer-paper`]: { width: "12%", boxSizing: 'border-box', backgroundColor: '#ff9800', flexShrink: 0 }}}>
           <Toolbar />
           <Grid container paddingLeft={4}>
             <Grid item>
               <div>
-                <img src={Logo} alt="logo" width="250"/>
+                <img src={Logo} alt="logo" width="85%"/>
               </div>
             </Grid>
           </Grid>
@@ -22,24 +22,24 @@ class LinkDrawer extends Component {
               direction="column"
               justifyContent="space-between"
               alignItems="flex-end"
-              paddingRight={5}
+              paddingRight={4}
               marginTop={20}
             >
-              <Button component={Link} to={"/stuff"}>
+              <Button component={Link} to={"/DayMeals"}>
                 My Week
               </Button>
-              <Button component={Link} to={"/"}>
+              <Button component={Link} to={"/Recipe_search"}>
                 Recipes
               </Button>
-              <Button size="large" component={Link} to={"/contact"} >
+              <Button component={Link} to={"/PantryList"} >
                 Pantry
               </Button>
-              <Button component={Link} to={"/contact"}>
+              <Button component={Link} to={"/GroceryList"}>
                 Grocery List
               </Button>
-            </Grid>
-            <Grid container marginTop={80} alignItems="flex-end">
-              Currently loggin in as: Admin
+              <Button component={Link} to={"/Test"}>
+                Test
+              </Button>
             </Grid>
       </Drawer>
     );

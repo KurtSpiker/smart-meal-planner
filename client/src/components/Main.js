@@ -5,10 +5,13 @@ import {
   Routes,
   Outlet
 } from "react-router-dom";
-import Home from "./Home";
-import Stuff from "./Stuff";
+import DayMeals from "./DayMeals"
 import Contact from "./Contact";
 import LinkDrawer from "./LinkDrawer"
+import GroceryList from "./GroceryList";
+import PantryList from "./PantryList";
+import Recipe from "./Recipe/index";
+import RecipeSearch from "./RecipeSearch";
 class Main extends Component {
   render() {
     return (
@@ -16,9 +19,11 @@ class Main extends Component {
         <BrowserRouter>
           <div className="content">
             <Routes>
-              <Route exact path="/" element={<Home/>}/>
-              <Route exact path="/stuff" element={<Stuff/>}/>
-              <Route exact path="/contact" element={<Contact/>}/>
+              <Route exact path="/GroceryList" element={<GroceryList/>}/>
+              <Route exact path="/DayMeals" element={<DayMeals/>}/>
+              <Route exact path="/PantryList" element={<PantryList/>}/>
+              <Route exact path="/Test" element={<Recipe/>}/>
+              <Route exact path="/Recipe_search" element={<RecipeSearch/>}/>
             </Routes>
             <Outlet/>
           </div>
