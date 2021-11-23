@@ -1,26 +1,29 @@
-import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader } from "@mui/material";
+import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader, CardActions, Icon, IconButton } from "@mui/material";
+import FoodBankIcon from '@mui/icons-material/FoodBank';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
-// const Dietary = function() {
-//   let subheaderTemplate = []
-//   if (recipe.dieteryRestrictions.vegetarian) {
-//     subheaderTemplate.push("vegetarian")
-//   }
-//   if (recipe.dieteryRestrictions.vegan) {
-//     subheaderTemplate.push("vegan")
-//   }
-//   if (recipe.dieteryRestrictions.glutenFree) {
-//     subheaderTemplate.push("glutenfree")
-//   }
-//   if (recipe.dieteryRestrictions.dairyFree) {
-//     subheaderTemplate.push("Dairyfree")
-//   }
-//   return subheaderTemplate.toString()
-// }
 
 const RecipeSearchItem = function (props) {
 
   const { recipe } = props
-  console.log(props);
+  
+  const Dietary = function() {
+    let subheaderTemplate = []
+    if (recipe.dieteryRestrictions.vegetarian) {
+      subheaderTemplate.push("vegetarian")
+    }
+    if (recipe.dieteryRestrictions.vegan) {
+      subheaderTemplate.push("vegan")
+    }
+    if (recipe.dieteryRestrictions.glutenfree) {
+      subheaderTemplate.push("glutenfree")
+    }
+    if (recipe.dieteryRestrictions.dairyfree) {
+      subheaderTemplate.push("Dairyfree")
+    }
+    return subheaderTemplate.toString()
+  }
+
   return (
     <Grid item>
       <Card sx={{ maxWidth: 250, minWidth: 250 }}>
@@ -33,9 +36,17 @@ const RecipeSearchItem = function (props) {
         />
         <CardHeader
           title={recipe.title}
-          subheader="Dietary"
+          subheader={Dietary()}
           sx={{ textAlign: "center" }}
         />
+        <CardActions sx={{ justifyContent: "space-between"}}>
+          <IconButton>
+            <FavoriteIcon/>
+          </IconButton>
+          <IconButton>
+            <FoodBankIcon/>
+          </IconButton>
+        </CardActions>
       </Card>
     </Grid>
   )
