@@ -9,7 +9,8 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes
   router.get("/", (req, res) => {
 
-    let searchTerm = "pasta,italian";
+    let data = { searchTerm: "pasta italian" };
+    let searchTerm = data.searchTerm.split(" ").join(",");
 
     axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}&query=${searchTerm}`)
       .then((response) => {
