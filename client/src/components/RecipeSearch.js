@@ -1,59 +1,139 @@
 import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader } from "@mui/material";
-import React from "react";
-import { recipe } from '../sampleRecipe'
+import {React, useState, useEffect} from "react";
 import RecipeCarousel from "./RecipeCarousel";
 import RecipeSearchItem from "./RecipeSearchItem";
+const axios = require('axios');
 
+const testRecipies = {
+  "results": [
+      {
+          "id": "633876",
+          "title": "Baked Ziti",
+          "image": "https://spoonacular.com/recipeImages/633876-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 648279,
+          "title": "Italian Tuna Pasta",
+          "image": "https://spoonacular.com/recipeImages/648279-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 633883,
+          "title": "Baked Ziti Casserole",
+          "image": "https://spoonacular.com/recipeImages/633883-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 632781,
+          "title": "Arugula & Feta Pasta",
+          "image": "https://spoonacular.com/recipeImages/632781-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 633884,
+          "title": "Baked Ziti Or Rigatoni",
+          "image": "https://spoonacular.com/recipeImages/633884-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 637591,
+          "title": "Cheese Tortellini Alfredo",
+          "image": "https://spoonacular.com/recipeImages/637591-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 644885,
+          "title": "Gluten Free Vegan Gnocchi",
+          "image": "https://spoonacular.com/recipeImages/644885-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 633752,
+          "title": "Baked Ravioli & Meat Sauce",
+          "image": "https://spoonacular.com/recipeImages/633752-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 654928,
+          "title": "Pasta With Italian Sausage",
+          "image": "https://spoonacular.com/recipeImages/654928-312x231.jpg",
+          "imageType": "jpg"
+      },
+      {
+          "id": 649718,
+          "title": "Lemon Pasta Alfredo (Vegan)",
+          "image": "https://spoonacular.com/recipeImages/649718-312x231.jpg",
+          "imageType": "jpg"
+      }
+  ],
+  "offset": 0,
+  "number": 10,
+  "totalResults": 31
+};
 
-const testRecipies = [
-  {
-    title: "Ziti",
-    image: "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2020%2F04%2F01%2F4557541.jpg"
-  },
-  {
-    title: "Chicken Ballotine",
-    image: "//imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F11%2F09%2Fchk-ballotine-stuffing-1244.jpg&q=85"
-  },
-  {
-    title: "Arancini",
-    image: "https://howtofeedaloon.com/wp-content/uploads/2017/08/rice-balls-3-2.jpg"
-  },
-  {
-    title: "Coconut curry",
-    image: "http://gazeandgraze.com/wordpress/wp-content/uploads/2017/09/Alinea-5-1024x683.jpg"
-  },
-  {
-    title: "Agnolotti",
-    image: "https://www.acanadianfoodie.com/wp-content/uploads/2014/11/2-Agnolotti-del-Plin.jpg"
-  }
-]
 
 
 const RecipeSearch = function(props) {
+
+  const [recipes, setRecipes] = useState(testRecipies.results);
+  const [searchTextValue, setSearchTextValue] = useState("");
+  const [renderStatus, setRenderStatus] = useState(false);
+
+  let recipeContents = [];
+
+  useEffect(() => {
+
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/recipes',
+      data: {
+        searchTerm: searchTextValue
+      }
+    }).
+    then((result)=>{
+      setRecipes(()=>{
+        return result.data.results;
+      })
+    })
+    .then(()=>{
+
+      setRenderStatus(() => {
+        return true
+      })
+
+    })   
+    .then(()=>{
+
+      if(renderStatus){
+        recipeContents = recipes.map((recipe) => {
+          return <RecipeSearchItem recipe={recipe} />;
+        })
+      }
+      console.log(recipeContents)
+    })
+    
+    .catch(
+      function (error) {
+        console.log(error)
+      }
+    )
+  }, [searchTextValue]);
+
   return (
     <Grid container justifyContent="center">
       <Typography variant="h3">
           Recipies
       </Typography>
-      <Autocomplete
-        disablePortal
-        getOptionLabel={(option) => option.title}
-        id="combo-box-demo"
-        options={testRecipies}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Search for a recipe!" />}
-      />
+      <TextField onChange={(event) => {setSearchTextValue(event.target.value)}}></TextField>
       <Grid container justifyContent="center" spacing={2} >
         { 
-          testRecipies.map((recipe) => {
-            return <RecipeSearchItem testRecipe={recipe} />
-          })
+          recipeContents
         }
-
       </Grid>
       <Grid container>
-        <RecipeCarousel testRecipies={testRecipies}/>
-        <RecipeCarousel testRecipies={testRecipies}/>
+        {/* <RecipeCarousel testRecipies={testRecipies}/>
+        <RecipeCarousel testRecipies={testRecipies}/> */}
       </Grid>
     </Grid>
   )
