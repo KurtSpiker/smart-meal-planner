@@ -21,7 +21,9 @@
     "pg-native": "^3.0.0",
     "sass": "^1.35.1",
     "axios": "^0.23.0",
-    "cookie-parser": "^1.4.5"
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.10"
