@@ -1,11 +1,12 @@
 import React from 'react';
-import { Grid, ButotnBase, ButtonBase } from '@mui/material';
+import { ButtonBase } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Link } from "react-router-dom";
 
 export default function Load() {
   return (
     
-    <ButtonBase>
+    <ButtonBase component={Link} to={"/"}>
       <AddIcon />
     </ButtonBase>
     
