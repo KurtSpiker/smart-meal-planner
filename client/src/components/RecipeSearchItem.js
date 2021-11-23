@@ -19,9 +19,9 @@ import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader 
 
 const RecipeSearchItem = function (props) {
 
-  console.log(props.props);
-  console.log(props.props.recipe);
-  console.log(props.recipe.image);
+  console.log(props);
+  console.log(props.recipe);
+  console.log(props.image);
 
   const { recipe } = props
   console.log(props);
@@ -37,7 +37,7 @@ const RecipeSearchItem = function (props) {
         />
         <CardHeader
           title={recipe.title}
-          subheader={"Dietary"}
+          subheader="Dietary"
           sx={{ textAlign: "center" }}
         />
       </Card>

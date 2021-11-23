@@ -72,7 +72,7 @@ const testRecipies = {
   "totalResults": 31
 };
 
-
+let recipeContents = [];
 
 const RecipeSearch = function(props) {
 
@@ -80,7 +80,6 @@ const RecipeSearch = function(props) {
   const [searchTextValue, setSearchTextValue] = useState("");
   const [renderStatus, setRenderStatus] = useState(false);
 
-  let recipeContents = [];
 
   useEffect(() => {
 
@@ -97,14 +96,11 @@ const RecipeSearch = function(props) {
       })
     })
     .then(()=>{
-
       setRenderStatus(() => {
         return true
       })
-
     })   
     .then(()=>{
-
       if(renderStatus){
         recipeContents = recipes.map((recipe) => {
           return <RecipeSearchItem recipe={recipe} />;
@@ -112,7 +108,6 @@ const RecipeSearch = function(props) {
       }
       console.log(recipeContents)
     })
-    
     .catch(
       function (error) {
         console.log(error)
