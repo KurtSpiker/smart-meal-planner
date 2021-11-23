@@ -72,37 +72,30 @@ const testRecipies = {
   "totalResults": 31
 };
 
-let recipeContents = [];
-
 const RecipeSearch = function (props) {
 
   const [recipes, setRecipes] = useState(testRecipies.results);
   const [searchTextValue, setSearchTextValue] = useState("");
-  const [renderStatus, setRenderStatus] = useState(false);
+  const [recipeContent, setRecipeContent] = useState([]);
 
-
+  console.log(recipeContent)
   useEffect(() => {
-    axios.post('http://localhost:4000/api/recipes/autogenerate', {
-      searchTerm: searchTextValue
-    }).
-      then((result) => {
+
+    // axios.post('/foo', qs.stringify({ 'bar': 123 }));
+    axios.get('http://localhost:4000/api/recipes', {
+      params: {
+        search: searchTextValue
+      }
+    })
+      .then((result) => {
         setRecipes(() => {
           return result.data.results;
         })
-      })
-      .then(() => {
-        setRenderStatus(() => {
-          return true
-        })
-      })
-      .then(() => {
-
-        if (renderStatus) {
-          recipeContents = recipes.map((recipe) => {
+        setRecipeContent(() => {
+          return recipes.map((recipe) => {
             return <RecipeSearchItem recipe={recipe} />;
           })
-        }
-        console.log(recipeContents)
+        })
       })
       .catch(
         function (error) {
@@ -119,7 +112,7 @@ const RecipeSearch = function (props) {
       <TextField onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
       <Grid container justifyContent="center" spacing={2} >
         {
-          recipeContents
+          recipeContent
         }
       </Grid>
       <Grid container>
