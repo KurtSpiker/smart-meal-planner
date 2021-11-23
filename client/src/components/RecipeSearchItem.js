@@ -19,10 +19,6 @@ import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader 
 
 const RecipeSearchItem = function (props) {
 
-  console.log(props);
-  console.log(props.recipe);
-  console.log(props.image);
-
   const { recipe } = props
   console.log(props);
   return (
