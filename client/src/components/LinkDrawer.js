@@ -28,7 +28,7 @@ class LinkDrawer extends Component {
               <Button component={Link} to={"/DayMeals"}>
                 My Week
               </Button>
-              <Button component={Link} to={"/"}>
+              <Button component={Link} to={"/Recipe_search"}>
                 Recipes
               </Button>
               <Button component={Link} to={"/PantryList"} >
@@ -36,6 +36,9 @@ class LinkDrawer extends Component {
               </Button>
               <Button component={Link} to={"/GroceryList"}>
                 Grocery List
+              </Button>
+              <Button component={Link} to={"/Test"}>
+                Test
               </Button>
             </Grid>
       </Drawer>
