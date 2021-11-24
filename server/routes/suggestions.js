@@ -26,6 +26,7 @@ module.exports = (db) => {
 
     // data storage
     let recipeStore = [];
+    let favouritesArray = [];
 
     db.getPantryByUser(userId)
       .then((results) => {
@@ -40,6 +41,12 @@ module.exports = (db) => {
         for (const res of response.data) {
           recipeStore.push({ id: res.id, title: res.title, image: res.image });
         }
+        return db.getFavourites(userId);
+      })
+      .then((favourites) => {
+        favouritesArray = favourites.map((fav) => {
+          return fav.spoonacular_id;
+        });
       })
       .then(() => {
         let recipeIds = [];
@@ -59,17 +66,15 @@ module.exports = (db) => {
           dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
 
           recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
-          //  recipeStore.results[recipeDietery].favourite = false;
-        }
-        // .then() or maybe the current if statement?
-        // db.getFavouritesByUser(userId)
-        // compare ids generated here to ids on favourites table
-        // if they match, set recipeStore.results[recipeDietery].favourite = true;
 
+          if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
+            recipeStore[recipeDietery].favourite = true;
+          } else {
+            recipeStore[recipeDietery].favourite = false;
+          }
+        }
       })
       .then(() => {
-
-
         res.send(recipeStore);
         console.log("GET to /suggestions - Success.");
       })
@@ -84,13 +89,21 @@ module.exports = (db) => {
   // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&cuisine=italian&number=10
   router.get("/cuisine", (req, res) => {
 
+    let userId = 1;
     let recipeStore = [];
     let cuisine = `&cuisine=${req.query.cuisine}`;
     let numberDisplayed = `&number=10`;
+    let favouritesArray = [];
 
     console.log("1. AXIOS CALLS FOR RECIPES BY CUISINE");
 
-    axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${cuisine}${numberDisplayed}`)
+    db.getFavourites(userId)
+      .then((favourites) => {
+        favouritesArray = favourites.map((fav) => {
+          return fav.spoonacular_id;
+        })
+        return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${cuisine}${numberDisplayed}`)
+      })
       .then((response) => {
         console.log("2. GOT RECIPES FOR CUISINE AND PUT INTO RECIPESTORE");
         recipeStore = response.data;
@@ -118,15 +131,15 @@ module.exports = (db) => {
             dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
 
             recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
-            //  recipeStore.results[recipeDietery].favourite = false;
+
+            if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
+              recipeStore.results[recipeDietery].favourite = true;
+            } else {
+              recipeStore.results[recipeDietery].favourite = false;
+            }
           }
           console.log("5. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
-          // .then() or maybe the current if statement?
-          // db.getFavouritesByUser(userId)
-          // compare ids generated here to ids on favourites table
-          // if they match, set recipeStore.results[recipeDietery].favourite = true;
         }
-
         // out of the 20 recipes (0 to 19) pick 5
         let arrayNumbers = randomRecipes(10, 5);
         console.log("6. PICKED THE RANDOM NUMBERS", arrayNumbers);
