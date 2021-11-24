@@ -12,7 +12,7 @@ export default function MealProvider(props) {
     setTypeOfMeal(type)
   }
 
-  const mealData = { setDayInformation };
+  const mealData = { dayOfWeek, typeOfMeal, setDayInformation };
 
   return (
     <mealContext.Provider value={mealData}>
