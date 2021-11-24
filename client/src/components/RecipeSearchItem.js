@@ -44,7 +44,8 @@ const RecipeSearchItem = function (props) {
 
   return (
     <Grid item>
-      {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow}/>}
+      {console.log(recipe.id)}
+      {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id}/>}
       <Card sx={{ maxWidth: 250, minWidth: 250 }}>
         <CardMedia
           component="img"
