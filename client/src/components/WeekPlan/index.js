@@ -2,21 +2,14 @@ import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
 import DayMeals from './DayMeals';
 import { weekRecipes } from '../../sampleWeekRecipes';
-import axios from 'axios';
+import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
 export default function WeekPlan(props) {
 
   const { setSelectedMeal } = props
 
-  useEffect(() => {
-    axios.get(`/api/recipes/mealList/1`)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-  }, []);
+  const { plan } = useWeeklyPlanData();
+  console.log("plan", plan)
 
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return (
@@ -25,9 +18,9 @@ export default function WeekPlan(props) {
         return (
           <DayMeals
             key={day}
-            meals={weekRecipes[day] ? weekRecipes[day] : {}} dayOfWeek={day}
+            meals={plan[day] ? plan[day] : {}} 
+            dayOfWeek={day}
             setSelectedMeal={setSelectedMeal}
-
           />
         )
       })}

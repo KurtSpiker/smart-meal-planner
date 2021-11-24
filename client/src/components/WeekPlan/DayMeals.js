@@ -19,7 +19,11 @@ export default function DayMeals(props) {
             return (
               <Grid key={mealType} item xs={4}>
                 <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
-                  <DayMealsItem setSelectedMeal={setSelectedMeal} dayOfWeek={dayOfWeek} meal={meals[mealType]} mealType={mealType}/>
+                  <DayMealsItem 
+                    setSelectedMeal={setSelectedMeal} 
+                    dayOfWeek={dayOfWeek} 
+                    meal={meals[mealType]} 
+                    mealType={mealType}/>
                 </Paper>
               </Grid>
             );

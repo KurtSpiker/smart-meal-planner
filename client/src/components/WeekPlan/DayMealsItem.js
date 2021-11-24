@@ -15,8 +15,13 @@ export default function DayMealsItem(props) {
   const SHOW = "SHOW";
   const CONFIRM = "CONFIRM";
   const LOAD = "LOAD";
-
-  const { mode, transition, back } = useMealsItemMode(meal ? SHOW : ADD);
+  console.log("meal", (meal ? true : false))
+  const { mode, transition, back } = useMealsItemMode(ADD);
+  
+  //If a meal is available transition to the show mode
+  if (mode === ADD && meal) {
+    transition(SHOW);
+  }
 
   //when a user confirms the remove action
   const onConfirm = () => {
@@ -33,6 +38,7 @@ export default function DayMealsItem(props) {
     transition(CONFIRM)
     return;
   }
+
 
   return (
     <Grid container justifyContent="center">
