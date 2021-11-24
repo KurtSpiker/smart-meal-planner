@@ -112,10 +112,10 @@ module.exports = (db) => {
 
   // gets users recipe schedule by the week
   // http://localhost:4000/api/recipes/mealList/1
-  router.get("/mealList/:id", (req, res) => {
+  router.get("/mealList/", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
-    let week = req.params.id
+    let week = req.query.id
 
     db.getRecipesByUser(userId, week)
       .then((result) => {
