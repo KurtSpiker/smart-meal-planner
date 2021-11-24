@@ -7,7 +7,7 @@ import Confirm from './Confirm';
 import useMealsItemMode from '../../hooks/useMealsItemMode';
 
 export default function DayMealsItem(props) {
-  
+
   const { meal, mealType, dayOfWeek, setSelectedMeal } = props;
 
   //appointment pannel mode name variables
@@ -36,7 +36,7 @@ export default function DayMealsItem(props) {
 
   return (
     <Grid container justifyContent="center">
-      
+
       {mode === SHOW && (
         <Show
           meal={meal}
@@ -46,11 +46,11 @@ export default function DayMealsItem(props) {
           }}
           dayOfWeek={dayOfWeek}
           setSelectedMeal={setSelectedMeal}
-      />
+        />
       )}
       {mode === ADD && (<Add />)}
       {mode === CONFIRM && (
-        <Confirm 
+        <Confirm
           onConfirm={onConfirm}
           onCancel={() => back()}
         />)}
