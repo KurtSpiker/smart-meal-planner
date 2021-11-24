@@ -116,11 +116,12 @@ module.exports = (db) => {
       })
       .then((recipeIds) => {
         let ids = recipeIds.join(",");
+        console.log("4. STARTING AXIOS CALL FOR ALL IDS")
         return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
 
       })
       .then((allRecipeInfo) => {
-        console.log("4. FINISHED AXIOS CALL TO GET INFORMATION BULK FROM IDS");
+        console.log("5. FINISHED AXIOS CALL TO GET INFORMATION BULK FROM IDS");
         // only if recipe info is found
         if (allRecipeInfo) {
           let dieteryRestrictions = {};
@@ -138,7 +139,7 @@ module.exports = (db) => {
               recipeStore.results[recipeDietery].favourite = false;
             }
           }
-          console.log("5. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
+          console.log("6. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
         }
         // out of the 20 recipes (0 to 19) pick 5
         let arrayNumbers = randomRecipes(10, 5);
@@ -148,10 +149,10 @@ module.exports = (db) => {
         for (const number of arrayNumbers) {
           arrayToSend.push(recipeStore.results[number])
         }
-        console.log("6. PUSHED THE RECIPES TO DISPLAY INTO ARRAY");
+        console.log("7. PUSHED THE RECIPES TO DISPLAY INTO ARRAY");
 
         res.send(arrayToSend);
-        console.log("7. DONE");
+        console.log("8. DONE");
       })
       .catch((error) => {
         console.log(error);
