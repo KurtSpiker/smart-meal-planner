@@ -10,6 +10,7 @@ import Contact from "./Contact";
 import LinkDrawer from "./LinkDrawer"
 import GroceryList from "./GroceryList";
 import PantryList from "./PantryList";
+import RecipeSearch from "./RecipeSearch";
 
 export default function Main() {
 
@@ -23,6 +24,7 @@ export default function Main() {
             <Route exact path="/GroceryList" element={<GroceryList/>}/>
             <Route exact path="/WeekPlan" element={<WeekPlan setSelectedMeal={setSelectedMeal} />}/>
             <Route exact path="/PantryList" element={<PantryList/>}/>
+            <Route exact path="/Recipe_search" element={<RecipeSearch/>}/>
           </Routes>
           <Outlet/>
         </div>

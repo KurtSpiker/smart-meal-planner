@@ -25,10 +25,10 @@ class LinkDrawer extends Component {
             paddingRight={4}
             marginTop={20}
           >
-            <Button component={Link} to={"/WeekPlan"}>
+            <Button component={Link} to={"/WeekPlan/"}>
               My Week
             </Button>
-            <Button component={Link} to={"/"}>
+            <Button component={Link} to={"/Recipe_search"}>
               Recipes
             </Button>
             <Button component={Link} to={"/PantryList"} >
@@ -37,31 +37,10 @@ class LinkDrawer extends Component {
             <Button component={Link} to={"/GroceryList"}>
               Grocery List
             </Button>
+            <Button component={Link} to={"/Test"}>
+              Test
+            </Button>
           </Grid>
-            <Grid 
-              container
-              direction="column"
-              justifyContent="space-between"
-              alignItems="flex-end"
-              paddingRight={4}
-              marginTop={20}
-            >
-              <Button component={Link} to={"/DayMeals"}>
-                My Week
-              </Button>
-              <Button component={Link} to={"/Recipe_search"}>
-                Recipes
-              </Button>
-              <Button component={Link} to={"/PantryList"} >
-                Pantry
-              </Button>
-              <Button component={Link} to={"/GroceryList"}>
-                Grocery List
-              </Button>
-              <Button component={Link} to={"/Test"}>
-                Test
-              </Button>
-            </Grid>
       </Drawer>
     );
   }
