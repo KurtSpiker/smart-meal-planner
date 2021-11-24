@@ -5,16 +5,46 @@ const { formatMealDays } = require("./routesHelpers");
 
 module.exports = (db) => {
 
+  // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&query=pasta&number=2
   // search for a recipe using keywords
   // http://localhost:4000/api/recipes?search=
   router.get("/", (req, res) => {
 
-    let searchTerm = req.query.search;
+    let recipeStore = [];
+    let searchTerm = `&query=${req.query.search}`;
+    let numberDisplayed = `&number=20`;
 
-    axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}&query=${searchTerm}`)
+    axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`)
       .then((response) => {
-        res.send(response.data);
-        console.log("GET to /recipes/autogenerate - Success.");
+
+        recipeStore = response.data;
+        let recipeIds = [];
+        for (const recipe of recipeStore.results) {
+          recipeIds.push(recipe.id);
+        }
+        return recipeIds;
+      })
+      .then((recipeIds) => {
+        // if it finds no recipes, gives [] to this section
+        if (recipeIds.length > 0) {
+          let ids = recipeIds.join(",");
+          return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
+        }
+      })
+      .then((allRecipeInfo) => {
+        // only if recipe info is found
+        if (allRecipeInfo) {
+          let dieteryRestrictions = {};
+          for (const recipeDietery in allRecipeInfo.data) {
+            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
+            dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
+            dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
+            dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
+            recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+          }
+        }
+        res.send(recipeStore);
+
       })
       .catch((error) => {
         console.log(error);
@@ -56,7 +86,6 @@ module.exports = (db) => {
           instructions.push(instruction.step);
         }
 
-        dieteryRestrictions.vegetarian = response.data.vegetarian;
         dieteryRestrictions.vegan = response.data.vegan;
         dieteryRestrictions.vegetarian = response.data.vegetarian;
         dieteryRestrictions.glutenFree = response.data.glutenFree;

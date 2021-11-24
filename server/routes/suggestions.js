@@ -29,9 +29,7 @@ module.exports = (db) => {
         for (const pantryItem of results) {
           pantryArray.push(pantryItem.item_name)
         }
-
         return axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryArray.join(",")}${numberToDisplay}${ignorePantry}${ranking}`);
-
       })
       .then((response) => {
         let arrayOfRecipes = [];
