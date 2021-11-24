@@ -41,7 +41,12 @@ module.exports = (db) => {
             dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
             dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
             recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+            //  recipeStore.results[recipeDietery].favourite = false;
           }
+          // .then() or maybe the current if statement?
+          // db.getFavouritesByUser(userId)
+          // compare ids generated here to ids on favourites table
+          // if they match, set recipeStore.results[recipeDietery].favourite = true;
         }
         res.send(recipeStore);
 

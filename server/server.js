@@ -21,11 +21,11 @@ const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 
 // add database query functions here
-const { getUserById, getPantryItems, generateGroceryList, getRecipesByUser, getGroceryListByUser, editGroceryList, deleteGroceryList, getUserDetails, addGroceryListItem, deleteRecipesForUser, addRecipesForUser, deleteGroceryListItem, getPantryByUser, deletePantryItem, editPantryItem, addPantryItem, generateJoke } = require("./db/database");
+const { getUserById, generateGroceryList, getRecipesByUser, getGroceryListByUser, editGroceryList, deleteGroceryList, getUserDetails, addGroceryListItem, deleteRecipesForUser, addRecipesForUser, deleteGroceryListItem, getPantryByUser, deletePantryItem, editPantryItem, addPantryItem, generateJoke } = require("./db/database");
 
 const pool = new Pool(dbParams);
 pool.connect();
-const db = { getUserById, getPantryItems, generateGroceryList, getRecipesByUser, getGroceryListByUser, editGroceryList, deleteGroceryList, getUserDetails, addGroceryListItem, deleteRecipesForUser, addRecipesForUser, deleteGroceryListItem, getPantryByUser, deletePantryItem, editPantryItem, addPantryItem, generateJoke };
+const db = { getUserById, generateGroceryList, getRecipesByUser, getGroceryListByUser, editGroceryList, deleteGroceryList, getUserDetails, addGroceryListItem, deleteRecipesForUser, addRecipesForUser, deleteGroceryListItem, getPantryByUser, deletePantryItem, editPantryItem, addPantryItem, generateJoke };
 
 app.use(morgan("dev"));
 
@@ -50,11 +50,6 @@ app.use("/api/grocery_list", groceryList(db));
 app.use("/api/suggestions", suggestions(db));
 app.use("/api/search", search(db));
 app.use("/api/payment", payment(db));
-
-// Home page
-app.get("/", (req, res) => {
-  res.send("Home Page");
-});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

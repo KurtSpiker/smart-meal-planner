@@ -56,18 +56,6 @@ exports.getUserById = getUserById;
 
 
 
-const getPantryItems = function () {
-
-  return new Promise((res, rej) => {
-    return res(["banana", "apple", "orange"]);
-  }).catch(e => {
-    console.error(e);
-  });
-}
-exports.getPantryItems = getPantryItems;
-
-
-
 const generateGroceryList = function (ingredientObject, userId, week) {
 
   // EXPECTED OBJECT
