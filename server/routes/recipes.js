@@ -79,7 +79,9 @@ module.exports = (db) => {
     let userId = 1;  // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
-    let data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
+    let data = { ...req.body, spoonacularId, userId };
+
+    // let data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
 
     db.addRecipesForUser(data)
       .then((result) => {
