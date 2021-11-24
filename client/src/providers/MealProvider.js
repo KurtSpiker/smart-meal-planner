@@ -6,13 +6,14 @@ export default function MealProvider(props) {
 
   const [dayOfWeek, setDayOfWeek] = useState("");
   const [typeOfMeal, setTypeOfMeal] = useState("");
+  const [weekNumber, setWeekNumber] = useState(1)
 
   const setDayInformation = (day, type) => {
     setDayOfWeek(day)
     setTypeOfMeal(type)
   }
 
-  const mealData = { dayOfWeek, typeOfMeal, setDayInformation };
+  const mealData = { dayOfWeek, typeOfMeal, setDayInformation, weekNumber };
 
   return (
     <mealContext.Provider value={mealData}>

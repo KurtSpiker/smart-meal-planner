@@ -2,12 +2,13 @@ import { Dialog, DialogTitle, MenuItem, InputLabel, Select, OutlinedInput, Dialo
 import { react, useState, useEffect, useContext } from 'react'
 import Button from '@mui/material/Button';
 import { mealContext } from '../providers/MealProvider';
+import axios from "axios";
 
 export default function RecipeDialog(props) {
 
-  const { typeOfMeal, dayOfWeek } = useContext(mealContext);
+  const { typeOfMeal, dayOfWeek, weekNumber } = useContext(mealContext);
 
-  const { dialogSwitch } = props
+  const { dialogSwitch, mealName, imageUrl, recipeId } = props
   
   const [open, setOpen] = useState(false);
   const [day, setDay] = useState(dayOfWeek);
@@ -36,6 +37,24 @@ export default function RecipeDialog(props) {
       setOpen(false);
     }
   };
+
+  const handleSendData = () => {
+    axios.post(`/api/recipes/${recipeId}`, {
+      week: 1,
+      day,
+      mealName,
+      meal,
+      imageUrl
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    handleClose()
+  }
+
 
   return (
     <div>
@@ -77,7 +96,7 @@ export default function RecipeDialog(props) {
           <Button variant="contained" color="error" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" color="success" onClick={handleClose}>
+          <Button variant="contained" color="success" onClick={handleSendData}>
             Ok
           </Button>
         </DialogActions>
