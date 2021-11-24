@@ -10,7 +10,13 @@ const testRecipies = {
       "id": "633876",
       "title": "Baked Ziti",
       "image": "https://spoonacular.com/recipeImages/633876-312x231.jpg",
-      "imageType": "jpg"
+      "imageType": "jpg",
+      "dieteryRestrictions": {
+        "vegetarian": true,
+        "vegan": true,
+        "glutenfree": true,
+        "dairyfree": true
+      }
     },
     {
       "id": 648279,
@@ -114,6 +120,7 @@ const RecipeSearch = function (props) {
         {
           recipeContent
         }
+        <RecipeSearchItem recipe={testRecipies.results[0]} test={true}/>
       </Grid>
       <Grid container>
         {/* <RecipeCarousel testRecipies={testRecipies}/>
