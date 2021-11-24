@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
 import DayMeals from './DayMeals';
 import { weekRecipes } from '../../sampleWeekRecipes';
+import axios from 'axios';
 
 export default function WeekPlan(props) {
 
   const { setSelectedMeal } = props
+
+  // useEffect(() => {
+  //   axios.get('/api/recipes', {
+  //     params: {
+  //       search: "tomato"
+  //     }
+  //   })
+  //     .then((response) => {
+  //       console.log(response)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     })
+  // }, []);
 
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return(
@@ -16,6 +31,7 @@ export default function WeekPlan(props) {
             key={day} 
             meals={weekRecipes[day] ? weekRecipes[day] : {}} dayOfWeek={day}
             setSelectedMeal={setSelectedMeal} 
+
           />
           )
       })}

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { mealContext } from '../../providers/MealProvider';
-import { Grid, Box, Stack, Typography, IconButton, ButtonBase } from '@mui/material';
+import { Grid, Stack, Typography, IconButton, ButtonBase } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function DayMealsItem(props) {
