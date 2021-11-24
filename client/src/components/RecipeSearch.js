@@ -78,18 +78,17 @@ const RecipeSearch = function (props) {
   const [searchTextValue, setSearchTextValue] = useState("");
   const [recipeContent, setRecipeContent] = useState([]);
 
-  console.log(recipeContent)
   useEffect(() => {
 
     // axios.post('/foo', qs.stringify({ 'bar': 123 }));
-    axios.get('http://localhost:4000/api/recipes', {
+    axios.get('/api/recipes', {
       params: {
         search: searchTextValue
       }
     })
       .then((result) => {
         setRecipes(() => {
-          return result.data.results;
+          return result.data;
         })
         setRecipeContent(() => {
           return recipes.map((recipe) => {
