@@ -146,6 +146,8 @@ module.exports = (db) => {
     let userId = 1;  // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
+    // let data = { ...req.body, spoonacularId, userId };
+
     let data = { userId, week: 2, day: "thursday", meal: "dinner", spoonacularId, mealName: "thursday Meal", imageUrl: 'another-image.jpg' };
 
     db.deleteRecipesForUser(data)

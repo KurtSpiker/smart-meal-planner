@@ -117,30 +117,28 @@ module.exports = (db) => {
       .then((recipeIds) => {
         let ids = recipeIds.join(",");
         console.log("4. STARTING AXIOS CALL FOR ALL IDS")
-        return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
-
+        return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}&includeNutrition=false`);
       })
       .then((allRecipeInfo) => {
         console.log("5. FINISHED AXIOS CALL TO GET INFORMATION BULK FROM IDS");
         // only if recipe info is found
-        if (allRecipeInfo) {
-          let dieteryRestrictions = {};
-          for (const recipeDietery in allRecipeInfo.data) {
-            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
-            dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
-            dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
-            dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
+        let dieteryRestrictions = {};
+        for (const recipeDietery in allRecipeInfo.data) {
+          dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
+          dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
+          dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
+          dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
 
-            recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+          recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
 
-            if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
-              recipeStore.results[recipeDietery].favourite = true;
-            } else {
-              recipeStore.results[recipeDietery].favourite = false;
-            }
+          if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
+            recipeStore.results[recipeDietery].favourite = true;
+          } else {
+            recipeStore.results[recipeDietery].favourite = false;
           }
-          console.log("6. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
         }
+        console.log("6. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
+
         // out of the 20 recipes (0 to 19) pick 5
         let arrayNumbers = randomRecipes(10, 5);
         console.log("6. PICKED THE RANDOM NUMBERS", arrayNumbers);
@@ -159,6 +157,9 @@ module.exports = (db) => {
       });
   });
 
+
+
+
   // generates a random food joke. this is my greatest creation.
   // http://localhost:4000/api/suggestions/joke
   router.get("/joke", (req, res) => {
@@ -175,6 +176,84 @@ module.exports = (db) => {
         res.send(e)
       });
   });
+
+
+  // IMPROVED RECIPE SUGGESTION SEARCH
+  // http://localhost:4000/api/suggestions/cuisine/improved?cuisine=italian
+  // router.get("/cuisine/improved", (req, res) => {
+
+  //   let userId = 1;
+  //   let recipeStore = [];
+  //   let cuisine = `&cuisine=${req.query.cuisine}`;
+  //   let numberDisplayed = `&number=10`;
+  //   let favouritesArray = [];
+  //   let promises = [];
+
+  //   console.log("1. AXIOS CALLS FOR RECIPES BY CUISINE");
+
+  //   db.getFavourites(userId)
+  //     .then((favourites) => {
+  //       favouritesArray = favourites.map((fav) => {
+  //         return fav.spoonacular_id;
+  //       })
+  //       return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${cuisine}${numberDisplayed}`)
+  //     })
+  //     .then((response) => {
+  //       console.log("2. GOT RECIPES FOR CUISINE AND PUT INTO RECIPESTORE");
+  //       recipeStore = response.data;
+  //       let recipeIds = [];
+  //       for (const recipe of recipeStore.results) {
+  //         recipeIds.push(recipe.id);
+  //       }
+  //       console.log("3. PUSHED RECIPES IDS IN AN ARRAY FOR SEARCHING");
+  //       return recipeIds;
+  //     })
+  //     .then((recipeIds) => {
+
+  //       for (let i = 0; i < recipeIds.length; i++) {
+  //         promises.push(axios.get(`https://api.spoonacular.com/recipes/${recipeIds[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
+  //       }
+  //       console.log("4. INITIATING PROMISE ALL");
+  //       return Promise.all(promises);
+  //     })
+  //     .then((allRecipeInfo) => {
+  //       console.log("5. FINISHED AXIOS CALL TO GET INFORMATION BULK FROM IDS");
+  //       // only if recipe info is found
+  //       if (allRecipeInfo) {
+  //         let dieteryRestrictions = {};
+  //         for (const recipeDietery in allRecipeInfo) {
+  //           dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
+  //           dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
+  //           dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;
+  //           dieteryRestrictions.dairyFree = allRecipeInfo[recipeDietery].data.dairyFree;
+  //           recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+
+  //           if (favouritesArray.includes(allRecipeInfo[recipeDietery].data.id)) {
+  //             recipeStore.results[recipeDietery].favourite = true;
+  //           } else {
+  //             recipeStore.results[recipeDietery].favourite = false;
+  //           }
+
+  //         }
+  //         console.log("6. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
+  //       }
+  //       // out of the 20 recipes (0 to 19) pick 5
+  //       let arrayNumbers = randomRecipes(10, 5);
+  //       console.log("6. PICKED THE RANDOM NUMBERS", arrayNumbers);
+  //       let arrayToSend = [];
+
+  //       for (const number of arrayNumbers) {
+  //         arrayToSend.push(recipeStore.results[number])
+  //       }
+  //       console.log("7. PUSHED THE RECIPES TO DISPLAY INTO ARRAY");
+
+  //       res.send(arrayToSend);
+  //       console.log("8. DONE");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // });
 
   return router;
 };
