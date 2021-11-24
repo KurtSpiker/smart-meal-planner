@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios';
 
 
 export default function useMealsItemMode(modeInit) {
@@ -32,6 +33,18 @@ export default function useMealsItemMode(modeInit) {
     }
   };
 
-  return { mode, transition, back };
+  const removeMeal = (meal, day) => {
+    return  axios.delete(`/api/recipes`, {
+      data: {
+        week: 1,
+        meal,
+        day
+      }
+    }).catch((e)=>{
+      console.log(e);
+    });
+  }
+
+  return { mode, transition, back, removeMeal };
 
 };

@@ -6,7 +6,7 @@ import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
 export default function WeekPlan() {
 
-  const { plan } = useWeeklyPlanData();
+  const { plan, setPlan } = useWeeklyPlanData();
 
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return (
@@ -16,7 +16,8 @@ export default function WeekPlan() {
           <DayMeals
             key={day}
             meals={plan[day] ? plan[day] : {}} 
-            dayOfWeek={day}
+            dayOfWeek={day} 
+            setPlan={setPlan}
           />
         )
       })}

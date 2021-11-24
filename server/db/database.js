@@ -263,10 +263,10 @@ exports.addRecipesForUser = addRecipesForUser;
 
 const deleteRecipesForUser = function (data) {
 
-  const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4 AND spoonacular_id = $5`;
+  const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4`;
 
   return pool
-    .query(sqlString, [data.userId, data.week, data.day, data.meal, data.spoonacularId])
+    .query(sqlString, [data.userId, data.week, data.day, data.meal])
     .then(res => {
       console.log(`Successfully deleted recipe of user ${data.userId}.`)
       return res.rows;

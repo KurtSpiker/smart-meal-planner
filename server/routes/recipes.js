@@ -95,13 +95,15 @@ module.exports = (db) => {
   });
 
   // deleting a recipe from a user's meal list
-  // http://localhost:4000/api/recipes/649141
-  router.delete("/:id", (req, res) => {
+  // http://localhost:4000/api/recipes
+  router.delete("/", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
-    let spoonacularId = req.params.id;
+    // let spoonacularId = req.params.id;
 
-    let data = { userId, week: 1, day: "monday", meal: "lunch", spoonacularId };
+    let data = {...req.body, userId};
+
+    // let data = { userId, week: 1, day: "monday", meal: "lunch", spoonacularId };
 
     db.deleteRecipesForUser(data)
       .then((result) => {
