@@ -14,7 +14,7 @@ import RecipeSearch from "./RecipeSearch";
 
 export default function Main() {
 
-  const [selectedMeal, setSelectedMeal] = useState({day: "", mealType: ""});
+  // const [selectedMeal, setSelectedMeal] = useState({day: "", mealType: ""});
   
   return (
     <div>
@@ -22,7 +22,7 @@ export default function Main() {
         <div className="content">
           <Routes>
             <Route exact path="/GroceryList" element={<GroceryList/>}/>
-            <Route exact path="/WeekPlan" element={<WeekPlan setSelectedMeal={setSelectedMeal} />}/>
+            <Route exact path="/WeekPlan" element={<WeekPlan />}/>
             <Route exact path="/PantryList" element={<PantryList/>}/>
             <Route exact path="/Recipe_search" element={<RecipeSearch/>}/>
           </Routes>

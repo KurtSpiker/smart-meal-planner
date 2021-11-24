@@ -4,12 +4,9 @@ import DayMeals from './DayMeals';
 import { weekRecipes } from '../../sampleWeekRecipes';
 import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
-export default function WeekPlan(props) {
-
-  const { setSelectedMeal } = props
+export default function WeekPlan() {
 
   const { plan } = useWeeklyPlanData();
-  console.log("plan", plan)
 
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return (
@@ -20,7 +17,6 @@ export default function WeekPlan(props) {
             key={day}
             meals={plan[day] ? plan[day] : {}} 
             dayOfWeek={day}
-            setSelectedMeal={setSelectedMeal}
           />
         )
       })}

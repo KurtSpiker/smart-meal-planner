@@ -8,14 +8,13 @@ import useMealsItemMode from '../../hooks/useMealsItemMode';
 
 export default function DayMealsItem(props) {
 
-  const { meal, mealType, dayOfWeek, setSelectedMeal } = props;
+  const { meal, mealType, dayOfWeek } = props;
 
   //appointment pannel mode name variables
   const ADD = "ADD";
   const SHOW = "SHOW";
   const CONFIRM = "CONFIRM";
   const LOAD = "LOAD";
-  console.log("meal", (meal ? true : false))
   const { mode, transition, back } = useMealsItemMode(ADD);
   
   //If a meal is available transition to the show mode
@@ -51,10 +50,14 @@ export default function DayMealsItem(props) {
             return transition(CONFIRM)
           }}
           dayOfWeek={dayOfWeek}
-          setSelectedMeal={setSelectedMeal}
         />
       )}
-      {mode === ADD && (<Add />)}
+      {mode === ADD && (
+        <Add 
+          mealType={mealType}
+          dayOfWeek={dayOfWeek}
+        />)
+      }
       {mode === CONFIRM && (
         <Confirm
           onConfirm={onConfirm}

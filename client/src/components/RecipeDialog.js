@@ -1,14 +1,17 @@
 import { Dialog, DialogTitle, MenuItem, InputLabel, Select, OutlinedInput, DialogActions, Box, FormControl, DialogContent } from "@mui/material"
-import { react, useState, useEffect } from 'react'
+import { react, useState, useEffect, useContext } from 'react'
 import Button from '@mui/material/Button';
+import { mealContext } from '../providers/MealProvider';
 
 export default function RecipeDialog(props) {
+
+  const { typeOfMeal, dayOfWeek } = useContext(mealContext);
 
   const { dialogSwitch } = props
   
   const [open, setOpen] = useState(false);
-  const [day, setDay] = useState('');
-  const [meal, setMeal] = useState('');
+  const [day, setDay] = useState(dayOfWeek);
+  const [meal, setMeal] = useState(typeOfMeal);
 
   useEffect(() => {
     console.log("hello")
@@ -47,13 +50,13 @@ export default function RecipeDialog(props) {
                 onChange={handleDayChange}
                 input={<OutlinedInput label="Day"/>}
               >
-                <MenuItem value={"Monday"}>Monday</MenuItem>
-                <MenuItem value={"Tuesday"}>Tuesday</MenuItem>
-                <MenuItem value={"Wednesday"}>Wednesday</MenuItem>
-                <MenuItem value={"Thursday"}>Thursday</MenuItem>
-                <MenuItem value={"Friday"}>Friday</MenuItem>
-                <MenuItem value={"Saturday"}>Saturday</MenuItem>
-                <MenuItem value={"Sunday"}>Sunday</MenuItem>
+                <MenuItem value={"monday"}>Monday</MenuItem>
+                <MenuItem value={"tuesday"}>Tuesday</MenuItem>
+                <MenuItem value={"wednesday"}>Wednesday</MenuItem>
+                <MenuItem value={"thursday"}>Thursday</MenuItem>
+                <MenuItem value={"friday"}>Friday</MenuItem>
+                <MenuItem value={"saturday"}>Saturday</MenuItem>
+                <MenuItem value={"sunday"}>Sunday</MenuItem>
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -63,9 +66,9 @@ export default function RecipeDialog(props) {
                 onChange={handleMealChange}
                 input={<OutlinedInput label="Meal" />}
               >
-                <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
-                <MenuItem value={"Lunch"}>Lunch</MenuItem>
-                <MenuItem value={"Dinner"}>Dinner</MenuItem>
+                <MenuItem value={"breakfast"}>Breakfast</MenuItem>
+                <MenuItem value={"lunch"}>Lunch</MenuItem>
+                <MenuItem value={"dinner"}>Dinner</MenuItem>
               </Select>
             </FormControl>
           </Box>
