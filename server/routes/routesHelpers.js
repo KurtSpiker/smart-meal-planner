@@ -23,3 +23,20 @@ const formatMealDays = function (result) {
   return objectToHold;
 }
 exports.formatMealDays = formatMealDays;
+
+
+const randomRecipes = function (maxNumber, amountToReturn) {
+
+  let arrayOfNumbers = [];
+
+  while (arrayOfNumbers.length < amountToReturn) {
+    let number = Math.floor(Math.random() * maxNumber);
+
+    if (!arrayOfNumbers.includes(number)) {
+      arrayOfNumbers.push(number);
+    }
+  }
+
+  return arrayOfNumbers;
+}
+exports.randomRecipes = randomRecipes;

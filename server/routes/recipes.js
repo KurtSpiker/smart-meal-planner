@@ -12,7 +12,7 @@ module.exports = (db) => {
 
     let recipeStore = [];
     let searchTerm = `&query=${req.query.search}`;
-    let numberDisplayed = `&number=20`;
+    let numberDisplayed = `&number=5`;
 
     axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`)
       .then((response) => {
@@ -40,6 +40,7 @@ module.exports = (db) => {
             dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
             dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
             dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
+
             recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
             //  recipeStore.results[recipeDietery].favourite = false;
           }
@@ -48,7 +49,7 @@ module.exports = (db) => {
           // compare ids generated here to ids on favourites table
           // if they match, set recipeStore.results[recipeDietery].favourite = true;
         }
-        res.send(recipeStore);
+        res.send(recipeStore.results);
 
       })
       .catch((error) => {
@@ -145,20 +146,68 @@ module.exports = (db) => {
   });
 
   // gets users recipe schedule by the week
-  // http://localhost:4000/api/recipes/mealList/1
-  router.get("/mealList/:id", (req, res) => {
+  // http://localhost:4000/api/recipes/mealList?week=
+  router.get("/mealList", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
-    let week = req.params.id
+    let week = req.query.week
 
     db.getRecipesByUser(userId, week)
       .then((result) => {
-        console.log("GET to /recipes/mealList/:id - Success.");
-
         res.send(formatMealDays(result));
-        console.log("GET to recipes/mealList/:id - Success.");
-        // console.log(formatMealDays(result))
+        console.log("GET to recipes/mealList - Success.");
       }).catch((error) => {
+        console.log(error);
+      });
+  });
+
+
+
+  router.get("/", (req, res) => {
+
+    let recipeStore = [];
+    let searchTerm = `&query=${req.query.search}`;
+    let numberDisplayed = `&number=5`;
+
+    axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`)
+      .then((response) => {
+
+        recipeStore = response.data;
+        let recipeIds = [];
+        for (const recipe of recipeStore.results) {
+          recipeIds.push(recipe.id);
+        }
+        return recipeIds;
+      })
+      .then((recipeIds) => {
+        // if it finds no recipes, gives [] to this section
+        if (recipeIds.length > 0) {
+          let ids = recipeIds.join(",");
+          return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
+        }
+      })
+      .then((allRecipeInfo) => {
+        // only if recipe info is found
+        if (allRecipeInfo) {
+          let dieteryRestrictions = {};
+          for (const recipeDietery in allRecipeInfo.data) {
+            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
+            dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
+            dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
+            dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
+
+            recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+            //  recipeStore.results[recipeDietery].favourite = false;
+          }
+          // .then() or maybe the current if statement?
+          // db.getFavouritesByUser(userId)
+          // compare ids generated here to ids on favourites table
+          // if they match, set recipeStore.results[recipeDietery].favourite = true;
+        }
+        res.send(recipeStore.results);
+
+      })
+      .catch((error) => {
         console.log(error);
       });
   });
