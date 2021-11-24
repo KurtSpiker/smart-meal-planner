@@ -12,7 +12,7 @@ export default function RecipeDialog(props) {
 
   useEffect(() => {
     console.log("hello")
-    return function cleanup() {
+    return function cleanup(){
       setOpen(true)
     }
   },[dialogSwitch]);

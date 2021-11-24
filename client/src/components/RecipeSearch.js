@@ -88,7 +88,7 @@ const RecipeSearch = function (props) {
   useEffect(() => {
 
     // axios.post('/foo', qs.stringify({ 'bar': 123 }));
-    axios.get('http://localhost:4000/api/recipes-test', {
+    axios.get('http://localhost:4000/api/recipes', {
       params: {
         search: searchTextValue
       }
