@@ -1,31 +1,50 @@
-import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader, CardActions, Icon, IconButton } from "@mui/material";
+import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader, CardActions, Icon, IconButton, Checkbox } from "@mui/material";
 import FoodBankIcon from '@mui/icons-material/FoodBank';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
+import { padding } from "@mui/system";
+import RecipeDialog from "./RecipeDialog";
+import { useState, forceUpdate } from "react"
 
 
 const RecipeSearchItem = function (props) {
+  const [dialogShow, setDialogShow] = useState(false)
 
-  const { recipe } = props
+  const { recipe, test } = props
+
+  const handleShowChange = () => {
+    
+    if(dialogShow) {
+      setDialogShow(false)
+      return
+    }
+    setDialogShow(true) 
+  }
+
   
   const Dietary = function() {
+    if (!test) {
+      return "subheader"
+    }
     let subheaderTemplate = []
     if (recipe.dieteryRestrictions.vegetarian) {
-      subheaderTemplate.push("vegetarian")
+      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/vegetarian.png"} alt="picture" width="45px" height="45px"/>)
     }
     if (recipe.dieteryRestrictions.vegan) {
-      subheaderTemplate.push("vegan")
+      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/vegan-symbol.png"} alt="picture" width="45px" height="45px"/>)
     }
     if (recipe.dieteryRestrictions.glutenfree) {
-      subheaderTemplate.push("glutenfree")
+      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/glutenfree.png"} alt="picture" width="45px" height="45px"/>)
     }
     if (recipe.dieteryRestrictions.dairyfree) {
-      subheaderTemplate.push("Dairyfree")
+      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/dairyfree2.png"} alt="picture" width="45px" height="45px"/>)
     }
-    return subheaderTemplate.toString()
+    return subheaderTemplate
   }
 
   return (
     <Grid item>
+      {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow}/>}
       <Card sx={{ maxWidth: 250, minWidth: 250 }}>
         <CardMedia
           component="img"
@@ -37,14 +56,13 @@ const RecipeSearchItem = function (props) {
         <CardHeader
           title={recipe.title}
           subheader={Dietary()}
-          sx={{ textAlign: "center" }}
+          sx={{ textAlign: "center", paddingBottom: 0 }}
         />
-        <CardActions sx={{ justifyContent: "space-between"}}>
+        <CardActions sx={{ justifyContent: "space-between", paddingTop: 0}}>
+          <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>
+          </Checkbox>
           <IconButton>
-            <FavoriteIcon/>
-          </IconButton>
-          <IconButton>
-            <FoodBankIcon/>
+            <FoodBankIcon onClick={() => {handleShowChange()}}/>
           </IconButton>
         </CardActions>
       </Card>

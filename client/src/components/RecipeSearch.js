@@ -88,7 +88,7 @@ const RecipeSearch = function (props) {
   useEffect(() => {
 
     // axios.post('/foo', qs.stringify({ 'bar': 123 }));
-    axios.get('http://localhost:4000/api/recipes', {
+    axios.get('http://localhost:4000/api/recipes-test', {
       params: {
         search: searchTextValue
       }
@@ -120,7 +120,7 @@ const RecipeSearch = function (props) {
         {
           recipeContent
         }
-        <RecipeSearchItem recipe={testRecipies.results[0]}/>
+        <RecipeSearchItem recipe={testRecipies.results[0]} test={true}/>
       </Grid>
       <Grid container>
         {/* <RecipeCarousel testRecipies={testRecipies}/>
