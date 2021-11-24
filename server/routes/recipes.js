@@ -146,17 +146,18 @@ module.exports = (db) => {
     let userId = 1;  // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
-    let data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
+    let data = { userId, week: 2, day: "thursday", meal: "dinner", spoonacularId, mealName: "thursday Meal", imageUrl: 'another-image.jpg' };
 
-    db.addRecipesForUser(data)
+    db.deleteRecipesForUser(data)
+      .then(() => {
+        return db.addRecipesForUser(data);
+      })
       .then((result) => {
-
         console.log("POST to /recipes/:id - Success.");
         res.send(result);
       }).catch((error) => {
         console.log(error);
       });
-
   });
 
   // deleting a recipe from a user's meal list
