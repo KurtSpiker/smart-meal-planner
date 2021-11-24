@@ -13,7 +13,7 @@ import PantryList from "./PantryList";
 
 export default function Main() {
 
-  const [selectedDay, setSelectedDay] = useState("");
+  const [selectedMeal, setSelectedMeal] = useState({day: "", mealType: ""});
   
   return (
     <div>
@@ -21,7 +21,7 @@ export default function Main() {
         <div className="content">
           <Routes>
             <Route exact path="/GroceryList" element={<GroceryList/>}/>
-            <Route exact path="/WeekPlan" element={<WeekPlan />}/>
+            <Route exact path="/WeekPlan" element={<WeekPlan setSelectedMeal={setSelectedMeal} />}/>
             <Route exact path="/PantryList" element={<PantryList/>}/>
           </Routes>
           <Outlet/>

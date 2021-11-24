@@ -4,12 +4,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function DayMealsItem(props) {
   
-  const { meal, mealType, onRemove } = props
+  const { meal, mealType, onRemove, dayOfWeek, setSelectedMeal } = props
 
   return (
     <Grid container>
       <Grid item>
-        <ButtonBase sx={{ width: 128, height: 128 }}>
+        <ButtonBase onClick={() => setSelectedMeal({day: dayOfWeek, mealType: mealType})} sx={{ width: 128, height: 128 }}>
           <img style={{width:"100%"}} alt="recipe" src={meal.image_link} />
         </ButtonBase>
       </Grid>

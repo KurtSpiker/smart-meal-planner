@@ -8,7 +8,7 @@ import useMealsItemMode from '../../hooks/useMealsItemMode';
 
 export default function DayMealsItem(props) {
   
-  const { meal, mealType } = props;
+  const { meal, mealType, dayOfWeek, setSelectedMeal } = props;
 
   //appointment pannel mode name variables
   const ADD = "ADD";
@@ -44,6 +44,8 @@ export default function DayMealsItem(props) {
           onRemove={() => {
             return transition(CONFIRM)
           }}
+          dayOfWeek={dayOfWeek}
+          setSelectedMeal={setSelectedMeal}
       />
       )}
       {mode === ADD && (<Add />)}
