@@ -9,8 +9,8 @@ app.use(express.json());
 
 const morgan = require("morgan");
 
-const cors = require('cors');
-app.use(cors());
+// const cors = require('cors');
+// app.use(cors());
 
 //cookie parser to get login id
 const cookieParser = require('cookie-parser');

@@ -1,9 +1,10 @@
-import './App.css';
+import './index.css';
+import WeekPlan from './components/WeekPlan/'
 
 function App() {
   return (
     <div className="App">
-      React App
+      <WeekPlan />
     </div>
   );
 }

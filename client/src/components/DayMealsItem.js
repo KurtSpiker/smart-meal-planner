@@ -17,18 +17,17 @@ export default function DayMealsItem(props) {
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
-          
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Meal Prop
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                Recipe Title Prop
-              </Typography>
-              <ButtonBase sx={{ cursor: 'pointer' }} variant="body2" color="text.secondary">
-                Recipe Details Link
-              </ButtonBase>
-            </Grid>
+          <Grid item xs>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              Meal Prop
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              Recipe Title Prop
+            </Typography>
+            <ButtonBase sx={{ cursor: 'pointer' }} variant="body2" color="text.secondary">
+              Recipe Details Link
+            </ButtonBase>
+          </Grid>
         </Grid>
       </Grid>
     </Paper>
