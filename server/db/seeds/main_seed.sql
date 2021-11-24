@@ -16,7 +16,7 @@ INSERT INTO meal_lists (meal_name, day_of_week, user_id, spoonacular_id, meal, w
 INSERT INTO meal_lists (meal_name, day_of_week, user_id, spoonacular_id, meal, week, image_link) VALUES ('Bad Meal 2','wednesday', 3, 636231, 'breakfast', 3, 'https://spoonacular.com/recipeImages/633876-556x370.jpg');
 INSERT INTO meal_lists (meal_name, day_of_week, user_id, spoonacular_id, meal, week, image_link) VALUES ('Bad Meal 1','tuesday', 1, 636078, 'breakfast', 1, 'https://spoonacular.com/recipeImages/633876-556x370.jpg');
 INSERT INTO meal_lists (meal_name, day_of_week, user_id, spoonacular_id, meal, week, image_link) VALUES ('A Meal','wednesday', 1, 654830, 'lunch', 2, 'https://spoonacular.com/recipeImages/633876-556x370.jpg');
-INSERT INTO favourites (user_id, spoonacular_id) VALUES (1, 633876);
+INSERT INTO favourites (user_id, spoonacular_id) VALUES (1, 663641);
 INSERT INTO favourites (user_id, spoonacular_id) VALUES (1, 636078);
 INSERT INTO favourites (user_id, spoonacular_id) VALUES (1, 646545);
 INSERT INTO jokes (joke) VALUES ('Any salad can be a Caesar salad if you stab it enough.');

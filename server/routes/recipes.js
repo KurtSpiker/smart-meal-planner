@@ -7,16 +7,23 @@ module.exports = (db) => {
 
   // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&query=pasta&number=2
   // search for a recipe using keywords
-  // http://localhost:4000/api/recipes?search=
+  // http://localhost:4000/api/recipes?search=Tomato%20tarte%20tatin
   router.get("/", (req, res) => {
 
+    let userId = 1 // const userId = req.cookies["user_id"];
     let recipeStore = [];
     let searchTerm = `&query=${req.query.search}`;
     let numberDisplayed = `&number=5`;
+    let favouritesArray = [];
 
-    axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`)
+    db.getFavourites(userId)
+      .then((favourites) => {
+        favouritesArray = favourites.map((fav) => {
+          return fav.spoonacular_id;
+        })
+        return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
+      })
       .then((response) => {
-
         recipeStore = response.data;
         let recipeIds = [];
         for (const recipe of recipeStore.results) {
@@ -40,25 +47,25 @@ module.exports = (db) => {
             dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
             dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
             dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
-
             recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
-            //  recipeStore.results[recipeDietery].favourite = false;
+
+            if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
+              recipeStore.results[recipeDietery].favourite = true;
+            } else {
+              recipeStore.results[recipeDietery].favourite = false;
+            }
+
           }
-          // .then() or maybe the current if statement?
-          // db.getFavouritesByUser(userId)
-          // compare ids generated here to ids on favourites table
-          // if they match, set recipeStore.results[recipeDietery].favourite = true;
         }
         res.send(recipeStore.results);
-
       })
       .catch((error) => {
         console.log(error);
       });
   });
 
-  // looking at a specific recipe using its spoonacular id
-  // http://localhost:4000/api/recipes/648279
+  // looking at a specific recipe using its spoonacular id 663641 648279
+  // http://localhost:4000/api/recipes/663641
   router.get("/:id", (req, res) => {
 
     let recipeId = req.params.id;
@@ -146,7 +153,7 @@ module.exports = (db) => {
   });
 
   // gets users recipe schedule by the week
-  // http://localhost:4000/api/recipes/mealList?week=
+  // http://localhost:4000/api/recipes/mealList/1
   router.get("/mealList/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
@@ -157,57 +164,6 @@ module.exports = (db) => {
         res.send(formatMealDays(result));
         console.log("GET to recipes/mealList/:id - Success.");
       }).catch((error) => {
-        console.log(error);
-      });
-  });
-
-
-
-  router.get("/", (req, res) => {
-
-    let recipeStore = [];
-    let searchTerm = `&query=${req.query.search}`;
-    let numberDisplayed = `&number=5`;
-
-    axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`)
-      .then((response) => {
-
-        recipeStore = response.data;
-        let recipeIds = [];
-        for (const recipe of recipeStore.results) {
-          recipeIds.push(recipe.id);
-        }
-        return recipeIds;
-      })
-      .then((recipeIds) => {
-        // if it finds no recipes, gives [] to this section
-        if (recipeIds.length > 0) {
-          let ids = recipeIds.join(",");
-          return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
-        }
-      })
-      .then((allRecipeInfo) => {
-        // only if recipe info is found
-        if (allRecipeInfo) {
-          let dieteryRestrictions = {};
-          for (const recipeDietery in allRecipeInfo.data) {
-            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
-            dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
-            dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
-            dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
-
-            recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
-            //  recipeStore.results[recipeDietery].favourite = false;
-          }
-          // .then() or maybe the current if statement?
-          // db.getFavouritesByUser(userId)
-          // compare ids generated here to ids on favourites table
-          // if they match, set recipeStore.results[recipeDietery].favourite = true;
-        }
-        res.send(recipeStore.results);
-
-      })
-      .catch((error) => {
         console.log(error);
       });
   });

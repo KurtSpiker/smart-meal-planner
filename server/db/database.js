@@ -379,3 +379,19 @@ const generateJoke = function (number) {
     .catch(e => { console.error(e) });
 }
 exports.generateJoke = generateJoke;
+
+
+
+const getFavourites = function (userId) {
+
+  const sqlString = `SELECT * FROM favourites WHERE user_id = $1;`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      console.log(`Successfully retrieved favourites for user ${userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.getFavourites = getFavourites;
