@@ -68,6 +68,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes/663641
   router.get("/:id", (req, res) => {
 
+    let userId = 1;
     let recipeId = req.params.id;
     let ingredientArray = [];
     let title = "";
@@ -78,9 +79,17 @@ module.exports = (db) => {
     let summary = "";
     let instructions = [];
     let dieteryRestrictions = {};
+    let favourite = false;
+    let favouritesArray = [];
 
-    // https://api.spoonacular.com/recipes/633876/information?apiKey=8ba6b2219e2341128994d3733eb5e7fc&includeNutrition=false
-    axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
+    db.getFavourites(userId)
+      .then((favourites) => {
+        favouritesArray = favourites.map((fav) => {
+          return fav.spoonacular_id;
+        })
+      }).then(() => {
+        return axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
+      })
       .then((response) => {
 
         for (const ingredient of response.data.extendedIngredients) {
@@ -104,7 +113,23 @@ module.exports = (db) => {
         dieteryRestrictions.glutenFree = response.data.glutenFree;
         dieteryRestrictions.dairyFree = response.data.dairyFree;
 
-        let objectToSend = { recipeId, dieteryRestrictions, ingredientArray, title, time, servings, sourceUrl, image, summary, instructions };
+        if (favouritesArray.includes(response.data.id)) {
+          favourite = true;
+        }
+
+        let objectToSend = {
+          recipeId,
+          dieteryRestrictions,
+          ingredientArray,
+          title,
+          time,
+          servings,
+          sourceUrl,
+          image,
+          summary,
+          instructions,
+          favourite
+        };
 
         res.send(objectToSend);
         console.log("GET to /recipes/:id - Success.");
