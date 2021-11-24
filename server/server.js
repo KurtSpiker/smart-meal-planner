@@ -5,7 +5,12 @@ const environment = require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
+app.use(express.json());
+
 const morgan = require("morgan");
+
+// const cors = require('cors');
+// app.use(cors());
 
 //cookie parser to get login id
 const cookieParser = require('cookie-parser');

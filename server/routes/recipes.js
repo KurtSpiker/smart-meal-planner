@@ -6,15 +6,15 @@ const { formatMealDays } = require("./routesHelpers");
 module.exports = (db) => {
 
   // search for a recipe using keywords
-  // http://localhost:4000/api/recipes
+  // http://localhost:4000/api/recipes?search=
   router.get("/", (req, res) => {
 
-    let searchTerm = "pasta,italian";
+    let searchTerm = req.query.search;
 
     axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}&query=${searchTerm}`)
       .then((response) => {
         res.send(response.data);
-        console.log("GET to /recipes - Success.");
+        console.log("GET to /recipes/autogenerate - Success.");
       })
       .catch((error) => {
         console.log(error);
