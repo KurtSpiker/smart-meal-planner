@@ -94,7 +94,7 @@ const RecipeSearch = function (props) {
     })
       .then((result) => {
         setRecipes(() => {
-          return result.data.results;
+          return result.data;
         })
         setRecipeContent(() => {
           return recipes.map((recipe) => {
