@@ -115,15 +115,12 @@ module.exports = (db) => {
   router.get("/mealList/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
-    let week = req.params.id
+    let week = req.params.id;
 
     db.getRecipesByUser(userId, week)
       .then((result) => {
-        console.log("GET to /recipes/mealList/:id - Success.");
-
         res.send(formatMealDays(result));
         console.log("GET to recipes/mealList/:id - Success.");
-        // console.log(formatMealDays(result))
       }).catch((error) => {
         console.log(error);
       });

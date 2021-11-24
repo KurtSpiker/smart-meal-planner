@@ -1,9 +1,14 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { recipe } from '../sampleRecipe'
+import { weekRecipes } from "../sampleWeekRecipes";
 
-import DayMealsItem from '../components/DayMealsItem'
-import DayMeals from '../components/DayMeals'
+import Show from '../components/WeekPlan/Show'
+import Load from '../components/WeekPlan/Load'
+import Add from '../components/WeekPlan/Add'
+import Confirm from '../components/WeekPlan/Confirm'
+import DayMeals from '../components/WeekPlan/DayMeals'
+import WeekPlan from '../components/WeekPlan/index'
 import Recipe from '../components/Recipe/'
 import RecipeIngredientsList from '../components/Recipe/RecipeIngredientsList'
 import ListItem from '../components/Recipe/ListItem'
@@ -15,11 +20,13 @@ import Counter from '../components/Counter'
 
 const recipeItems = recipe.ingredientArray
 
-storiesOf("DayMealsItem", module)
-  .add("Base", () => <DayMealsItem />)
-
-storiesOf("DayMeals", module)
-  .add("Base", () => <DayMeals />)
+storiesOf("WeekPlan", module)
+  .add("Base", () => <WeekPlan />)
+  .add("DayMeals", () => <DayMeals meals={weekRecipes.monday} dayOfWeek="Monday"/>)
+  .add("Show", () => <Show meal={weekRecipes.monday.breakfast} mealType={"breakfast"}/>)
+  .add("Load", () => <Load />)
+  .add("Add", () => <Add />)
+  .add("Confirm", () => <Confirm />)
 
 storiesOf("Recipe", module)
   .add("Base", () => <Recipe />)
