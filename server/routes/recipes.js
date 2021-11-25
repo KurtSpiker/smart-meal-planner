@@ -7,11 +7,12 @@ module.exports = (db) => {
 
   // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&query=pasta&number=2
   // search for a recipe using keywords
-  http://localhost:4000/api/recipes?search=Tomato%20tarte%20tatin
+  // http://localhost:4000/api/recipes?search=Nachos%20Grande
   router.get("/", (req, res) => {
 
     let userId = 1 // const userId = req.cookies["user_id"];
     let recipeStore = [];
+    // let recipeSend = []; //for sort function
     let searchTerm = `&query=${req.query.search}`;
     let numberDisplayed = `&number=5`;
     let favouritesArray = [];
@@ -24,40 +25,63 @@ module.exports = (db) => {
         return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
       })
       .then((response) => {
-        recipeStore = response.data;
+        recipeStore = response.data.results;
         let recipeIds = [];
-        for (const recipe of recipeStore.results) {
+        for (const recipe of recipeStore) {
           recipeIds.push(recipe.id);
         }
         return recipeIds;
       })
       .then((recipeIds) => {
         // if it finds no recipes, gives [] to this section
+        let ids = recipeIds.join(",");
         if (recipeIds.length > 0) {
-          let ids = recipeIds.join(",");
+          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=663587.663588.663638.663641.663659
           return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
         }
       })
       .then((allRecipeInfo) => {
         // only if recipe info is found
         if (allRecipeInfo) {
-          let dieteryRestrictions = {};
+
+          // keeping sort functions here incase its needed
+          // let sortedRecipes = allRecipeInfo.data.sort((recipeA, recipeB) => {
+          //   if (recipeA.id > recipeB.id) {
+          //     return 1;
+          //   } else if (recipeA.id < recipeB.id) {
+          //     return -1;
+          //   } else {
+          //     return 0;
+          //   }
+          // })
+
+          // recipeSend = recipeStore.sort((recipeA, recipeB) => {
+          //   if (recipeA.id > recipeB.id) {
+          //     return 1;
+          //   } else if (recipeA.id < recipeB.id) {
+          //     return -1;
+          //   } else {
+          //     return 0;
+          //   }
+          // })
+
           for (const recipeDietery in allRecipeInfo.data) {
-            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
+            let dieteryRestrictions = {};
             dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
             dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
             dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
-            recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian;
+            recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
 
             if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
-              recipeStore.results[recipeDietery].favourite = true;
+              recipeStore[recipeDietery].favourite = true;
             } else {
-              recipeStore.results[recipeDietery].favourite = false;
+              recipeStore[recipeDietery].favourite = false;
             }
 
           }
         }
-        res.send(recipeStore.results);
+        res.send(recipeStore);
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +89,7 @@ module.exports = (db) => {
   });
 
   // looking at a specific recipe using its spoonacular id 663641 648279
-  // http://localhost:4000/api/recipes/663641
+  // http://localhost:4000/api/recipes/634856
   router.get("/:id", (req, res) => {
 
     let userId = 1;
@@ -88,6 +112,8 @@ module.exports = (db) => {
           return fav.spoonacular_id;
         })
       }).then(() => {
+
+        // https://api.spoonacular.com/recipes/13265/information?apiKey=44f44a53a6e64445a1156824595d2c98&includeNutrition=false
         return axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`)
       })
       .then((response) => {
@@ -147,10 +173,6 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
 
     let data = { ...req.body, spoonacularId, userId };
-
-    // let data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
-
-    //let data = { userId, week: 2, day: "thursday", meal: "dinner", spoonacularId, mealName: "thursday Meal", imageUrl: 'another-image.jpg' };
 
     db.deleteRecipesForUser(data)
       .then(() => {
@@ -250,8 +272,8 @@ module.exports = (db) => {
   //     .then((allRecipeInfo) => {
   //       // only if recipe info is found
   //       if (allRecipeInfo) {
-  //         let dieteryRestrictions = {};
   //         for (const recipeDietery in allRecipeInfo) {
+  //         let dieteryRestrictions = {};
   //           dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
   //           dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
   //           dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;
@@ -275,3 +297,4 @@ module.exports = (db) => {
 
   return router;
 };
+
