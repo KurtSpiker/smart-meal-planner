@@ -28,5 +28,33 @@ module.exports = (db) => {
     res.send("cleared cookie");
   })
 
+  // user adds a favourite
+  db.getUserDetails(userId)
+    .then((userDetails) => {
+      console.log("GET to users/login/:id - Success.");
+      res.send(userDetails);
+    })
+    .catch(e => {
+      console.error(e);
+      res.send(e)
+    });
+
+  // user deletes a favourite
+  router.get("/login/:id", (req, res) => {
+
+    res.cookie('user_id', req.params.id);
+    const userId = req.cookies["user_id"];
+
+    db.getUserDetails(userId)
+      .then((userDetails) => {
+        console.log("GET to users/login/:id - Success.");
+        res.send(userDetails);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  });
+
   return router;
 };

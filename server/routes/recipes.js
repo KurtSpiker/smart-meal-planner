@@ -89,7 +89,7 @@ module.exports = (db) => {
   });
 
   // looking at a specific recipe using its spoonacular id 663641 648279
-  // http://localhost:4000/api/recipes/634856
+  // http://localhost:4000/api/recipes/640104
   router.get("/:id", (req, res) => {
 
     let userId = 1;
