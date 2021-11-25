@@ -8,33 +8,22 @@ export default function useWeeklyPlanData() {
   const [plan, setPlan] = useState({})
 
   useEffect(() => {
-
-
-  }, [plan]);
-
-  useEffect(() => {
     axios.get(`/api/recipes/mealList/${weekNumber}`)
-    .then((data)=>{
-      setPlan(data)
-    })
- 
-  }, [])
-
-  useEffect(() => {
-    axios.get(`/api/recipes/mealList/${weekNumber}`)
-    .then(()=>{
-      setPlan((prev)=>{
-       let obj = { ...prev}
-       delete obj[1].monday.breakfast;
-       return obj;
+      .then((response) => {
+        console.log(response.data)
+        setPlan((prev) => (
+          {
+            ...prev, 
+            ...response.data
+          }
+        ))
       })
-    })
-  
-  }, [plan]);
-  
+      .catch((err) => {
+        console.log(err.message);
+      })
+  }, []);
 
   const removeMeal = (meal, day) => {
-    console.log("Remove this meal!")
     return axios.delete(`/api/recipes`, {
       data: {
         week: 1,
@@ -43,25 +32,12 @@ export default function useWeeklyPlanData() {
       }
     })
     .then(() => {
-      console.log("do i get here?")
-      setPlan((prev) => (
-        {
-          ...prev,
-          [day]: {[meal]: {}}
-        }
-      ))
-      .then(()=>{
-        console.log("GOT TO UPDATE MEALIST!")
-        axios.get(`/api/recipes/mealList/${weekNumber}`)
-        .then((response) => {
-          setPlan((prev) => (
-            {
-              ...prev, 
-              ...response.data
-            }
-          ))
-        })
-      })
+      console.log("remove plan", meal, day)
+      let updateObject = {...plan}
+      delete updateObject[day][meal];
+
+      setPlan(() => (updateObject));
+      
     })
     .catch((e)=>{
       console.log(e);

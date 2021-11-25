@@ -31,10 +31,10 @@ const RecipeSearchItem = function (props) {
     if (recipe.dieteryRestrictions.vegan) {
       subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/vegan-symbol.png"} alt="picture" width="45px" height="45px"/>)
     }
-    if (recipe.dieteryRestrictions.glutenfree) {
+    if (recipe.dieteryRestrictions.glutenFree) {
       subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/glutenfree.png"} alt="picture" width="45px" height="45px"/>)
     }
-    if (recipe.dieteryRestrictions.dairyfree) {
+    if (recipe.dieteryRestrictions.dairyFree) {
       subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/dairyfree2.png"} alt="picture" width="45px" height="45px"/>)
     }
     return subheaderTemplate
