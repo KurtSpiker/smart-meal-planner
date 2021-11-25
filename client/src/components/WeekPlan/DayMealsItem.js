@@ -9,7 +9,7 @@ import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
 export default function DayMealsItem(props) {
 
-  const { meal, mealType, dayOfWeek } = props;
+  const { meal, mealType, dayOfWeek, removeMeal } = props;
 
   //appointment pannel mode name variables
   const ADD = "ADD";
@@ -17,7 +17,6 @@ export default function DayMealsItem(props) {
   const CONFIRM = "CONFIRM";
   const LOAD = "LOAD";
   const { mode, transition, back } = useMealsItemMode(ADD);
-  const { removeMeal } = useWeeklyPlanData();
   
   //If a meal is available transition to the show mode
   if (mode === ADD && meal) {
