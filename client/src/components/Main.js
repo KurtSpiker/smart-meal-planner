@@ -14,8 +14,6 @@ import RecipeSearch from "./RecipeSearch";
 import Recipe from "./Recipe";
 
 export default function Main() {
-
-  // const [selectedMeal, setSelectedMeal] = useState({day: "", mealType: ""});
   
   return (
     <div>

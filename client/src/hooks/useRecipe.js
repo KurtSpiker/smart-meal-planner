@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export default function useRecipe () {
 
+  const [loading, setLoading] = useState(false)
   const [recipe, setRecipe] = useState(
     {
       "recipeId": "",
@@ -22,6 +23,7 @@ export default function useRecipe () {
   const { mealId } = useContext(mealContext);
   
   useEffect(() => {
+    setLoading(true)
     axios.get(`/api/recipes/${mealId}`)
     .then((response)=>{
       setRecipe ((prev) => (
@@ -30,12 +32,13 @@ export default function useRecipe () {
           ...response.data
         }
       ));
+      setLoading(false)
     })
     .catch(function (error) {
       console.log(error);
     });
   }, [])
 
-  return { recipe };
+  return { recipe, loading };
 
 };
