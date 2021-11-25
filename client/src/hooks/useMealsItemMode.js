@@ -33,18 +33,6 @@ export default function useMealsItemMode(modeInit) {
     }
   };
 
-  const removeMeal = (meal, day) => {
-    return  axios.delete(`/api/recipes`, {
-      data: {
-        week: 1,
-        meal,
-        day
-      }
-    }).catch((e)=>{
-      console.log(e);
-    });
-  }
-
-  return { mode, transition, back, removeMeal };
+  return { mode, transition, back };
 
 };

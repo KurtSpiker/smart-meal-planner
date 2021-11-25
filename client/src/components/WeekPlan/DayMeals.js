@@ -4,7 +4,7 @@ import DayMealsItem from './DayMealsItem'
 
 export default function DayMeals(props) {
   const mealTypes = ["breakfast", "lunch", "dinner"];
-  const { meals, dayOfWeek, setSelectedMeal, setPlan } = props;
+  const { meals, dayOfWeek, setSelectedMeal } = props;
   
   return (
     <Grid sx={{paddingBottom: "20px"}}>
@@ -22,7 +22,6 @@ export default function DayMeals(props) {
                   <DayMealsItem 
                     dayOfWeek={dayOfWeek} 
                     meal={meals[mealType]} 
-                    setPlan={setPlan}
                     mealType={mealType}/>
                 </Paper>
               </Grid>
