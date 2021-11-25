@@ -88,12 +88,12 @@ exports.generateGroceryList = generateGroceryList;
 
 
 
-const getGroceryListByUser = function (userId) {
+const getGroceryListByUser = function (userId, week) {
 
-  const sqlString = `SELECT * FROM grocery_list_items WHERE user_id = $1;`;
+  const sqlString = `SELECT * FROM grocery_list_items WHERE user_id = $1 AND week = $2;`;
 
   return pool
-    .query(sqlString, [userId])
+    .query(sqlString, [userId, week])
     .then(res => {
       console.log(`Successfully retrieved groceries by user ${userId}.`);
       return res.rows;
@@ -395,3 +395,35 @@ const getFavourites = function (userId) {
     .catch(e => { console.error(e) });
 }
 exports.getFavourites = getFavourites;
+
+
+
+const addFavourites = function (userId, spoonacularId) {
+
+  let sqlString = `INSERT INTO favourites (user_id, spoonacular_item_id) VALUES ($1, $2)`;
+
+  return pool
+    .query(sqlString, [userId, spoonacularId])
+    .then(res => {
+      console.log(`Successfully added favourites for user ${userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.addFavourites = addFavourites;
+
+
+
+const deleteFavourites = function (userId, spoonacularId) {
+
+  let sqlString = `DELETE FROM favourites WHERE user_id = $1 AND spoonacular_id = $2`;
+
+  return pool
+    .query(sqlString, [userId, spoonacularId])
+    .then(res => {
+      console.log(`Successfully added favourites for user ${userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.deleteFavourites = deleteFavourites;

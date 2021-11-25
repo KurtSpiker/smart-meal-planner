@@ -29,26 +29,33 @@ module.exports = (db) => {
   })
 
   // user adds a favourite
-  db.getUserDetails(userId)
-    .then((userDetails) => {
-      console.log("GET to users/login/:id - Success.");
-      res.send(userDetails);
-    })
-    .catch(e => {
-      console.error(e);
-      res.send(e)
-    });
+  // http://localhost:4000/api/users/favourites
+  router.post("/favourites", (req, res) => {
+
+    let userId = 1;
+    let spoonacularId = req.body.spoonacularId;
+
+    db.addFavourites(userId, spoonacularId)
+      .then((results) => {
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  })
+
 
   // user deletes a favourite
-  router.get("/login/:id", (req, res) => {
+  // http://localhost:4000/api/users/favourites
+  router.delete("/favourites", (req, res) => {
 
-    res.cookie('user_id', req.params.id);
-    const userId = req.cookies["user_id"];
+    let userId = 1;
+    let spoonacularId = req.body.spoonacularId;
 
-    db.getUserDetails(userId)
-      .then((userDetails) => {
-        console.log("GET to users/login/:id - Success.");
-        res.send(userDetails);
+    db.deleteFavourites(userId, spoonacularId)
+      .then((results) => {
+        res.send(results);
       })
       .catch(e => {
         console.error(e);
