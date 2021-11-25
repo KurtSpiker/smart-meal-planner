@@ -172,9 +172,11 @@ module.exports = (db) => {
     let userId = 1;  // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
-    // let data = { ...req.body, spoonacularId, userId };
+    let data = { ...req.body, spoonacularId, userId };
 
-    let data = { userId, week: 2, day: "thursday", meal: "dinner", spoonacularId, mealName: "thursday Meal", imageUrl: 'another-image.jpg' };
+    // let data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
+
+    //let data = { userId, week: 2, day: "thursday", meal: "dinner", spoonacularId, mealName: "thursday Meal", imageUrl: 'another-image.jpg' };
 
     db.deleteRecipesForUser(data)
       .then(() => {
@@ -189,13 +191,15 @@ module.exports = (db) => {
   });
 
   // deleting a recipe from a user's meal list
-  // http://localhost:4000/api/recipes/649141
-  router.delete("/:id", (req, res) => {
+  // http://localhost:4000/api/recipes
+  router.delete("/", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
-    let spoonacularId = req.params.id;
+    // let spoonacularId = req.params.id;
 
-    let data = { userId, week: 1, day: "monday", meal: "lunch", spoonacularId };
+    let data = {...req.body, userId};
+
+    // let data = { userId, week: 1, day: "monday", meal: "lunch", spoonacularId };
 
     db.deleteRecipesForUser(data)
       .then((result) => {

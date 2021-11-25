@@ -5,27 +5,32 @@ import Load from './Load';
 import Add from './Add';
 import Confirm from './Confirm';
 import useMealsItemMode from '../../hooks/useMealsItemMode';
+import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
 export default function DayMealsItem(props) {
 
-  const { meal, mealType, dayOfWeek, setSelectedMeal } = props;
+  const { meal, mealType, dayOfWeek, removeMeal } = props;
 
   //appointment pannel mode name variables
   const ADD = "ADD";
   const SHOW = "SHOW";
   const CONFIRM = "CONFIRM";
   const LOAD = "LOAD";
-
-  const { mode, transition, back } = useMealsItemMode(meal ? SHOW : ADD);
+  const { mode, transition, back } = useMealsItemMode(ADD);
+  
+  //If a meal is available transition to the show mode
+  if (mode === ADD && meal) {
+    transition(SHOW);
+  }
 
   //when a user confirms the remove action
   const onConfirm = () => {
-    //call to database and remove recipe from their list
-    //set timeout is for demonstration until db is hooked up
     transition(LOAD);
-    setTimeout(() => {
-      transition(ADD);
-    }, 2000);
+    removeMeal(mealType, dayOfWeek)
+      .then(() => {
+        console.log("after remove meal")
+        transition(ADD);
+      });
   };
 
   //when a user cancels the delete action
@@ -45,10 +50,14 @@ export default function DayMealsItem(props) {
             return transition(CONFIRM)
           }}
           dayOfWeek={dayOfWeek}
-          setSelectedMeal={setSelectedMeal}
         />
       )}
-      {mode === ADD && (<Add />)}
+      {mode === ADD && (
+        <Add 
+          mealType={mealType}
+          dayOfWeek={dayOfWeek}
+        />)
+      }
       {mode === CONFIRM && (
         <Confirm
           onConfirm={onConfirm}

@@ -10,14 +10,27 @@ const testRecipies = {
       "id": "633876",
       "title": "Baked Ziti",
       "image": "https://spoonacular.com/recipeImages/633876-312x231.jpg",
-      "imageType": "jpg"
+      "imageType": "jpg",
+      "dieteryRestrictions": {
+        "vegetarian": true,
+        "vegan": true,
+        "glutenfree": true,
+        "dairyfree": true
+      }
     },
     {
-      "id": 648279,
-      "title": "Italian Tuna Pasta",
-      "image": "https://spoonacular.com/recipeImages/648279-312x231.jpg",
-      "imageType": "jpg"
-    },
+      "id": 663659,
+      "title": "Tomato-Zucchini Pie",
+      "image": "https://spoonacular.com/recipeImages/663659-312x231.jpg",
+      "imageType": "jpg",
+      "dieteryRestrictions": {
+          "vegetarian": true,
+          "vegan": true,
+          "glutenFree": true,
+          "dairyFree": true
+      },
+      "favourite": false
+  },
     {
       "id": 633883,
       "title": "Baked Ziti Casserole",
@@ -74,13 +87,12 @@ const testRecipies = {
 
 const RecipeSearch = function (props) {
 
-  const [recipes, setRecipes] = useState(testRecipies.results);
+  const [recipes, setRecipes] = useState([]);
   const [searchTextValue, setSearchTextValue] = useState("");
   const [recipeContent, setRecipeContent] = useState([]);
 
   useEffect(() => {
 
-    // axios.post('/foo', qs.stringify({ 'bar': 123 }));
     axios.get('/api/recipes', {
       params: {
         search: searchTextValue
@@ -113,6 +125,7 @@ const RecipeSearch = function (props) {
         {
           recipeContent
         }
+        <RecipeSearchItem recipe={testRecipies.results[0]} test={true}/>
       </Grid>
       <Grid container>
         {/* <RecipeCarousel testRecipies={testRecipies}/>
