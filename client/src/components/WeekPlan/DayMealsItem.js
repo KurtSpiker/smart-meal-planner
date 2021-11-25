@@ -5,7 +5,6 @@ import Load from './Load';
 import Add from './Add';
 import Confirm from './Confirm';
 import useMealsItemMode from '../../hooks/useMealsItemMode';
-import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
 export default function DayMealsItem(props) {
 

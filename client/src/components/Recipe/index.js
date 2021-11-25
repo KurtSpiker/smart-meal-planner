@@ -2,15 +2,18 @@ import React from 'react'
 import { Grid, Card, CardHeader } from '@mui/material'
 import RecipeIngredientsList from './RecipeIngredientsList'
 import InstructionsList from './InstructionsList'
-import { recipe } from '../../sampleRecipe'
+// import { recipe } from '../../sampleRecipe'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import useRecipe from '../../hooks/useRecipe'
 
 
 export default function Recipe() {
   
+  const { recipe } = useRecipe();
   const recipeItems = recipe.ingredientArray
   const instructionItems = recipe.instructions
+
 
   return (
     <Grid container justifyContent="center">
