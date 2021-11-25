@@ -8,19 +8,30 @@ export default function useWeeklyPlanData() {
   const [plan, setPlan] = useState({})
 
   useEffect(() => {
-    axios.get(`/api/recipes/mealList/${weekNumber}`)
-      .then((response) => {
-        setPlan((prev) => (
-          {
-            ...prev, 
-            ...response.data
-          }
-        ))
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+
+
   }, [plan]);
+
+  useEffect(() => {
+    axios.get(`/api/recipes/mealList/${weekNumber}`)
+    .then((data)=>{
+      setPlan(data)
+    })
+ 
+  }, [])
+
+  useEffect(() => {
+    axios.get(`/api/recipes/mealList/${weekNumber}`)
+    .then(()=>{
+      setPlan((prev)=>{
+       let obj = { ...prev}
+       delete obj[1].monday.breakfast;
+       return obj;
+      })
+    })
+  
+  }, [plan]);
+  
 
   const removeMeal = (meal, day) => {
     console.log("Remove this meal!")
@@ -38,8 +49,19 @@ export default function useWeeklyPlanData() {
           ...prev,
           [day]: {[meal]: {}}
         }
-      ));
-      console.log(plan)
+      ))
+      .then(()=>{
+        console.log("GOT TO UPDATE MEALIST!")
+        axios.get(`/api/recipes/mealList/${weekNumber}`)
+        .then((response) => {
+          setPlan((prev) => (
+            {
+              ...prev, 
+              ...response.data
+            }
+          ))
+        })
+      })
     })
     .catch((e)=>{
       console.log(e);

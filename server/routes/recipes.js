@@ -148,10 +148,6 @@ module.exports = (db) => {
 
     let data = { ...req.body, spoonacularId, userId };
 
-    // let data = { userId, week: 1, day: "tuesday", meal: "lunch", spoonacularId, mealName: "Delicious Meal", imageUrl: 'https://spoonacular.com/recipeImages/633876-556x370.jpg' };
-
-    let data = { userId, week: 2, day: "thursday", meal: "dinner", spoonacularId, mealName: "thursday Meal", imageUrl: 'another-image.jpg' };
-
     db.deleteRecipesForUser(data)
       .then(() => {
         return db.addRecipesForUser(data);
