@@ -11,10 +11,9 @@ import LinkDrawer from "./LinkDrawer"
 import GroceryList from "./GroceryList";
 import PantryList from "./PantryList";
 import RecipeSearch from "./RecipeSearch";
+import Recipe from "./Recipe";
 
 export default function Main() {
-
-  // const [selectedMeal, setSelectedMeal] = useState({day: "", mealType: ""});
   
   return (
     <div>
@@ -25,6 +24,7 @@ export default function Main() {
             <Route exact path="/WeekPlan" element={<WeekPlan />}/>
             <Route exact path="/PantryList" element={<PantryList/>}/>
             <Route exact path="/Recipe_search" element={<RecipeSearch/>}/>
+            <Route exact path="/Recipe" element={<Recipe/>}/>
           </Routes>
           <Outlet/>
         </div>

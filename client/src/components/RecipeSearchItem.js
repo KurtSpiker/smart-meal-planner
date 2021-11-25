@@ -4,13 +4,17 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
 import { padding } from "@mui/system";
 import RecipeDialog from "./RecipeDialog";
-import { useState, forceUpdate } from "react"
+import { useState, useContext } from "react"
+import useRecipe from "../hooks/useRecipe";
+import { mealContext } from "../providers/MealProvider"
+import { Link } from "react-router-dom";
 
 
 const RecipeSearchItem = function (props) {
   const [dialogShow, setDialogShow] = useState(false)
 
   const { recipe, test } = props
+  const { setDayInformation } = useContext(mealContext)
 
   const handleShowChange = () => {
     
@@ -44,7 +48,7 @@ const RecipeSearchItem = function (props) {
     <Grid item>
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id}/>}
       <Card sx={{ maxWidth: 250, minWidth: 250 }}>
-        <ButtonBase>
+        <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
           <CardMedia
             component="img"
             image={recipe.image}
