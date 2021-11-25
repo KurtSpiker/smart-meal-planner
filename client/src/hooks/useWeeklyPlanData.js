@@ -10,7 +10,7 @@ export default function useWeeklyPlanData() {
   useEffect(() => {
     axios.get(`/api/recipes/mealList/${weekNumber}`)
       .then((response) => {
-        console.log(response)
+        console.log(response.data)
         setPlan((prev) => (
           {
             ...prev, 
@@ -23,5 +23,26 @@ export default function useWeeklyPlanData() {
       })
   }, []);
 
-  return { plan };
+  const removeMeal = (meal, day) => {
+    return axios.delete(`/api/recipes`, {
+      data: {
+        week: 1,
+        meal,
+        day
+      }
+    })
+    .then(() => {
+      console.log("remove plan", meal, day)
+      let updateObject = {...plan}
+      delete updateObject[day][meal];
+
+      setPlan(() => (updateObject));
+      
+    })
+    .catch((e)=>{
+      console.log(e);
+    });
+  }
+
+  return { plan, removeMeal };
 };

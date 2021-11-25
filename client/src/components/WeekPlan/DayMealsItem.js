@@ -5,10 +5,11 @@ import Load from './Load';
 import Add from './Add';
 import Confirm from './Confirm';
 import useMealsItemMode from '../../hooks/useMealsItemMode';
+import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
 
 export default function DayMealsItem(props) {
 
-  const { meal, mealType, dayOfWeek } = props;
+  const { meal, mealType, dayOfWeek, removeMeal } = props;
 
   //appointment pannel mode name variables
   const ADD = "ADD";
@@ -24,12 +25,12 @@ export default function DayMealsItem(props) {
 
   //when a user confirms the remove action
   const onConfirm = () => {
-    //call to database and remove recipe from their list
-    //set timeout is for demonstration until db is hooked up
     transition(LOAD);
-    setTimeout(() => {
-      transition(ADD);
-    }, 2000);
+    removeMeal(mealType, dayOfWeek)
+      .then(() => {
+        console.log("after remove meal")
+        transition(ADD);
+      });
   };
 
   //when a user cancels the delete action
@@ -37,7 +38,6 @@ export default function DayMealsItem(props) {
     transition(CONFIRM)
     return;
   }
-
 
   return (
     <Grid container justifyContent="center">

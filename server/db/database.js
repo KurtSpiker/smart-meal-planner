@@ -56,18 +56,6 @@ exports.getUserById = getUserById;
 
 
 
-const getPantryItems = function () {
-
-  return new Promise((res, rej) => {
-    return res(["banana", "apple", "orange"]);
-  }).catch(e => {
-    console.error(e);
-  });
-}
-exports.getPantryItems = getPantryItems;
-
-
-
 const generateGroceryList = function (ingredientObject, userId, week) {
 
   // EXPECTED OBJECT
@@ -263,10 +251,10 @@ exports.addRecipesForUser = addRecipesForUser;
 
 const deleteRecipesForUser = function (data) {
 
-  const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4 AND spoonacular_id = $5`;
+  const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4`;
 
   return pool
-    .query(sqlString, [data.userId, data.week, data.day, data.meal, data.spoonacularId])
+    .query(sqlString, [data.userId, data.week, data.day, data.meal])
     .then(res => {
       console.log(`Successfully deleted recipe of user ${data.userId}.`)
       return res.rows;
@@ -391,3 +379,19 @@ const generateJoke = function (number) {
     .catch(e => { console.error(e) });
 }
 exports.generateJoke = generateJoke;
+
+
+
+const getFavourites = function (userId) {
+
+  const sqlString = `SELECT * FROM favourites WHERE user_id = $1;`;
+
+  return pool
+    .query(sqlString, [userId])
+    .then(res => {
+      console.log(`Successfully retrieved favourites for user ${userId}.`)
+      return res.rows;
+    })
+    .catch(e => { console.error(e) });
+}
+exports.getFavourites = getFavourites;

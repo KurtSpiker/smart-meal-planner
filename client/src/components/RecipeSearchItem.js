@@ -1,4 +1,4 @@
-import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader, CardActions, Icon, IconButton, Checkbox } from "@mui/material";
+import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader, CardActions, Icon, IconButton, Checkbox, ButtonBase } from "@mui/material";
 import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
@@ -23,9 +23,7 @@ const RecipeSearchItem = function (props) {
 
   
   const Dietary = function() {
-    if (!test) {
-      return "subheader"
-    }
+    console.log("IM A RECIPE",recipe)
     let subheaderTemplate = []
     if (recipe.dieteryRestrictions.vegetarian) {
       subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/vegetarian.png"} alt="picture" width="45px" height="45px"/>)
@@ -46,13 +44,15 @@ const RecipeSearchItem = function (props) {
     <Grid item>
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id}/>}
       <Card sx={{ maxWidth: 250, minWidth: 250 }}>
-        <CardMedia
-          component="img"
-          image={recipe.image}
-          alt="image"
-          height="250"
-          width="250"
-        />
+        <ButtonBase>
+          <CardMedia
+            component="img"
+            image={recipe.image}
+            alt="image"
+            height="250"
+            width="250"
+          />
+        </ButtonBase>
         <CardHeader
           title={recipe.title}
           subheader={Dietary()}
