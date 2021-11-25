@@ -28,5 +28,40 @@ module.exports = (db) => {
     res.send("cleared cookie");
   })
 
+  // user adds a favourite
+  // http://localhost:4000/api/users/favourites
+  router.post("/favourites", (req, res) => {
+
+    let userId = 1;
+    let spoonacularId = req.body.spoonacularId;
+
+    db.addFavourites(userId, spoonacularId)
+      .then((results) => {
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  })
+
+
+  // user deletes a favourite
+  // http://localhost:4000/api/users/favourites
+  router.delete("/favourites", (req, res) => {
+
+    let userId = 1;
+    let spoonacularId = req.body.spoonacularId;
+
+    db.deleteFavourites(userId, spoonacularId)
+      .then((results) => {
+        res.send(results);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  });
+
   return router;
 };

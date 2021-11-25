@@ -2,8 +2,14 @@ import React from "react";
 import { Grid, Typography } from '@mui/material';
 import IngredientItem from "./IngredientItem";
 
-
-const IngredientList = function(props) {
+const IngredientList = function (props) {
+  const { list } = props;
+  const listItems = (list) => {
+   return list.map((item) => {
+      let ingredient = item
+      return <IngredientItem ingredient={ingredient} />
+    })
+  }
 
   return (
     <Grid container>
@@ -22,10 +28,8 @@ const IngredientList = function(props) {
           </Grid>
         </Grid>
       </Grid>
-      
-      <IngredientItem/>
-      <IngredientItem/>
-      <IngredientItem/>
+
+      {listItems(list)}
 
     </Grid>
   )

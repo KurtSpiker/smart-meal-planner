@@ -1,39 +1,40 @@
 import React from "react";
 import Apple from './Apple.png'
-import { Grid, Paper, IconButton, ButtonBase} from '@mui/material';
+import { Grid, Paper, IconButton, ButtonBase } from '@mui/material';
 import Counter from './Counter';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const IngredientItem = function(props) {
+const IngredientItem = function (props) {
+  const { ingredient } = props;
 
   return (
     <Grid container padding="10px">
-      <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex"}}>
+      <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex" }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
-            <ButtonBase sx={{ width: 64, height: 64 }}>
-              <img alt="Apple" src={Apple} width="120%"/>
+            <ButtonBase sx={{ width: "200px" }}>
+              <img alt="ingredient-image" src={"https://spoonacular.com/cdn/ingredients_500x500/" + ingredient.image_link} style={{ "maxHeight": "70px" }} />
             </ButtonBase>
           </Grid>
-          <Grid item>
-            Apple
+          <Grid item alignItems="center">
+            {ingredient.item_name}
           </Grid>
-        </Grid> 
+        </Grid>
         <Grid container alignItems="center" justifyContent="flex-end">
           <Grid item>
-              <Counter/>
-              Unit
-              <IconButton>
-                <DeleteIcon />
-              </IconButton>
-            </Grid>
+            <Counter />
+            {ingredient.measure}
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Grid>
         </Grid>
       </Paper>
     </Grid>
   );
 };
 
- 
+
 export default IngredientItem;
 
 

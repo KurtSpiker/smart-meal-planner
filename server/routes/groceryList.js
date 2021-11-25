@@ -5,12 +5,13 @@ const axios = require('axios');
 module.exports = (db) => {
 
   // user requests to see their own grocery list
-  // http://localhost:4000/api/grocery_list
-  router.get("/", (req, res) => {
+  // http://localhost:4000/api/grocery_list/1
+  router.get("/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
+    let week = req.params.id;
 
-    db.getGroceryListByUser(userId)
+    db.getGroceryListByUser(userId, week)
       .then((results) => {
         console.log("GET to /grocery_list - Success.");
         res.send(results);
