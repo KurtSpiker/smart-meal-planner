@@ -7,13 +7,13 @@ module.exports = (db) => {
   // search for ingredient item before adding it in pantry
   // http://localhost:4000/api/search/ingredientTerm
   router.get("/ingredientTerm", (req, res) => {
-
-    let data = { searchTerm: "milk" }
+    console.log("search", req.query)
+    let data = req.query
     let ingredient = data.searchTerm.split(" ").join("-");
 
     axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
-      .then((response) => {
-        res.send(response.data);
+    .then((response) => {
+      res.send(response.data);
         console.log("GET to /search/ingredientTerm - Success.");
       })
       .catch((error) => {

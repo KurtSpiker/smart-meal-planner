@@ -8,6 +8,7 @@ const PantryList = function (props) {
 
   const [list, setList] = useState([])
   const [listName, setListName] = useState("")
+  const [ingredientSearchItem, setIngredientSearchItem] = useState([])
 
   useEffect(() => {
 
@@ -24,6 +25,20 @@ const PantryList = function (props) {
       )
   }, []);
 
+  let ingredientSearchResults = [];
+  const searchForIngredient = (term) => {
+    axios.get(`/api/search/ingredientTerm`, {
+      params: {
+        searchTerm: term
+      }
+    })
+    .then((result) => {
+      //ingredientSearchResults = result.data.results
+      setIngredientSearchItem(result.data.results);
+    })
+  };
+  
+
   return (
     <Grid container>
       <Typography variant="h3">
@@ -33,9 +48,9 @@ const PantryList = function (props) {
         disablePortal
         getOptionLabel={(option) => option.name}
         id="combo-box-demo"
-        options={[]}
+        options={ingredientSearchItem}
         sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
+        renderInput={(params) => <TextField onChange={(event) => searchForIngredient(event.target.value)} {...params} label="Search for an ingredient to add" />}
       />
       <IngredientList list={list} listName={listName} setList={setList} list={list}/>
     </Grid>
