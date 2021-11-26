@@ -96,7 +96,6 @@ module.exports = (db) => {
     let promises = [];
     let groceryListForDb = [];
 
-    let groceryListStore = [];
     let pantryStore = [];
 
     db.deleteGroceryList(userId, week) //for generating again only items that belong to recipes
@@ -131,6 +130,7 @@ module.exports = (db) => {
             itemMeasuremementStrings.push(ingredient["originalString"]);
           }
         }
+        itemMeasuremementStrings.push("-100g of fresh mozzarella");
         return itemMeasuremementStrings; // array will have multiple of the same item with different measures
       })
       .then((itemMeasuremementStrings) => {
@@ -161,13 +161,96 @@ module.exports = (db) => {
           groceryListForDb[i].imageUrl = result[i].data.image;
         }
 
+        // get all the grocery ids
+        let groceryIds = groceryListForDb.map((groceryItem) => {
+          return groceryItem.ingredientId;
+        })
+
+        // get all the pantry ids
+        let pantryIds = pantryStore.map((pantryItem) => {
+          return pantryItem.spoonacular_ingredient_id
+        })
+
+        console.log("groceryItem", groceryIds)
+        console.log("pantryItem", pantryIds)
+
+        // filter for the ones that match and need conversion
+        let ingredientsToConvert = groceryIds.filter((id) => {
+          if (pantryIds.includes(id)) {
+            return id;
+          }
+        })
+
+        console.log("THIS NEEDS TO BE CONVERTED", ingredientsToConvert)
+        console.log(groceryListForDb)
+        promises = [];
+
+        // https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=flour&sourceAmount=2.5&sourceUnit=cups&targetUnit=grams
+
+        // pantryStore
+        // [ { id: 1,
+        //   item_name: 'milk',
+        //   user_id: 1,
+        //   spoonacular_ingredient_id: 1077,
+        //   quantity: '12',
+        //   measure: 'tablespoon',
+        //   image_link: 'milk.png' },
+        // { id: 2,
+        //   item_name: 'banana',
+        //   user_id: 1,
+        //   spoonacular_ingredient_id: 9040,
+        //   quantity: '2',
+        //   measure: '',
+        //   image_link: 'banana.jpg' },
+        // ]
+
+        // groceryListForDb
+        // INGREDIENT OBJ TO COMPARE WITH PANTRY {
+        //   name: 'milk',
+        //   measures:
+        //   {
+        //     original: { amount: 2, unit: 'cups' },
+        //     metric: { amount: 488, unit: 'ml' },
+        //     us: { amount: 16.6, unit: 'fl oz' }
+        //   },
+        //   pantryItem: false,
+        //   aisle: 'Milk, Eggs, Other Dairy',
+        //   cost: 66.17,
+        //   ingredientId: 1077,
+        //   imageUrl: 'milk.png'
+        // }
+
+        // but people can type all of this in
+        //   {
+        //     "id": 1077,
+        //     "ingredientName": "dairy milk",
+        //     "possibleUnits": [
+        //         "quart",
+        //         "g",
+        //         "oz",
+        //         "teaspoon",
+        //         "fluid ounce",
+        //         "cup",
+        //         "serving",
+        //         "tablespoon"
+        //     ],
+        //     "imageURL": "milk.png"
+        // }
+
+      })
+      .then(() => {
         // stores all db calls into promise array
         promises = [];
         for (const ingredientObj of groceryListForDb) {
+
+          // find out target measure from pantry (tbsp)
+          // convert recipe amount to tbsp
+          // subtract recipe amount tbsp - pantry amount tbsp
           promises.push(db.generateGroceryList(ingredientObj, userId, week))
         }
         // calls db with all promises
         return Promise.all(promises);
+
       })
       .then((result) => {
         res.send({ result, key: "grocery_list" });

@@ -9,7 +9,7 @@ CREATE TABLE pantry_ingredients (
   item_name VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   spoonacular_ingredient_id INTEGER,
-  quantity NUMERIC DEFAULT 0,
+  quantity DOUBLE PRECISION DEFAULT 0,
   measure VARCHAR(255),
   image_link VARCHAR(255)
 );
@@ -29,7 +29,7 @@ CREATE TABLE grocery_list_items (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   item_name VARCHAR(255) NOT NULL,
-  quantity NUMERIC DEFAULT 0,
+  quantity DOUBLE PRECISION 0,
   measure VARCHAR(255),
   spoonacular_item_id INTEGER NOT NULL,
   week INTEGER NOT NULL,

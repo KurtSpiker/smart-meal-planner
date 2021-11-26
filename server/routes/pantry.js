@@ -74,6 +74,7 @@ module.exports = (db) => {
       .then((results) => {
         console.log("DELETE to /pantry/:id - Success.");
         res.send(results);
+        console
       })
       .catch(e => {
         console.error(e);
