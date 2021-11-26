@@ -37,8 +37,8 @@ module.exports = (db) => {
         let ids = recipeIds.join(",");
         if (recipeIds.length > 0) {
 
-          // [ 646545, 633876, 636078 ]
-          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=646545
+          // [ 646545, 633876, 638784 ]
+          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=638784
           return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
         }
       })
