@@ -6,7 +6,6 @@ import {
   Outlet
 } from "react-router-dom";
 import WeekPlan from "./WeekPlan"
-import Contact from "./Contact";
 import LinkDrawer from "./LinkDrawer"
 import GroceryList from "./GroceryList";
 import PantryList from "./PantryList";

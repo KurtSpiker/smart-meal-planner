@@ -73,18 +73,40 @@ const generateGroceryList = function (ingredientObject, userId, week) {
   //   ingredientId: 1033,
   //   imageUrl: 'thyme.jpg'
   // };
-
+  // getPantryByUser (userId)
   const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link, auto_generated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
 
+  // { "original": { "amount": 3, "unit": "cups" }, "metric": { "amount": 336, "unit": "g" }, "us": { "amount": 11.9, "unit": "oz" } }
+  let objectToCompare = {};
+
+  getOnePantryItem(userId, ingredientObject.ingredientId)
+    .then((result) => {
+      objectToCompare = result;
+      console.log("THIS IS OUTPUT OF PANTRY ITEM I GET", objectToCompare)
+    })
+    .then(() => {
+      return pool
+        .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl, true])
+        .then(res => {
+          console.log(`Successfully generated grocery list item ${ingredientObject.name} for ingredient ${ingredientObject.ingredientId} ${ingredientObject.name}.`);
+          return res.rows[0];
+        })
+        .catch(e => { console.error(e) });
+    })
+}
+exports.generateGroceryList = generateGroceryList;
+
+
+const getOnePantryItem = function (userId, week, spoonacularId) {
+  const sqlString = `SELECT * FROM pantry_ingredients WHERE user_id = $1 AND spoonacular_ingredient_id = $2;`;
   return pool
-    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl, true])
+    .query(sqlString, [userId, spoonacularId])
     .then(res => {
-      console.log(`Successfully generated grocery list item ${ingredientObject.name} for user ${userId}.`);
-      return res.rows[0];
+      return res.rows;
     })
     .catch(e => { console.error(e) });
 }
-exports.generateGroceryList = generateGroceryList;
+
 
 
 
@@ -107,7 +129,7 @@ exports.getGroceryListByUser = getGroceryListByUser;
 const editGroceryList = function (data) {
 
   // EXPECTED DATA OBJECT
-  // data = { userId: 1, itemDbId: 1, name: "some stuff i named", quantity: 10, measure: "ml", week: 1, week: 1 };
+  // data = { userId: 1, name: "some stuff i named", quantity: 10, measure: "ml", week: 1, week: 1 };
 
   let sqlString = `UPDATE grocery_list_items SET `;
   let counter = 0;
@@ -139,8 +161,8 @@ const editGroceryList = function (data) {
   arrayToPass.push(data.userId);
 
   counter++;
-  sqlString = sqlString + ` AND id = $${counter}`;
-  arrayToPass.push(data.itemDbId);
+  sqlString = sqlString + ` AND spoonacular_item_id = $${counter}`;
+  arrayToPass.push(data.spoonacularId);
 
   counter++;
   sqlString = sqlString + ` AND week = $${counter}`;
@@ -149,7 +171,7 @@ const editGroceryList = function (data) {
   return pool
     .query(sqlString, arrayToPass)
     .then(res => {
-      console.log(`Successfully edited grocery entry ${data.itemDbId} for user ${data.userId}.`)
+      console.log(`Successfully edited grocery entry ${data.spoonacularId} for user ${data.userId}.`)
       return res.rows[0];
     })
     .catch(e => { console.error(e) });
@@ -351,13 +373,13 @@ const editPantryItem = function (data) {
   arrayToPass.push(data.userId);
 
   counter++;
-  sqlString = sqlString + ` AND id = $${counter}`;
-  arrayToPass.push(data.itemDbId);
+  sqlString = sqlString + ` AND spoonacular_ingredient_id = $${counter}`;
+  arrayToPass.push(data.spoonacularId);
 
   return pool
     .query(sqlString, arrayToPass)
     .then(res => {
-      console.log(`Successfully edited pantry item entry ${data.itemDbId} for user ${data.userId}.`)
+      console.log(`Successfully edited pantry item entry ${data.spoonacularId} for user ${data.userId}.`)
       return res.rows;
     })
     .catch(e => { console.error(e) });

@@ -8,12 +8,15 @@ import axios from "axios";
 const GroceryList = function (props) {
 
   const [list, setList] = useState([]);
+  const [listName, setListName] = useState("")
 
   useEffect(() => {
 
     axios.get(`/api/grocery_list/1`)
-      .then((result) => {
-        setList(result.data);
+      .then((n) => {
+        setList((prev) => [...prev, n.data.result]);
+        setListName(n.data.key)
+        console.log("Grocery list", list)
       })
       .catch(
         function (error) {
@@ -27,7 +30,7 @@ const GroceryList = function (props) {
       <Typography variant="h3">
         GroceryList
       </Typography>
-      <IngredientList list={list} />
+      <IngredientList list={list} listName={listName} />
     </Grid>
   )
 }
