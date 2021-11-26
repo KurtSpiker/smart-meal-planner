@@ -12,7 +12,6 @@ const Counter = function (props) {
   useEffect(() => {
     axios.post(`/api/${listName}/edit/${ingredientId}`, {
       data: {
-        spoonacularId: ingredientId,
         quantity: quantity
       }
     })
