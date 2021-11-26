@@ -91,7 +91,7 @@ module.exports = (db) => {
   });
 
   // looking at a specific recipe using its spoonacular id 663641 648279
-  // http://localhost:4000/api/recipes/640104
+  // http://localhost:4000/api/recipes/715594
   router.get("/:id", (req, res) => {
 
     let userId = 1;
@@ -132,8 +132,12 @@ module.exports = (db) => {
         summary = response.data.summary;
         servings = response.data.servings;
 
-        for (const instruction of response.data.analyzedInstructions[0].steps) {
-          instructions.push(instruction.step);
+        if (response.data.analyzedInstructions.length > 0) {
+          for (const instruction of response.data.analyzedInstructions[0].steps) {
+            instructions.push(instruction.step);
+          }
+        } else {
+          instructions = [];
         }
 
         dieteryRestrictions.vegan = response.data.vegan;

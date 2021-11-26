@@ -182,8 +182,10 @@ module.exports = (db) => {
         })
 
         console.log("THIS NEEDS TO BE CONVERTED", ingredientsToConvert)
-        console.log(groceryListForDb)
+
+        console.log(JSON.stringify(groceryListForDb))
         promises = [];
+
 
         // https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=flour&sourceAmount=2.5&sourceUnit=cups&targetUnit=grams
 
