@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useCounter from '../hooks/useCounter';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from '@mui/material/Button';
-import axios from "axios";
-
 
 const Counter = function (props) {
   const { quantity, listName, ingredientId } = props
