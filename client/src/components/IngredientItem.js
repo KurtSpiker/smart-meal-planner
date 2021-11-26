@@ -5,14 +5,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 
 const IngredientItem = function (props) {
-  const { ingredient, listName } = props;
+  const { ingredient, listName, setList, list} = props;
 
   const deleteRecipe = () => {
-    console.log(ingredient)
-    console.log(ingredient.spoonacular_ingredient_id)
     axios.delete(`/api/${listName}/delete/${ingredient.spoonacular_ingredient_id}`,
     {
       spoonacularId: ingredient.spoonacular_ingredient_id, week: 1
+    })
+    .then(() => {
+      list.forEach((item, index) => {
+        if(item.spoonacular_ingredient_id === ingredient.spoonacular_ingredient_id) {
+          let listReplace = [...list]
+          listReplace.splice(index, 1)
+          setList(listReplace)
+          return
+        }
+      })
     })
     .catch((err) => {
       console.log(err.message)

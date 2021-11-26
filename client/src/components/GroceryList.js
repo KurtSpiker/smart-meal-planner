@@ -30,7 +30,7 @@ const GroceryList = function (props) {
       <Typography variant="h3">
         GroceryList
       </Typography>
-      <IngredientList list={list} listName={listName} />
+      <IngredientList list={list} listName={listName} setList={setList}/>
     </Grid>
   )
 }

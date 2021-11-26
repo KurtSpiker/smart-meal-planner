@@ -58,7 +58,7 @@ exports.getUserById = getUserById;
 
 const generateGroceryList = function (ingredientObject, userId, week, ingredientsToValidate, ingredientsToConvert) {
 
-  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link, auto_generated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+  const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_ingredient_id, week, image_link, auto_generated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
 
   let amount = ingredientObject.measures.metric.amount;
   let measure = ingredientObject.measures.metric.unit;
@@ -138,7 +138,7 @@ const editGroceryList = function (data) {
   arrayToPass.push(data.userId);
 
   counter++;
-  sqlString = sqlString + ` AND spoonacular_item_id = $${counter}`;
+  sqlString = sqlString + ` AND spoonacular_ingredient_id = $${counter}`;
   arrayToPass.push(data.spoonacularId);
 
   counter++;
@@ -159,7 +159,7 @@ exports.editGroceryList = editGroceryList;
 
 const addGroceryListItem = function (data) {
 
-  let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link, spoonacular_item_id `;
+  let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link, spoonacular_ingredient_id `;
   let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageUrl, data.spoonacularId];
 
   if (data.measure) {
@@ -199,7 +199,7 @@ exports.deleteGroceryList = deleteGroceryList;
 
 const deleteGroceryListItem = function (data) {
 
-  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND spoonacular_item_id = $2 AND week = $3`;
+  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND spoonacular_ingredient_id = $2 AND week = $3`;
 
   return pool
     .query(sqlString, [data.userId, data.spoonacularId, data.week])
@@ -399,7 +399,7 @@ exports.getFavourites = getFavourites;
 
 const addFavourites = function (userId, spoonacularId) {
 
-  let sqlString = `INSERT INTO favourites (user_id, spoonacular_item_id) VALUES ($1, $2)`;
+  let sqlString = `INSERT INTO favourites (user_id, spoonacular_ingredient_id) VALUES ($1, $2)`;
 
   return pool
     .query(sqlString, [userId, spoonacularId])
