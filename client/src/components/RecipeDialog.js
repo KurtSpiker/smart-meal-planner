@@ -1,12 +1,12 @@
 import { Dialog, DialogTitle, MenuItem, InputLabel, Select, OutlinedInput, DialogActions, Box, FormControl, DialogContent } from "@mui/material"
-import { react, useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Button from '@mui/material/Button';
 import { mealContext } from '../providers/MealProvider';
 import axios from "axios";
 
 export default function RecipeDialog(props) {
 
-  const { typeOfMeal, dayOfWeek, weekNumber } = useContext(mealContext);
+  const { typeOfMeal, dayOfWeek } = useContext(mealContext); //Add "weekNumber" when we add the feature for multiple weeks
 
   const { dialogSwitch, mealName, imageUrl, recipeId } = props
 
@@ -28,9 +28,9 @@ export default function RecipeDialog(props) {
     setMeal(event.target.value);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = (event, reason) => {
     if (reason !== 'backdropClick') {
