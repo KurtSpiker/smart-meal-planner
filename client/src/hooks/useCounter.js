@@ -32,5 +32,5 @@ export default function useCounter(quantity, listName, ingredientId) {
       return prev -= 1;
     });
   };
-  return { count, handleDecrement, handleIncrement};
+  return { count, handleDecrement, handleIncrement, setCount };
 };
