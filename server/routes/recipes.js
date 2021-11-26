@@ -37,8 +37,8 @@ module.exports = (db) => {
         let ids = recipeIds.join(",");
         if (recipeIds.length > 0) {
 
-          // [ 646545, 633876, 636078 ]
-          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=646545
+          // [ 646545, 633876, 638784 ]
+          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=638784
           return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
         }
       })
@@ -91,7 +91,7 @@ module.exports = (db) => {
   });
 
   // looking at a specific recipe using its spoonacular id 663641 648279
-  // http://localhost:4000/api/recipes/640104
+  // http://localhost:4000/api/recipes/715594
   router.get("/:id", (req, res) => {
 
     let userId = 1;
@@ -128,12 +128,17 @@ module.exports = (db) => {
         time = response.data.readyInMinutes;
         servings = response.data.servings;
         sourceUrl = response.data.sourceUrl;
-        image = response.data.image;
+        // image = response.data.image; // revert back if image gives errors
+        image = `https://spoonacular.com/recipeImages/${recipeId}-636x393.${response.data.imageType}`
         summary = response.data.summary;
         servings = response.data.servings;
 
-        for (const instruction of response.data.analyzedInstructions[0].steps) {
-          instructions.push(instruction.step);
+        if (response.data.analyzedInstructions.length > 0) {
+          for (const instruction of response.data.analyzedInstructions[0].steps) {
+            instructions.push(instruction.step);
+          }
+        } else {
+          instructions = [];
         }
 
         dieteryRestrictions.vegan = response.data.vegan;
@@ -235,8 +240,8 @@ module.exports = (db) => {
 
 
 
-  // search for a recipe using keywords (improved?)
-  // http://localhost:4000/api/recipes/?search=banana
+  // // search for a recipe using keywords (improved?)
+  // // http://localhost:4000/api/recipes/?search=banana
   // router.get("/", (req, res) => {
 
   //   let userId = 1 // const userId = req.cookies["user_id"];
@@ -275,7 +280,7 @@ module.exports = (db) => {
   //       // only if recipe info is found
   //       if (allRecipeInfo) {
   //         for (const recipeDietery in allRecipeInfo) {
-  //         let dieteryRestrictions = {};
+  //           let dieteryRestrictions = {};
   //           dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
   //           dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
   //           dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;

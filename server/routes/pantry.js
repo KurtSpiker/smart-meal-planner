@@ -22,13 +22,15 @@ module.exports = (db) => {
   });
 
   // user edits their pantry
-  // http://localhost:4000/api/pantry/edit/12345
+  // http://localhost:4000/api/pantry/edit/1077
   router.post("/edit/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
+
     let data = { userId, spoonacularId, quantity: req.body.quantity };
     console.log(data);
+
 
     db.editPantryItem(data)
       .then((results) => {
