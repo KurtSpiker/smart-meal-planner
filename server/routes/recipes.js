@@ -128,7 +128,8 @@ module.exports = (db) => {
         time = response.data.readyInMinutes;
         servings = response.data.servings;
         sourceUrl = response.data.sourceUrl;
-        image = response.data.image;
+        // image = response.data.image; // revert back if image gives errors
+        image = `https://spoonacular.com/recipeImages/${recipeId}-636x393.${response.data.imageType}`
         summary = response.data.summary;
         servings = response.data.servings;
 
@@ -239,8 +240,8 @@ module.exports = (db) => {
 
 
 
-  // search for a recipe using keywords (improved?)
-  // http://localhost:4000/api/recipes/?search=banana
+  // // search for a recipe using keywords (improved?)
+  // // http://localhost:4000/api/recipes/?search=banana
   // router.get("/", (req, res) => {
 
   //   let userId = 1 // const userId = req.cookies["user_id"];
@@ -279,7 +280,7 @@ module.exports = (db) => {
   //       // only if recipe info is found
   //       if (allRecipeInfo) {
   //         for (const recipeDietery in allRecipeInfo) {
-  //         let dieteryRestrictions = {};
+  //           let dieteryRestrictions = {};
   //           dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
   //           dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
   //           dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;
