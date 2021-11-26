@@ -31,7 +31,7 @@ CREATE TABLE grocery_list_items (
   item_name VARCHAR(255) NOT NULL,
   quantity DOUBLE PRECISION DEFAULT 0,
   measure VARCHAR(255),
-  spoonacular_item_id INTEGER NOT NULL,
+  spoonacular_ingredient_id INTEGER NOT NULL,
   week INTEGER NOT NULL,
   image_link VARCHAR(255),
   auto_generated boolean DEFAULT false

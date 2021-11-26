@@ -64,8 +64,8 @@ module.exports = (db) => {
   });
 
   // user deletes an item off their pantry
-  // http://localhost:4000/api/pantry/12345
-  router.delete("/:id", (req, res) => {
+  // http://localhost:4000/api/pantry/delete/12345
+  router.delete("/delete/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;

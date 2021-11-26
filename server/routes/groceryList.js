@@ -210,7 +210,7 @@ module.exports = (db) => {
         })
 
         // populating promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
-        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=milk&sourceAmount=488&sourceUnit=ml&targetUnit=tablespoon
+        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=french%20bread&sourceAmount=1&sourceUnit=&targetUnit=g
         promises = [];
         for (const item of noUndefinedAxios) {
           promises.push(axios.get(`https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=${item.name}&sourceAmount=${item.amount}&sourceUnit=${item.measure}&targetUnit=${pantryStoreWithIdKeys[item.spoonacularId].measure}`))
@@ -241,7 +241,6 @@ module.exports = (db) => {
         // stores all db calls into promise array
         promises = [];
         for (const ingredientObj of groceryListForDb) {
-          console.log("EACH INGREDIENT OBJ", ingredientObj)
           // using the test data, thyme should NOT be in grocery list items
           promises.push(db.generateGroceryList(ingredientObj, userId, week, ingredientsToValidate, ingredientsToConvert))
         }
@@ -249,6 +248,7 @@ module.exports = (db) => {
         return Promise.all(promises);
       })
       .then((result) => {
+        // return ingredient appear null because db skips negative quantity
         res.send({ result, key: "grocery_list" });
       })
       .catch(e => {
