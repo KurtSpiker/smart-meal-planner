@@ -69,6 +69,7 @@ const generateGroceryList = function (ingredientObject, userId, week, ingredient
     if (ingredientsToValidate[ingredientObject.ingredientId].resultingSubtraction <= 0) {
       return;
     }
+    // console.log("INGREDIENTS LIST TO VALIDATE", ingredientsToValidate);
     amount = ingredientsToValidate[ingredientObject.ingredientId].resultingSubtraction;
     measure = ingredientsToValidate[ingredientObject.ingredientId].pantryMeasure;
   }
@@ -198,10 +199,10 @@ exports.deleteGroceryList = deleteGroceryList;
 
 const deleteGroceryListItem = function (data) {
 
-  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND id = $2 AND week = $3`;
+  const sqlString = `DELETE FROM grocery_list_items WHERE user_id = $1 AND spoonacular_item_id = $2 AND week = $3`;
 
   return pool
-    .query(sqlString, [data.userId, data.itemDbId, data.week])
+    .query(sqlString, [data.userId, data.spoonacularId, data.week])
     .then(res => {
       console.log(`Successfully deleted grocery list item for user ${data.userId}.`)
       return res.rows;
@@ -281,10 +282,10 @@ exports.getPantryByUser = getPantryByUser;
 
 const deletePantryItem = function (data) {
 
-  const sqlString = `DELETE FROM pantry_ingredients WHERE user_id = $1 AND id = $2`;
+  const sqlString = `DELETE FROM pantry_ingredients WHERE user_id = $1 AND spoonacular_ingredient_id = $2`;
 
   return pool
-    .query(sqlString, [data.userId, data.itemDbId])
+    .query(sqlString, [data.userId, data.spoonacularId])
     .then(res => {
       console.log(`Successfully deleted pantry item for user ${data.userId}.`)
       return res.rows;
