@@ -21,7 +21,11 @@ const IngredientItem = function (props) {
         </Grid>
         <Grid container alignItems="center" justifyContent="flex-end">
           <Grid item>
-            <Counter quantity={ingredient.quantity} listName={listName} ingredientId={ingredient.id}/>
+            <Counter 
+              quantity={ingredient.quantity} 
+              listName={listName} 
+              ingredientId={ingredient.id}
+            />
             {ingredient.measure}
             <IconButton>
               <DeleteIcon />

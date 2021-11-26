@@ -13,6 +13,7 @@ const PantryList = function (props) {
 
     axios.get(`/api/pantry`)
       .then((n) => {
+        console.log("db pantry return", n.data.result)
         console.log(n.data.result)
         setList(n.data.result);
         setListName(n.data.key)
