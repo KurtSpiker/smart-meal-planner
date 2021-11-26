@@ -32,7 +32,8 @@ module.exports = (db) => {
     let userId = 1;// const userId = req.cookies["user_id"];
 
 
-    let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
+    let data = {userId, spoonacularId, quantity: req.body.quantity, week: req.body.week};
+    // let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
     db.editGroceryList(data)
       .then((results) => {

@@ -344,7 +344,7 @@ const editPantryItem = function (data) {
     sqlStringArray.push(`item_name = $${counter}`);
     arrayToPass.push(data.name);
   }
-
+  console.log(data.quantity)
   if (data.quantity) {
     counter++;
     sqlStringArray.push(`quantity = $${counter}`);
