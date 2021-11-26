@@ -31,9 +31,7 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
     let userId = 1;// const userId = req.cookies["user_id"];
 
-    let data = { quantity: req.body.quantity, spoonacularId, userId }
-
-    let data = {userId, spoonacularId, quantity: req.body.quantity, week: req.body.week};
+    let data = { userId, spoonacularId, quantity: req.body.quantity, week: req.body.week };
 
     // let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
@@ -49,14 +47,14 @@ module.exports = (db) => {
   });
 
   // user deletes a grocery list item
-  // http://localhost:4000/api/grocery_list/delete/1
+  // http://localhost:4000/api/grocery_list/delete/12345
   router.delete("/delete/:id", (req, res) => {
 
     // will be from req.body
     let userId = 1;// const userId = req.cookies["user_id"];
-    let itemDbId = req.params.id;
+    let spoonacularId = req.params.id;
 
-    let data = { userId, itemDbId, week: 1 };
+    let data = { userId, spoonacularId, week: 1 };
 
     db.deleteGroceryListItem(data)
       .then((results) => {
@@ -211,7 +209,7 @@ module.exports = (db) => {
           return items !== undefined;
         })
 
-        // populationg promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
+        // populating promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
         // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=milk&sourceAmount=488&sourceUnit=ml&targetUnit=tablespoon
         promises = [];
         for (const item of noUndefinedAxios) {
@@ -243,6 +241,7 @@ module.exports = (db) => {
         // stores all db calls into promise array
         promises = [];
         for (const ingredientObj of groceryListForDb) {
+          console.log("EACH INGREDIENT OBJ", ingredientObj)
           // using the test data, thyme should NOT be in grocery list items
           promises.push(db.generateGroceryList(ingredientObj, userId, week, ingredientsToValidate, ingredientsToConvert))
         }
