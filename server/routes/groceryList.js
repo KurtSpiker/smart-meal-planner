@@ -31,8 +31,8 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
     let userId = 1;// const userId = req.cookies["user_id"];
 
+    let data = { userId, spoonacularId, quantity: req.body.quantity, week: req.body.week };
 
-    let data = {userId, spoonacularId, quantity: req.body.quantity, week: req.body.week};
     // let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
     db.editGroceryList(data)
@@ -47,14 +47,14 @@ module.exports = (db) => {
   });
 
   // user deletes a grocery list item
-  // http://localhost:4000/api/grocery_list/delete/1
+  // http://localhost:4000/api/grocery_list/delete/12345
   router.delete("/delete/:id", (req, res) => {
 
     // will be from req.body
     let userId = 1;// const userId = req.cookies["user_id"];
-    let itemDbId = req.params.id;
+    let spoonacularId = req.params.id;
 
-    let data = { userId, itemDbId, week: 1 };
+    let data = { userId, spoonacularId, week: 1 };
 
     db.deleteGroceryListItem(data)
       .then((results) => {
@@ -98,6 +98,8 @@ module.exports = (db) => {
     let groceryListForDb = [];
 
     let pantryStore = [];
+    let pantryStoreWithIdKeys = {};
+    let ingredientsToConvert = [];
 
     db.deleteGroceryList(userId, week) //for generating again only items that belong to recipes
       .then(() => {
@@ -131,7 +133,6 @@ module.exports = (db) => {
             itemMeasuremementStrings.push(ingredient["originalString"]);
           }
         }
-        itemMeasuremementStrings.push("-100g of fresh mozzarella");
         return itemMeasuremementStrings; // array will have multiple of the same item with different measures
       })
       .then((itemMeasuremementStrings) => {
@@ -172,88 +173,82 @@ module.exports = (db) => {
           return pantryItem.spoonacular_ingredient_id
         })
 
-        console.log("groceryItem", groceryIds)
-        console.log("pantryItem", pantryIds)
-
         // filter for the ones that match and need conversion
-        let ingredientsToConvert = groceryIds.filter((id) => {
+        ingredientsToConvert = groceryIds.filter((id) => {
           if (pantryIds.includes(id)) {
             return id;
           }
         })
 
-        console.log("THIS NEEDS TO BE CONVERTED", ingredientsToConvert)
-        console.log(groceryListForDb)
+        // french bread = 18266/ it has a measure for one as ""
+        // console.log(JSON.stringify(groceryListForDb, null, 2))
+
+        for (const item of pantryStore) {
+          pantryStoreWithIdKeys[item.spoonacular_ingredient_id] = {
+            name: item.item_name,
+            quantity: item.quantity,
+            measure: item.measure
+          }
+        }
+        // show the kind of measurements the outputConversion will receive
+        // console.log("PANTRY WITH ID KEYS", pantryStoreWithIdKeys)
+
+        // for some reason filter didnt work, but map does but has undefined for ones that dont fit the if statement
+        let axiosIngredientInformation = groceryListForDb.map((groceryListForDbItems) => {
+          if (ingredientsToConvert.includes(groceryListForDbItems.ingredientId)) {
+            return {
+              name: groceryListForDbItems.name,
+              spoonacularId: groceryListForDbItems.ingredientId,
+              measure: groceryListForDbItems.measures.metric.unit,
+              amount: groceryListForDbItems.measures.metric.amount
+            }
+          }
+        })
+        // removing the undefined values from above
+        let noUndefinedAxios = axiosIngredientInformation.filter((items) => {
+          return items !== undefined;
+        })
+
+        // populating promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
+        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=french%20bread&sourceAmount=1&sourceUnit=&targetUnit=g
         promises = [];
-
-        // https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=flour&sourceAmount=2.5&sourceUnit=cups&targetUnit=grams
-
-        // pantryStore
-        // [ { id: 1,
-        //   item_name: 'milk',
-        //   user_id: 1,
-        //   spoonacular_ingredient_id: 1077,
-        //   quantity: '12',
-        //   measure: 'tablespoon',
-        //   image_link: 'milk.png' },
-        // { id: 2,
-        //   item_name: 'banana',
-        //   user_id: 1,
-        //   spoonacular_ingredient_id: 9040,
-        //   quantity: '2',
-        //   measure: '',
-        //   image_link: 'banana.jpg' },
-        // ]
-
-        // groceryListForDb
-        // INGREDIENT OBJ TO COMPARE WITH PANTRY {
-        //   name: 'milk',
-        //   measures:
-        //   {
-        //     original: { amount: 2, unit: 'cups' },
-        //     metric: { amount: 488, unit: 'ml' },
-        //     us: { amount: 16.6, unit: 'fl oz' }
-        //   },
-        //   pantryItem: false,
-        //   aisle: 'Milk, Eggs, Other Dairy',
-        //   cost: 66.17,
-        //   ingredientId: 1077,
-        //   imageUrl: 'milk.png'
-        // }
-
-        // but people can type all of this in
-        //   {
-        //     "id": 1077,
-        //     "ingredientName": "dairy milk",
-        //     "possibleUnits": [
-        //         "quart",
-        //         "g",
-        //         "oz",
-        //         "teaspoon",
-        //         "fluid ounce",
-        //         "cup",
-        //         "serving",
-        //         "tablespoon"
-        //     ],
-        //     "imageURL": "milk.png"
-        // }
-
+        for (const item of noUndefinedAxios) {
+          promises.push(axios.get(`https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=${item.name}&sourceAmount=${item.amount}&sourceUnit=${item.measure}&targetUnit=${pantryStoreWithIdKeys[item.spoonacularId].measure}`))
+        }
+        return Promise.all(promises);
       })
-      .then(() => {
+      .then((result) => {
+
+        let ingredientsToValidate = {}
+        for (const itemIndex in result) {
+          // console.log("OUTPUT", item[itemIndex].data)
+          ingredientsToValidate[pantryStore[itemIndex].spoonacular_ingredient_id] =
+          {
+            // rest of data is to validate if this is in sync
+            name: pantryStore[itemIndex].item_name,
+            pantryAmount: pantryStore[itemIndex].quantity,
+            pantryMeasure: pantryStore[itemIndex].measure,
+            groceryListConversion: result[itemIndex].data.answer,
+            groceryListAmount: result[itemIndex].data.targetAmount,
+            groceryListMeasure: result[itemIndex].data.targetUnit,
+            // subtraction amount is what we really want
+            resultingSubtraction: result[itemIndex].data.targetAmount - pantryStore[itemIndex].quantity
+          }
+        }
+        return ingredientsToValidate
+      })
+      .then((ingredientsToValidate) => {
         // stores all db calls into promise array
         promises = [];
         for (const ingredientObj of groceryListForDb) {
-
-          // find out target measure from pantry (tbsp)
-          // convert recipe amount to tbsp
-          // subtract recipe amount tbsp - pantry amount tbsp
-          promises.push(db.generateGroceryList(ingredientObj, userId, week))
+          // using the test data, thyme should NOT be in grocery list items
+          promises.push(db.generateGroceryList(ingredientObj, userId, week, ingredientsToValidate, ingredientsToConvert))
         }
         // calls db with all promises
         return Promise.all(promises);
-
       })
       .then((result) => {
+        // return ingredient appear null because db skips negative quantity
         res.send({ result, key: "grocery_list" });
       })
       .catch(e => {

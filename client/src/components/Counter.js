@@ -6,7 +6,9 @@ import NumberFormat from 'react-number-format'
 
 const Counter = function (props) {
   const { quantity, listName, ingredientId } = props
-  const { count, setCount, handleDecrement, handleIncrement } = useCounter(quantity, listName, ingredientId);
+
+  const { count, handleDecrement, handleIncrement } = useCounter(quantity, listName, ingredientId);
+
 
   return (
     <ButtonGroup aria-label="small outlined button group" >

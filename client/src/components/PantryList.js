@@ -37,7 +37,7 @@ const PantryList = function (props) {
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
       />
-      <IngredientList list={list} listName={listName} />
+      <IngredientList list={list} listName={listName} setList={setList} list={list}/>
     </Grid>
   );
 }

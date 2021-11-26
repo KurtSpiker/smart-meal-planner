@@ -25,7 +25,7 @@ module.exports = (db) => {
   // add &amount=1 to the end of the link for more information
   // http://localhost:4000/api/search/ingredientId/1077
   // https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${process.env.API_KEY}`)
-  // 	https://spoonacular.com/recipeImages/19400-240x150.jpg?apiKey=44f44a53a6e64445a1156824595d2c98
+  // https://spoonacular.com/recipeImages/19400-240x150.jpg?apiKey=44f44a53a6e64445a1156824595d2c98
   router.get("/ingredientId/:id", (req, res) => {
 
     let id = req.params.id; //spoonacular id
