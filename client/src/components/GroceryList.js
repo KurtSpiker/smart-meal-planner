@@ -14,8 +14,8 @@ const GroceryList = function (props) {
 
     axios.get(`/api/grocery_list/1`)
       .then((n) => {
-        setList(n.data.result);
         setListName(n.data.key)
+        setList(n.data.result);
       })
       .catch(
         function (error) {
