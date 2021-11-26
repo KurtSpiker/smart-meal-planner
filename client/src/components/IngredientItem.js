@@ -24,7 +24,7 @@ const IngredientItem = function (props) {
             <Counter 
               quantity={ingredient.quantity} 
               listName={listName} 
-              ingredientId={ingredient.id}
+              ingredientId={ingredient.spoonacular_ingredient_id}
             />
             {ingredient.measure}
             <IconButton>
