@@ -14,9 +14,9 @@ const GroceryList = function (props) {
 
     axios.get(`/api/grocery_list/1`)
       .then((n) => {
-        setList((prev) => [...prev, n.data.result]);
+        console.log("grocery list", n.data.result);
+        setList(n.data.result);
         setListName(n.data.key)
-        console.log("Grocery list", list)
       })
       .catch(
         function (error) {

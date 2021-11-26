@@ -7,7 +7,7 @@ const IngredientList = function (props) {
   const listItems = (list) => {
    return list.map((item) => {
       let ingredient = item
-      return <IngredientItem ingredient={ingredient} listName={listName}/>
+      return <IngredientItem key={item.id} ingredient={ingredient} listName={listName}/>
     })
   }
 

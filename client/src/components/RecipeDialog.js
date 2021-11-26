@@ -52,7 +52,7 @@ export default function RecipeDialog(props) {
       axios.post(`/api/grocery_list/1`)
     })
     .then(function (response) {
-      console.log(response);
+      console.log("post groceries", response);
     })
     .catch(function (error) {
       console.log(error);
