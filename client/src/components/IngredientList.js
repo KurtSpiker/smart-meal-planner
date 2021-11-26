@@ -3,11 +3,11 @@ import { Grid, Typography } from '@mui/material';
 import IngredientItem from "./IngredientItem";
 
 const IngredientList = function (props) {
-  const { list } = props;
+  const { list, listName} = props;
   const listItems = (list) => {
    return list.map((item) => {
       let ingredient = item
-      return <IngredientItem ingredient={ingredient} />
+      return <IngredientItem ingredient={ingredient} listName={listName}/>
     })
   }
 

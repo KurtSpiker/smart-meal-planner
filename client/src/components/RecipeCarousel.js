@@ -24,7 +24,6 @@ const RecipeCarousel = function(props){
         </IconButton>
         <RecipeSearchItem testRecipe={testRecipies[currentRecipes]}/>
         <IconButton onClick={() => {
-          console.log(testRecipies.length)
           if (currentRecipes < (testRecipies.length) - 1)
             setCurrentRecipes(currentRecipes + 1)
         }}>

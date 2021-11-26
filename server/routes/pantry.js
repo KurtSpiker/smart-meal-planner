@@ -13,7 +13,7 @@ module.exports = (db) => {
     db.getPantryByUser(userId)
       .then((results) => {
         console.log("GET to /pantry - Success.");
-        res.send(results);
+        res.send({ result: [...results], key: "pantry" });
       })
       .catch(e => {
         console.error(e);
@@ -22,13 +22,13 @@ module.exports = (db) => {
   });
 
   // user edits their pantry
-  // http://localhost:4000/api/pantry/edit/1
+  // http://localhost:4000/api/pantry/edit/12345
   router.post("/edit/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
-    let itemDbId = req.params.id;
+    let spoonacularId = req.params.id;
 
-    let data = { userId, itemDbId, name: "apple juice", quantity: 121 };
+    let data = { userId, spoonacularId, quantity: 121 };
 
     db.editPantryItem(data)
       .then((results) => {

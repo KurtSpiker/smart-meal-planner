@@ -9,17 +9,17 @@ export default function RecipeDialog(props) {
   const { typeOfMeal, dayOfWeek, weekNumber } = useContext(mealContext);
 
   const { dialogSwitch, mealName, imageUrl, recipeId } = props
-  
+
   const [open, setOpen] = useState(false);
   const [day, setDay] = useState(dayOfWeek);
   const [meal, setMeal] = useState(typeOfMeal);
 
   useEffect(() => {
     console.log("hello")
-    return function cleanup(){
+    return function cleanup() {
       setOpen(true)
     }
-  },[dialogSwitch]);
+  }, [dialogSwitch]);
 
   const handleDayChange = (event) => {
     setDay(event.target.value);
@@ -39,6 +39,7 @@ export default function RecipeDialog(props) {
   };
 
   const handleSendData = () => {
+    //when user adds a recipe, add the recipe to their weekly list to the db
     axios.post(`/api/recipes/${recipeId}`, {
       week: 1,
       day,
@@ -46,15 +47,18 @@ export default function RecipeDialog(props) {
       meal,
       imageUrl
     })
+    .then(() => {
+    //next add the grocery items pertaining to the db
+      axios.post(`/api/grocery_list/1`)
+    })
     .then(function (response) {
       console.log(response);
     })
     .catch(function (error) {
       console.log(error);
     });
-    handleClose()
-  }
-
+    handleClose();
+  };
 
   return (
     <div>
@@ -67,7 +71,7 @@ export default function RecipeDialog(props) {
               <Select
                 value={day}
                 onChange={handleDayChange}
-                input={<OutlinedInput label="Day"/>}
+                input={<OutlinedInput label="Day" />}
               >
                 <MenuItem value={"monday"}>Monday</MenuItem>
                 <MenuItem value={"tuesday"}>Tuesday</MenuItem>
@@ -92,7 +96,7 @@ export default function RecipeDialog(props) {
             </FormControl>
           </Box>
         </DialogContent>
-        <DialogActions sx={{justifyContent: "space-between"}}>
+        <DialogActions sx={{ justifyContent: "space-between" }}>
           <Button variant="contained" color="error" onClick={handleClose}>
             Cancel
           </Button>

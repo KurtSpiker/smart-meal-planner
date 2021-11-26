@@ -12,9 +12,10 @@ module.exports = (db) => {
     let week = req.params.id;
 
     db.getGroceryListByUser(userId, week)
-      .then((results) => {
+      .then((result) => {
         console.log("GET to /grocery_list - Success.");
-        res.send(results);
+        res.send({ result, key: "grocery_list" });
+
       })
       .catch(e => {
         console.error(e);
@@ -24,12 +25,14 @@ module.exports = (db) => {
   });
 
   // user edits their grocery list
-  // http://localhost:4000/api/grocery_list/edit/1
+  // http://localhost:4000/api/grocery_list/edit/12345
   router.post("/edit/:id", (req, res) => {
 
-    let itemDbId = req.params.id;
+    let spoonacularId = req.params.id;
     let userId = 1;// const userId = req.cookies["user_id"];
-    let data = { userId, itemDbId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
+
+
+    let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
     db.editGroceryList(data)
       .then((results) => {
@@ -93,16 +96,22 @@ module.exports = (db) => {
     let promises = [];
     let groceryListForDb = [];
 
-    db.deleteGroceryList(userId, week)
+    let groceryListStore = [];
+    let pantryStore = [];
+
+    db.deleteGroceryList(userId, week) //for generating again only items that belong to recipes
       .then(() => {
-        return db.getRecipesByUser(userId, week);
+        return db.getPantryByUser(userId); // get the pantry items to compare
+      })
+      .then((pantryInfo) => {
+        pantryStore = pantryInfo;
+        return db.getRecipesByUser(userId, week); // get user recipes to query ignredients
       })
       .then((arrayOfSpoonacularIdObjects) => {
         let arrayOfRecipesForUser = [];
         for (const id of arrayOfSpoonacularIdObjects) {
-          arrayOfRecipesForUser.push(id["spoonacular_id"]);
+          arrayOfRecipesForUser.push(id["spoonacular_id"]); // push recipe ids to use later
         }
-
         return arrayOfRecipesForUser
       })
       .then((arrayOfRecipesForUser) => {
@@ -110,20 +119,19 @@ module.exports = (db) => {
         for (let i = 0; i < arrayOfRecipesForUser.length; i++) {
           promises.push(axios.get(`https://api.spoonacular.com/recipes/${arrayOfRecipesForUser[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
         }
-        // pass array of promises
+        // pass array of promises to a promise.all
         return Promise.all(promises);
-
       })
       .then((responses) => {
+        // get all recipe information
         let itemMeasuremementStrings = [];
-        // push all responses to an array
-        // console.log("THIS IS A SINGLE RESPONSE DATA ", responses[1].id);
+        // push all ingredient information of responses to an array
         for (const response of responses) {
           for (const ingredient of response.data.extendedIngredients) {
             itemMeasuremementStrings.push(ingredient["originalString"]);
           }
         }
-        return itemMeasuremementStrings;
+        return itemMeasuremementStrings; // array will have multiple of the same item with different measures
       })
       .then((itemMeasuremementStrings) => {
         return axios({
@@ -135,6 +143,7 @@ module.exports = (db) => {
         })
       })
       .then((response) => {
+        // response of items seperated by their aisle
         for (const item of response.data["aisles"]) {
           // remove items from their aisles into one array
           groceryListForDb = groceryListForDb.concat(item["items"]);
@@ -161,8 +170,7 @@ module.exports = (db) => {
         return Promise.all(promises);
       })
       .then((result) => {
-        console.log("POST to grocery_list/:id - Success.");
-        res.send(result);
+        res.send({ result, key: "grocery_list" });
       })
       .catch(e => {
         console.error(e);

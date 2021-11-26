@@ -5,7 +5,7 @@ import Counter from './Counter';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const IngredientItem = function (props) {
-  const { ingredient } = props;
+  const { ingredient, listName } = props;
 
   return (
     <Grid container padding="10px">
@@ -22,7 +22,7 @@ const IngredientItem = function (props) {
         </Grid>
         <Grid container alignItems="center" justifyContent="flex-end">
           <Grid item>
-            <Counter />
+            <Counter quantity={ingredient.quantity} listName={listName} ingredientId={ingredient.id}/>
             {ingredient.measure}
             <IconButton>
               <DeleteIcon />
