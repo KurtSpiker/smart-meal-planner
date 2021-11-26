@@ -1,6 +1,6 @@
-import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader } from "@mui/material";
+import { Grid, Typography, TextField } from "@mui/material";
 import { React, useState, useEffect } from "react";
-import RecipeCarousel from "./RecipeCarousel";
+// import RecipeCarousel from "./RecipeCarousel";
 import RecipeSearchItem from "./RecipeSearchItem";
 const axios = require('axios');
 

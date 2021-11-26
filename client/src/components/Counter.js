@@ -1,44 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import useCounter from '../hooks/useCounter';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import axios from "axios";
-
 
 const Counter = function (props) {
   const { quantity, listName, ingredientId } = props
-  const [count, setCount] = useState(quantity)
 
-  useEffect(() => {
-    axios.post(`/api/${listName}/edit/${ingredientId}`, {
-      data: {
-        quantity: quantity
-      }
-    })
-  }, [count])
+  const { count, handleDecrement, handleIncrement } = useCounter(quantity, listName, ingredientId);
 
-
-  // })
-  // })
-
-  //  http://localhost:4000/api/pantry/edit/12345
-  //  http://localhost:4000/api/grocery_list/edit/12345
-
-
-  const handleIncrement = () => {
-    setCount((prev) => {
-      return prev += 1;
-    });
-  };
-
-  const handleDecrement = () => {
-    setCount((prev) => {
-      if (prev === 0) {
-        return prev = 0;
-      }
-      return prev -= 1;
-    });
-  };
 
   return (
     <ButtonGroup aria-label="small outlined button group" >
@@ -48,7 +17,6 @@ const Counter = function (props) {
       </Button>
       <Button onClick={() => handleDecrement()}>-</Button>
     </ButtonGroup>
-    // <p>{count}</p>
   );
 
 };

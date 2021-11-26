@@ -33,6 +33,8 @@ module.exports = (db) => {
 
     let data = { quantity: req.body.quantity, spoonacularId, userId }
 
+    let data = {userId, spoonacularId, quantity: req.body.quantity, week: req.body.week};
+
     // let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
     db.editGroceryList(data)

@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from 'react';
-import DayMeals from '../components/WeekPlan/DayMeals';
 import { mealContext } from '../providers/MealProvider';
 import axios from 'axios';
 

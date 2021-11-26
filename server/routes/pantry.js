@@ -28,10 +28,9 @@ module.exports = (db) => {
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
-    
-    let data = { quantity: req.body.data.quantity, userId, spoonacularId };
+    let data = { userId, spoonacularId, quantity: req.body.quantity };
+    console.log(data);
 
-    // let data = { userId, spoonacularId, quantity: 121 };
 
     db.editPantryItem(data)
       .then((results) => {

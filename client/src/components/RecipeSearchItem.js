@@ -1,23 +1,20 @@
-import { Autocomplete, Grid, Typography, TextField, Card, CardMedia, CardHeader, CardActions, Icon, IconButton, Checkbox, ButtonBase } from "@mui/material";
+import { Grid, Card, CardMedia, CardHeader, CardActions, IconButton, Checkbox, ButtonBase, Fab } from "@mui/material";
 import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
-import { padding } from "@mui/system";
 import RecipeDialog from "./RecipeDialog";
 import { useState, useContext } from "react"
-import useRecipe from "../hooks/useRecipe";
 import { mealContext } from "../providers/MealProvider"
 import { Link } from "react-router-dom";
-
+import { dietaryDisplay } from "../helper/Dietary";
 
 const RecipeSearchItem = function (props) {
   const [dialogShow, setDialogShow] = useState(false)
 
-  const { recipe, test } = props
+  const { recipe } = props
   const { setDayInformation } = useContext(mealContext)
 
   const handleShowChange = () => {
-    
     if(dialogShow) {
       setDialogShow(false)
       return
@@ -25,27 +22,10 @@ const RecipeSearchItem = function (props) {
     setDialogShow(true) 
   }
 
-  
-  const Dietary = function() {
-    console.log("IM A RECIPE",recipe)
-    let subheaderTemplate = []
-    if (recipe.dieteryRestrictions.vegetarian) {
-      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/vegetarian.png"} alt="picture" width="45px" height="45px"/>)
-    }
-    if (recipe.dieteryRestrictions.vegan) {
-      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/vegan-symbol.png"} alt="picture" width="45px" height="45px"/>)
-    }
-    if (recipe.dieteryRestrictions.glutenFree) {
-      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/glutenfree.png"} alt="picture" width="45px" height="45px"/>)
-    }
-    if (recipe.dieteryRestrictions.dairyFree) {
-      subheaderTemplate.push(<img src={process.env.PUBLIC_URL + "/dairyfree2.png"} alt="picture" width="45px" height="45px"/>)
-    }
-    return subheaderTemplate
-  }
 
   return (
     <Grid item>
+      {console.log("Its me" ,recipe.id)}
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id}/>}
       <Card sx={{ maxWidth: 250, minWidth: 250 }}>
         <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
@@ -59,7 +39,7 @@ const RecipeSearchItem = function (props) {
         </ButtonBase>
         <CardHeader
           title={recipe.title}
-          subheader={Dietary()}
+          subheader={dietaryDisplay(recipe)}
           sx={{ textAlign: "center", paddingBottom: 0 }}
         />
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0}}>

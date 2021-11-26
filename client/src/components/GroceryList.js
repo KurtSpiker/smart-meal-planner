@@ -16,7 +16,6 @@ const GroceryList = function (props) {
       .then((n) => {
         setList(n.data.result);
         setListName(n.data.key)
-        console.log("Grocery list", list)
       })
       .catch(
         function (error) {
