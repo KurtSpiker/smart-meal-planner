@@ -36,7 +36,9 @@ module.exports = (db) => {
         // if it finds no recipes, gives [] to this section
         let ids = recipeIds.join(",");
         if (recipeIds.length > 0) {
-          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=663587.663588.663638.663641.663659
+
+          // [ 646545, 633876, 636078 ]
+          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=646545
           return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
         }
       })
@@ -89,7 +91,7 @@ module.exports = (db) => {
   });
 
   // looking at a specific recipe using its spoonacular id 663641 648279
-  // http://localhost:4000/api/recipes/634856
+  // http://localhost:4000/api/recipes/640104
   router.get("/:id", (req, res) => {
 
     let userId = 1;
@@ -193,7 +195,7 @@ module.exports = (db) => {
     let userId = 1; // const userId = req.cookies["user_id"];
     // let spoonacularId = req.params.id;
 
-    let data = {...req.body, userId};
+    let data = { ...req.body, userId };
 
     // let data = { userId, week: 1, day: "monday", meal: "lunch", spoonacularId };
 
