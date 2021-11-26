@@ -15,7 +15,7 @@ export default function RecipeDialog(props) {
   const [meal, setMeal] = useState(typeOfMeal);
 
   useEffect(() => {
-    console.log("hello")
+    console.log()
     return function cleanup() {
       setOpen(true)
     }
@@ -52,7 +52,6 @@ export default function RecipeDialog(props) {
       axios.post(`/api/grocery_list/1`)
     })
     .then(function (response) {
-      console.log(response);
     })
     .catch(function (error) {
       console.log(error);
