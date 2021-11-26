@@ -31,9 +31,7 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
     let userId = 1;// const userId = req.cookies["user_id"];
 
-    let data = { quantity: req.body.quantity, spoonacularId, userId }
-
-    let data = {userId, spoonacularId, quantity: req.body.quantity, week: req.body.week};
+    let data = { userId, spoonacularId, quantity: req.body.quantity, week: req.body.week };
 
     // let data = { userId, spoonacularId, name: "some stuff i named", measure: "whatever", week: 1, week: 1 };
 
@@ -49,14 +47,14 @@ module.exports = (db) => {
   });
 
   // user deletes a grocery list item
-  // http://localhost:4000/api/grocery_list/delete/1
+  // http://localhost:4000/api/grocery_list/delete/12345
   router.delete("/delete/:id", (req, res) => {
 
     // will be from req.body
     let userId = 1;// const userId = req.cookies["user_id"];
-    let itemDbId = req.params.id;
+    let spoonacularId = req.params.id;
 
-    let data = { userId, itemDbId, week: 1 };
+    let data = { userId, spoonacularId, week: 1 };
 
     db.deleteGroceryListItem(data)
       .then((results) => {
@@ -211,8 +209,8 @@ module.exports = (db) => {
           return items !== undefined;
         })
 
-        // populationg promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
-        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=milk&sourceAmount=488&sourceUnit=ml&targetUnit=tablespoon
+        // populating promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
+        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=french%20bread&sourceAmount=1&sourceUnit=&targetUnit=g
         promises = [];
         for (const item of noUndefinedAxios) {
           promises.push(axios.get(`https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=${item.name}&sourceAmount=${item.amount}&sourceUnit=${item.measure}&targetUnit=${pantryStoreWithIdKeys[item.spoonacularId].measure}`))
@@ -250,6 +248,7 @@ module.exports = (db) => {
         return Promise.all(promises);
       })
       .then((result) => {
+        // return ingredient appear null because db skips negative quantity
         res.send({ result, key: "grocery_list" });
       })
       .catch(e => {
