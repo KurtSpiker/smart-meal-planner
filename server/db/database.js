@@ -76,36 +76,27 @@ const generateGroceryList = function (ingredientObject, userId, week) {
   // getPantryByUser (userId)
   const sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, measure, spoonacular_item_id, week, image_link, auto_generated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
 
-  // { "original": { "amount": 3, "unit": "cups" }, "metric": { "amount": 336, "unit": "g" }, "us": { "amount": 11.9, "unit": "oz" } }
-  let objectToCompare = {};
+  return pool
+    .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl, true])
+    .then(res => {
+      console.log(`Successfully generated grocery list item ${ingredientObject.name} for ingredient ${ingredientObject.ingredientId} ${ingredientObject.name}.`);
+      return res.rows[0];
+    })
+    .catch(e => { console.error(e) });
 
-  getOnePantryItem(userId, ingredientObject.ingredientId)
-    .then((result) => {
-      objectToCompare = result;
-      console.log("THIS IS OUTPUT OF PANTRY ITEM I GET", objectToCompare)
-    })
-    .then(() => {
-      return pool
-        .query(sqlString, [userId, ingredientObject.name, ingredientObject.measures.metric.amount, ingredientObject.measures.metric.unit, ingredientObject.ingredientId, week, ingredientObject.imageUrl, true])
-        .then(res => {
-          console.log(`Successfully generated grocery list item ${ingredientObject.name} for ingredient ${ingredientObject.ingredientId} ${ingredientObject.name}.`);
-          return res.rows[0];
-        })
-        .catch(e => { console.error(e) });
-    })
 }
 exports.generateGroceryList = generateGroceryList;
 
 
-const getOnePantryItem = function (userId, week, spoonacularId) {
-  const sqlString = `SELECT * FROM pantry_ingredients WHERE user_id = $1 AND spoonacular_ingredient_id = $2;`;
-  return pool
-    .query(sqlString, [userId, spoonacularId])
-    .then(res => {
-      return res.rows;
-    })
-    .catch(e => { console.error(e) });
-}
+// const getOnePantryItem = function (userId, week, spoonacularId) {
+//   const sqlString = `SELECT * FROM pantry_ingredients WHERE user_id = $1 AND spoonacular_ingredient_id = $2;`;
+//   return pool
+//     .query(sqlString, [userId, spoonacularId])
+//     .then(res => {
+//       return res.rows;
+//     })
+//     .catch(e => { console.error(e) });
+// }
 
 
 

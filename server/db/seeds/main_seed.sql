@@ -2,7 +2,7 @@ INSERT INTO users (name) VALUES ('John Bob');
 INSERT INTO users (name) VALUES ('Mary Li');
 INSERT INTO users (name) VALUES ('Josh Miller');
 INSERT INTO users (name) VALUES ('Angela Martin');
-INSERT INTO pantry_ingredients (item_name, user_id, spoonacular_ingredient_id, quantity, measure, image_link) VALUES ('banana', 1, 9040, 2, '', 'banana.jpg');
+INSERT INTO pantry_ingredients (item_name, user_id, spoonacular_ingredient_id, quantity, measure, image_link) VALUES ('milk', 1, 1077, 12, 'tablespoon', 'milk.png');
 INSERT INTO pantry_ingredients (item_name, user_id, spoonacular_ingredient_id, quantity, measure, image_link) VALUES ('banana', 1, 9040, 2, '', 'banana.jpg');
 INSERT INTO pantry_ingredients (item_name, user_id, spoonacular_ingredient_id, quantity, measure, image_link) VALUES ('tomato', 1, 11529, 5, '', 'banana.jpg');
 INSERT INTO pantry_ingredients (item_name, user_id, spoonacular_ingredient_id, quantity, measure, image_link) VALUES ('spaghettini', 1, 12520420, 500, 'grams', 'banana.jpg');
