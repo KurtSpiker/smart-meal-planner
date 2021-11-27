@@ -58,8 +58,9 @@ module.exports = (db) => {
 
       }).then((allRecipeInfo) => {
         // only if recipe info is found
-        let dieteryRestrictions = {};
+
         for (const recipeDietery in allRecipeInfo.data) {
+          let dieteryRestrictions = {};
           dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian
           dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
           dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;

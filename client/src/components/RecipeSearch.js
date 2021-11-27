@@ -24,13 +24,13 @@ const testRecipies = {
       "image": "https://spoonacular.com/recipeImages/663659-312x231.jpg",
       "imageType": "jpg",
       "dieteryRestrictions": {
-          "vegetarian": true,
-          "vegan": true,
-          "glutenFree": true,
-          "dairyFree": true
+        "vegetarian": true,
+        "vegan": true,
+        "glutenFree": true,
+        "dairyFree": true
       },
       "favourite": false
-  },
+    },
     {
       "id": 633883,
       "title": "Baked Ziti Casserole",
@@ -117,15 +117,15 @@ const RecipeSearch = function (props) {
 
   return (
     <Grid container justifyContent="center">
-      <Typography variant="h3">
-        Recipies
+      <Typography variant="h3" sx={{ mr: 1.5 }}>
+        Search Recipes
       </Typography>
       <TextField onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
       <Grid container justifyContent="center" spacing={2} >
         {
           recipeContent
         }
-        <RecipeSearchItem recipe={testRecipies.results[0]} test={true}/>
+        <RecipeSearchItem recipe={testRecipies.results[0]} test={true} />
       </Grid>
       <Grid container>
         {/* <RecipeCarousel testRecipies={testRecipies}/>

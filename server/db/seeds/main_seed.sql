@@ -70,7 +70,7 @@ INSERT INTO jokes (joke) VALUES ('The majority of Americans find bananas a peeli
 INSERT INTO jokes (joke) VALUES ('The price of candy at the movie theater is ridiculous. They''re always raisinet!');
 INSERT INTO jokes (joke) VALUES ('I love when candy canes are in mint condition.');
 INSERT INTO jokes (joke) VALUES ('Becoming a vegetarian was a huge missed steak.');
-INSERT INTO jokes (joke) VALUES ('What are hot dogs called in winter? hilly dogs');
+INSERT INTO jokes (joke) VALUES ('What are hot dogs called in winter? Chilly dogs.');
 INSERT INTO jokes (joke) VALUES ('Time flies like an arrow. Fruit flies like a banana.');
 INSERT INTO jokes (joke) VALUES ('Why did the tomato blush? Because it saw the salad dressing.');
 INSERT INTO jokes (joke) VALUES ('Did you hear the one about the greedy peanut butter? I''m not telling you. You might spread it.');

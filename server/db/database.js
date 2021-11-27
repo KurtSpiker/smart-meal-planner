@@ -237,7 +237,7 @@ const addRecipesForUser = function (data) {
   const sqlString = `INSERT INTO meal_lists (user_id, spoonacular_id, week, day_of_week, meal, meal_name, image_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
 
   return pool
-    .query(sqlString, [data.userId, data.spoonacularId, data.week, data.day, data.meal, data.mealName, data.imageUrl])
+    .query(sqlString, [data.userId, data.spoonacularId, data.week, data.day.toLowerCase(), data.meal.toLowerCase(), data.mealName, data.imageUrl])
     .then(res => {
       console.log(`Successfully added recipe ${data.spoonacularId} for user ${data.userId}.`)
       return res.rows;
@@ -253,7 +253,7 @@ const deleteRecipesForUser = function (data) {
   const sqlString = `DELETE FROM meal_lists WHERE user_id = $1 AND week = $2 AND day_of_week = $3 AND meal = $4`;
 
   return pool
-    .query(sqlString, [data.userId, data.week, data.day, data.meal])
+    .query(sqlString, [data.userId, data.week, data.day.toLowerCase(), data.meal])
     .then(res => {
       console.log(`Successfully deleted recipe of user ${data.userId}.`)
       return res.rows;

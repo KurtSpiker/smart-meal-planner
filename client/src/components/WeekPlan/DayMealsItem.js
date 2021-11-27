@@ -16,7 +16,7 @@ export default function DayMealsItem(props) {
   const CONFIRM = "CONFIRM";
   const LOAD = "LOAD";
   const { mode, transition, back } = useMealsItemMode(ADD);
-  
+
   //If a meal is available transition to the show mode
   if (mode === ADD && meal) {
     transition(SHOW);
@@ -42,7 +42,7 @@ export default function DayMealsItem(props) {
     <Grid container justifyContent="center">
 
       {mode === SHOW && (
-        <Show
+        <Show sx={{ maxWidth: 500 }}
           meal={meal}
           mealType={mealType}
           onRemove={() => {
@@ -52,7 +52,7 @@ export default function DayMealsItem(props) {
         />
       )}
       {mode === ADD && (
-        <Add 
+        <Add
           mealType={mealType}
           dayOfWeek={dayOfWeek}
         />)

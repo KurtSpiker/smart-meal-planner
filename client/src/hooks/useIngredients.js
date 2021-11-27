@@ -3,8 +3,8 @@ import axios from "axios";
 import IngredientItem from "../components/IngredientItem";
 
 
-export default function useIngredients (setList, list) {
-  
+export default function useIngredients(setList, list) {
+
   const [ingredientSearchResults, setIngredientSearchResults] = useState([]);
   const [active, setActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState({});

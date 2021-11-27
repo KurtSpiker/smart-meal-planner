@@ -5,9 +5,9 @@ import DayMealsItem from './DayMealsItem'
 export default function DayMeals(props) {
   const mealTypes = ["breakfast", "lunch", "dinner"];
   const { meals, dayOfWeek, removeMeal } = props;
-  
+
   return (
-    <Grid sx={{paddingBottom: "20px"}}>
+    <Grid sx={{ paddingBottom: "20px" }}>
       <Grid>
         <Typography align="center" variant="h4" component="div">
           {dayOfWeek}
@@ -18,20 +18,20 @@ export default function DayMeals(props) {
           mealTypes.map((mealType) => {
             return (
               <Grid key={mealType} item xs={4}>
-                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
-                  <DayMealsItem 
-                    dayOfWeek={dayOfWeek} 
-                    meal={meals[mealType]} 
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1, borderRadius: '20px' }}>
+                  <DayMealsItem
+                    dayOfWeek={dayOfWeek}
+                    meal={meals[mealType]}
                     mealType={mealType}
                     removeMeal={removeMeal}
-                    />
+                  />
                 </Paper>
               </Grid>
             );
           })
         }
       </Grid>
-    </Grid>
+    </Grid >
   );
 
 };
