@@ -3,13 +3,25 @@ import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem } f
 import IngredientList from "./IngredientList";
 import axios from 'axios'
 import useIngredients from "../hooks/useIngredients";
+import NumberFormat from 'react-number-format'
 
 const PantryList = function (props) {
 
   const [list, setList] = useState([]);
   const [listName, setListName] = useState("");
 
-  const { searchForIngredient, addPantryItem, ingredientSearchResults, active, setActive, searchTerm, dropValue, setDropValue } = useIngredients(list, setList);
+  const { 
+    measureValue, 
+    setMeasureValue, 
+    searchForIngredient, 
+    addIngredientItem, 
+    ingredientSearchResults, 
+    active, 
+    setActive, 
+    searchTerm, 
+    dropValue, 
+    setDropValue 
+  } = useIngredients(list, setList);
 
   useEffect(() => {
 
@@ -25,8 +37,7 @@ const PantryList = function (props) {
           console.log(error)
         }
       )
-  }, []);
-
+  }, [active]);
 
   return (
     <Grid container>
@@ -45,7 +56,8 @@ const PantryList = function (props) {
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
       />
-      <Select disabled={!searchTerm.possibleUnits} label="Unit of measure"
+      <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue}/>
+      <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
         onChange={(event) => {
           setDropValue(event.target.value)}
         }
@@ -55,8 +67,8 @@ const PantryList = function (props) {
           return <MenuItem key={item} value={item}>{item}</MenuItem>
         })}
       </Select>
-      <Button onClick={() => addPantryItem()} disabled={!dropValue} variant="outlined">Add to pantry</Button>
-      <IngredientList list={list} listName={listName} setList={setList} list={list}/>
+      <Button onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="outlined">Add to pantry</Button>
+      <IngredientList list={list} listName={listName} setList={setList} />
     </Grid>
   );
 }

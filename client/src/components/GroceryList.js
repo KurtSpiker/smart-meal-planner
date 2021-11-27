@@ -1,14 +1,28 @@
-import React from "react";
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem } from '@mui/material';
 import IngredientList from "./IngredientList";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import useIngredients from "../hooks/useIngredients";
+import NumberFormat from 'react-number-format'
 
 
 const GroceryList = function (props) {
 
   const [list, setList] = useState([]);
   const [listName, setListName] = useState("")
+
+  const { 
+    measureValue, 
+    setMeasureValue, 
+    searchForIngredient, 
+    addIngredientItem, 
+    ingredientSearchResults, 
+    active, 
+    setActive, 
+    searchTerm, 
+    dropValue, 
+    setDropValue 
+  } = useIngredients(list, setList);
 
   useEffect(() => {
 
@@ -23,13 +37,37 @@ const GroceryList = function (props) {
           console.log(error)
         }
       )
-  }, []);
+  }, [active]);
 
   return (
     <Grid container>
       <Typography variant="h3">
         GroceryList
       </Typography>
+      <Autocomplete
+        disablePortal
+        getOptionLabel={(option) => option.name}
+        onInputChange={(event, inputValue) => {
+          searchForIngredient(inputValue)
+        }
+        }
+        id="combo-box-demo"
+        options={ingredientSearchResults}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
+      />
+      <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue}/>
+      <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
+        onChange={(event) => {
+          setDropValue(event.target.value)}
+        }
+      
+      >  
+        {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
+          return <MenuItem key={item} value={item}>{item}</MenuItem>
+        })}
+      </Select>
+      <Button onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="outlined">Add to pantry</Button>
       <IngredientList list={list} listName={listName} setList={setList}/>
     </Grid>
   )

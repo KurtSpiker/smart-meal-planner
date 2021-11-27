@@ -45,12 +45,12 @@ module.exports = (db) => {
 
   // user adds an item to their pantry
   // http://localhost:4000/api/pantry/9016
-  router.post("/:id", (req, res) => {
+  router.post("/add/:id", (req, res) => {
 
     let spoonacularId = req.params.id;
     let userId = 1;
 
-    let data = { userId, name: req.body.name, quantity: req.body.quantity, measure: req.body.measure, spoonacularId, imageLink: req.body.imageLink };
+    let data = { userId, name: req.body.name, quantity: req.body.quantity, measure: req.body.measure, spoonacularId , imageLink: req.body.imageLink };
 
     db.addPantryItem(data)
       .then((results) => {

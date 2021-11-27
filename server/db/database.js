@@ -66,6 +66,9 @@ const generateGroceryList = function (ingredientObject, userId, week, ingredient
   // if ingredientObject's id is inside ingredients convert (they also have it in their pantry)
   if (ingredientsToConvert.includes(ingredientObject.ingredientId)) {
     // set amount and unit of measure from the ingredientToValidate obj, unless it is negative
+    console.log("ingredients to convert", ingredientsToConvert)
+    console.log("ingrdeintsToValidate", ingredientsToValidate)
+    console.log("INSPECTING ID", ingredientObject.ingredientId)
     if (ingredientsToValidate[ingredientObject.ingredientId].resultingSubtraction <= 0) {
       return;
     }

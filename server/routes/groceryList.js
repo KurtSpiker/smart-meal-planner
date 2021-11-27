@@ -70,13 +70,15 @@ module.exports = (db) => {
   // user adds a grocery list item
   // http://localhost:4000/api/grocery_list/add/18019
   router.post("/add/:id", (req, res) => {
+    console.log(req.body)
+    console.log(req.params.id)
 
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
 
     // will be from req.body
-    let data = { userId, name: req.query, quantity: 10, week: 1, measure: "loaf", imageUrl: "quick-bread.png", spoonacularId };
+    let data = { userId, name: req.body.name, quantity: req.body.quantity, week: req.body.week, measure: req.body.measure, spoonacularId, imageLink: req.body.imageLink };
 
     db.addGroceryListItem(data)
       .then((results) => {
@@ -181,6 +183,8 @@ module.exports = (db) => {
           }
         })
 
+        console.log("ingredients that need to be converted from inital step", ingredientsToConvert)
+
         // french bread = 18266/ it has a measure for one as ""
         // console.log(JSON.stringify(groceryListForDb, null, 2))
 
@@ -191,6 +195,7 @@ module.exports = (db) => {
             measure: item.measure
           }
         }
+
         // show the kind of measurements the outputConversion will receive
         // console.log("PANTRY WITH ID KEYS", pantryStoreWithIdKeys)
 
@@ -210,8 +215,10 @@ module.exports = (db) => {
           return items !== undefined;
         })
 
+        console.log("These grocery ingredients are in my pantry->", noUndefinedAxios)
+
         // populating promises to return with noUndefinedAxios which has all the information it needs along with pantryStoreWithIdKeys to compare
-        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=french%20bread&sourceAmount=1&sourceUnit=&targetUnit=g
+        // https://api.spoonacular.com/recipes/convert?apiKey=8fc98d21e6c34ca0ba2782a7e1466616&ingredientName=parmesan cheese&sourceAmount=100&sourceUnit=g&targetUnit=kg
         promises = [];
         for (const item of noUndefinedAxios) {
           promises.push(axios.get(`https://api.spoonacular.com/recipes/convert?apiKey=${process.env.API_KEY}&ingredientName=${item.name}&sourceAmount=${item.amount}&sourceUnit=${item.measure}&targetUnit=${pantryStoreWithIdKeys[item.spoonacularId].measure}`))
@@ -219,16 +226,17 @@ module.exports = (db) => {
         return Promise.all(promises);
       })
       .then((result) => {
+        console.log("Resulting axios conversion for index 0 ->", result[0].data)
 
         let ingredientsToValidate = {}
         for (const itemIndex in result) {
-          // console.log("OUTPUT", item[itemIndex].data)
-          ingredientsToValidate[pantryStore[itemIndex].spoonacular_ingredient_id] =
+
+          ingredientsToValidate[ingredientsToConvert[itemIndex]] =
           {
             // rest of data is to validate if this is in sync
-            name: pantryStore[itemIndex].item_name,
-            pantryAmount: pantryStore[itemIndex].quantity,
-            pantryMeasure: pantryStore[itemIndex].measure,
+            name: pantryStoreWithIdKeys[ingredientsToConvert[itemIndex]].name,
+            pantryAmount: pantryStoreWithIdKeys[ingredientsToConvert[itemIndex]].quantity,
+            pantryMeasure: pantryStoreWithIdKeys[ingredientsToConvert[itemIndex]].measure,
             groceryListConversion: result[itemIndex].data.answer,
             groceryListAmount: result[itemIndex].data.targetAmount,
             groceryListMeasure: result[itemIndex].data.targetUnit,
@@ -236,7 +244,7 @@ module.exports = (db) => {
             resultingSubtraction: result[itemIndex].data.targetAmount - pantryStore[itemIndex].quantity
           }
         }
-        return ingredientsToValidate
+        return ingredientsToValidate;
       })
       .then((ingredientsToValidate) => {
         // stores all db calls into promise array
