@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import IngredientItem from "../components/IngredientItem";
 
 
 export default function useIngredients (setList, list) {
@@ -7,6 +8,7 @@ export default function useIngredients (setList, list) {
   const [ingredientSearchResults, setIngredientSearchResults] = useState([]);
   const [active, setActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState({});
+  const [dropValue, setDropValue] = useState(false);
 
   // useEffect(() => {
   //   ingredientSearchResults.forEach((listedIngredient) => {
@@ -19,7 +21,6 @@ export default function useIngredients (setList, list) {
   // }, [ingredientSearchResults])
 
   const searchForIngredient = (term) => {
-    console.log("seach")
     axios.get(`/api/search/ingredientTerm`, {
       params: {
         searchTerm: term
@@ -33,30 +34,43 @@ export default function useIngredients (setList, list) {
       // if the serch term exactly matches one of the ingredient items, we set active to true
       ingredientSearchResults.forEach((listedIngredient) => {
         if (listedIngredient.name === term) {
-          console.log("listed ingredient", listedIngredient ,"Term", term)
-          setActive(true)
-          console.log("This is the listed ingredient", listedIngredient)
-          return listedIngredient.id
-        } else {
-          return "1077"
-        }
+          if (listedIngredient.id) {
+            axios.get(`/api/search/ingredientId/${listedIngredient.id}`)
+            .then((result) => {
+              console.log(result.data)
+              setSearchTerm(result.data)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+          }
+        } 
       })
     })
-    .then((id) => {
-      axios.get(`/api/search/ingredientId/${id}`)
-      .then((result) => {
-        setSearchTerm(result.data)
-        console.log("result!", result.data)
-      })
-    })
+    // .then((id) => {
+    //   console.log("id", id)
+    //   if (id) {
+    //     axios.get(`/api/search/ingredientId/${id}`)
+    //     .then((result) => {
+    //       setSearchTerm(result.data)
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    //   }
+    // })
   };
 
 
 
-  const addPantryItem = (result) => {
-   // setList((prev) => [...prev, listedIngredient])
-   axios.get(`/api/`)
+  const addPantryItem = () => {
+    axios.post(`api/pantry/${searchTerm.id}`,{
+      name: searchTerm.ingredientName, quantity: 44, measure: dropValue, imageLink: searchTerm.imageURL
+    })
+    .then((result)=>{
+      console.log(result.data)
+    })
   }
 
-  return { active, searchForIngredient, addPantryItem, ingredientSearchResults, searchTerm };
+  return { dropValue, setDropValue, active, setActive, searchForIngredient, addPantryItem, ingredientSearchResults, searchTerm };
 }

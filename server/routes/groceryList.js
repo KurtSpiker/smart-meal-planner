@@ -75,7 +75,7 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
 
     // will be from req.body
-    let data = { userId, name: "banana bread", quantity: 10, week: 1, measure: "loaf", imageUrl: "quick-bread.png", spoonacularId };
+    let data = { userId, name: "banana bread", quantity: 10, week: 1, measure: "loaf", imageLink: "quick-bread.png", spoonacularId };
 
     db.addGroceryListItem(data)
       .then((results) => {

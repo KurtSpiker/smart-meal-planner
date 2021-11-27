@@ -160,7 +160,7 @@ exports.editGroceryList = editGroceryList;
 const addGroceryListItem = function (data) {
 
   let sqlString = `INSERT INTO grocery_list_items (user_id, item_name, quantity, week, image_link, spoonacular_ingredient_id `;
-  let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageUrl, data.spoonacularId];
+  let sqlStringArray = [data.userId, data.name, data.quantity, data.week, data.imageLink, data.spoonacularId];
 
   if (data.measure) {
     sqlString = sqlString + `, measure) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
@@ -330,7 +330,6 @@ const editPantryItem = function (data) {
     sqlStringArray.push(`item_name = $${counter}`);
     arrayToPass.push(data.name);
   }
-  console.log(data.quantity)
   if (data.quantity) {
     counter++;
     sqlStringArray.push(`quantity = $${counter}`);

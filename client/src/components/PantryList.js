@@ -9,7 +9,7 @@ const PantryList = function (props) {
   const [list, setList] = useState([]);
   const [listName, setListName] = useState("");
 
-  const { searchForIngredient, addPantryItem, ingredientSearchResults, active, searchTerm } = useIngredients(list, setList);
+  const { searchForIngredient, addPantryItem, ingredientSearchResults, active, setActive, searchTerm, dropValue, setDropValue } = useIngredients(list, setList);
 
   useEffect(() => {
 
@@ -44,12 +44,17 @@ const PantryList = function (props) {
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
       />
-      <Select>
-        {/* {searchTerm.possibleUnits.map((item) => {
+      <Select disabled={!searchTerm.possibleUnits} label="Unit of measure"
+        onChange={(event) => {
+          setDropValue(event.target.value)}
+        }
+      
+      >  
+        {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
           return <MenuItem key={item} value={item}>{item}</MenuItem>
-        })} */}
+        })}
       </Select>
-      <Button onClick={() => addPantryItem()} disabled={!active} variant="outlined">Add to pantry</Button>
+      <Button onClick={() => addPantryItem()} disabled={!dropValue} variant="outlined">Add to pantry</Button>
       <IngredientList list={list} listName={listName} setList={setList} list={list}/>
     </Grid>
   );
