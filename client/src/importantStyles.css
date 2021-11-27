@@ -37,3 +37,8 @@
 .css-wvkj6e-MuiDrawer-docked .MuiDrawer-paper{
   margin-bottom: 50px !important;
 }
+
+/* keeps measure unit in a line */
+.ingredientMeasure {
+  display:inline;
+}

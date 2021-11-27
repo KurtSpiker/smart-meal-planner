@@ -11,6 +11,7 @@ import PantryList from "./PantryList";
 import RecipeSearch from "./RecipeSearch";
 import Recipe from "./Recipe";
 
+
 export default function Main() {
 
   return (
@@ -23,6 +24,8 @@ export default function Main() {
             <Route exact path="/PantryList" element={<PantryList />} />
             <Route exact path="/Recipe_search" element={<RecipeSearch />} />
             <Route exact path="/Recipe" element={<Recipe />} />
+            {/* <Route exact path="/Login" element={<Login />} />
+            <Route exact path="/Favourites" element={<Favourites />} /> */}
           </Routes>
           <Outlet />
         </div>
