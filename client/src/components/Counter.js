@@ -7,7 +7,7 @@ import NumberFormat from 'react-number-format'
 const Counter = function (props) {
   const { quantity, listName, ingredientId } = props
 
-  const { count, handleDecrement, handleIncrement, setCount } = useCounter(quantity, listName, ingredientId);
+  const { count, setCount, handleDecrement, handleIncrement } = useCounter(quantity, listName, ingredientId);
 
 
   return (
