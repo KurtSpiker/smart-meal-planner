@@ -2,23 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import IngredientItem from "../components/IngredientItem";
 
-
 export default function useIngredients(setList, list) {
 
   const [ingredientSearchResults, setIngredientSearchResults] = useState([]);
   const [active, setActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState({});
   const [dropValue, setDropValue] = useState(false);
-
-  // useEffect(() => {
-  //   ingredientSearchResults.forEach((listedIngredient) => {
-  //     if (listedIngredient.name === searchTerm) {
-  //       console.log("listed ingredient", listedIngredient ,"Term", searchTerm)
-  //       setActive(true)
-  //     }
-  //   })
-  //   console.log("Active", active)
-  // }, [ingredientSearchResults])
+  const [measureValue, setMeasureValue] = useState("");
 
   const searchForIngredient = (term) => {
     axios.get(`/api/search/ingredientTerm`, {
@@ -31,46 +21,36 @@ export default function useIngredients(setList, list) {
       setSearchTerm(term);
       setIngredientSearchResults(result.data.results);
       
-      // if the serch term exactly matches one of the ingredient items, we set active to true
+      // if the serch term exactly matches one of the ingredient items
+      //we make another api call to retrieve more ingredient information needed for the list item
       ingredientSearchResults.forEach((listedIngredient) => {
         if (listedIngredient.name === term) {
           if (listedIngredient.id) {
             axios.get(`/api/search/ingredientId/${listedIngredient.id}`)
             .then((result) => {
-              console.log(result.data)
-              setSearchTerm(result.data)
+              setSearchTerm(result.data);
             })
             .catch((err) => {
-              console.log(err)
-            })
+              console.log(err);
+            });
           }
         } 
       })
-    })
-    // .then((id) => {
-    //   console.log("id", id)
-    //   if (id) {
-    //     axios.get(`/api/search/ingredientId/${id}`)
-    //     .then((result) => {
-    //       setSearchTerm(result.data)
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    //   }
-    // })
+    });
   };
-
-
 
   const addPantryItem = () => {
     axios.post(`api/pantry/${searchTerm.id}`,{
-      name: searchTerm.ingredientName, quantity: 44, measure: dropValue, imageLink: searchTerm.imageURL
+      name: searchTerm.ingredientName, quantity: measureValue, measure: dropValue, imageLink: searchTerm.imageURL
     })
     .then((result)=>{
-      console.log(result.data)
-    })
-  }
+      //sets the acive ingredient to be added. When this changes, the useEffect in PantryList re-loads the database content
+      setActive(result.data);
+      //resets the unit and measure/quantity values
+      setDropValue(false);
+      setMeasureValue("");
+    });
+  };
 
-  return { dropValue, setDropValue, active, setActive, searchForIngredient, addPantryItem, ingredientSearchResults, searchTerm };
+  return { measureValue, setMeasureValue, dropValue, setDropValue, active, setActive, searchForIngredient, addPantryItem, ingredientSearchResults, searchTerm };
 }
