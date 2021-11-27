@@ -68,15 +68,22 @@ module.exports = (db) => {
   });
 
   // user adds a grocery list item
-  // http://localhost:4000/api/grocery_list/add/18019
+  // http://localhost:4000/api/grocery_list/add/17166
   router.post("/add/:id", (req, res) => {
 
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
+    let data = {
+      name: 'elk meat',
+      week: 1,
+      quantity: '12',
+      measure: 'pound',
+      imageLink: 'beef-cubes-raw.png'
+    }
 
     // will be from req.body
-    let data = { userId, name: req.query, quantity: 10, week: 1, measure: "loaf", imageUrl: "quick-bread.png", spoonacularId };
+    // let data = { userId, name: "fhfgh", quantity: 10, week: 1, measure: "loaf", imageLink: "quick-bread.png", spoonacularId };
 
     db.addGroceryListItem(data)
       .then((results) => {

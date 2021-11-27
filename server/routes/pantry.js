@@ -45,7 +45,7 @@ module.exports = (db) => {
 
   // user adds an item to their pantry
   // http://localhost:4000/api/pantry/9016
-  router.post("/:id", (req, res) => {
+  router.post("/add/:id", (req, res) => {
 
     let spoonacularId = req.params.id;
     let userId = 1;

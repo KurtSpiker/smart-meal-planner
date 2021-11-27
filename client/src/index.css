@@ -51,3 +51,37 @@ ul.header li a {
   height: 20%;
   object-fit: cover
 }
+
+.fioLogo{
+  border-radius: 50px;
+}
+
+/* login form css */
+.login {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.form {
+  max-width: 350px;
+  margin: -100px auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgb(255, 198, 75);
+ 
+}
+
+.form .form__custom-button {
+  margin-top: 10px;
+}
+
+.fioLogoLogin{
+  margin-bottom: 10px;
+  width:150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+

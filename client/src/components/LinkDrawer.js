@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Grid, Toolbar, Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
-import Logo from './FIO_transparent.png'
+import Logo from './Fork it Over-logos.jpeg'
 import { Link } from "react-router-dom";
-
 
 class LinkDrawer extends Component {
   render() {
@@ -14,7 +13,7 @@ class LinkDrawer extends Component {
         <Grid container paddingLeft={4}>
           <Grid item>
             <div>
-              <img src={Logo} alt="logo" width="85%" />
+              <img className="fioLogo" src={Logo} alt="logo" width="85%" />
             </div>
           </Grid>
         </Grid>
