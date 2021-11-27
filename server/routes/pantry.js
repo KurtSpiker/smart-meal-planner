@@ -50,8 +50,7 @@ module.exports = (db) => {
     let spoonacularId = req.params.id;
     let userId = 1;
 
-
-    let data = { userId, name: "apple juice", quantity: 500, measure: "ml", spoonacularId, imageLink: "apple-juice.jpg" };
+    let data = { userId, name: req.body.name, quantity: req.body.quantity, measure: req.body.measure, spoonacularId , imageLink: req.body.imageLink };
 
     db.addPantryItem(data)
       .then((results) => {

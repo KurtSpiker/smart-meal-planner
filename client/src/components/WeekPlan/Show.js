@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { mealContext } from '../../providers/MealProvider';
 import { Grid, Stack, Typography, IconButton, ButtonBase } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
 
 export default function DayMealsItem(props) {
@@ -11,6 +12,7 @@ export default function DayMealsItem(props) {
 
   return (
     <Grid container>
+      
       <Grid item>
         <ButtonBase
           onClick={() => setDayInformation(dayOfWeek, mealType, meal.spoonacular_id)}
@@ -32,6 +34,13 @@ export default function DayMealsItem(props) {
       </Stack>
 
       <Grid item>
+        <IconButton 
+          onClick={() => setDayInformation(dayOfWeek, mealType, meal.spoonacular_id)} 
+          component={Link}
+          to={"/Recipe_search"}
+          >
+          <EditIcon />
+        </IconButton>
         <IconButton onClick={onRemove}>
           <DeleteIcon />
         </IconButton>
