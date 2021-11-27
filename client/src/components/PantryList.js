@@ -10,7 +10,18 @@ const PantryList = function (props) {
   const [list, setList] = useState([]);
   const [listName, setListName] = useState("");
 
-  const { measureValue, setMeasureValue, searchForIngredient, addPantryItem, ingredientSearchResults, active, setActive, searchTerm, dropValue, setDropValue } = useIngredients(list, setList);
+  const { 
+    measureValue, 
+    setMeasureValue, 
+    searchForIngredient, 
+    addIngredientItem, 
+    ingredientSearchResults, 
+    active, 
+    setActive, 
+    searchTerm, 
+    dropValue, 
+    setDropValue 
+  } = useIngredients(list, setList);
 
   useEffect(() => {
 
@@ -56,8 +67,8 @@ const PantryList = function (props) {
           return <MenuItem key={item} value={item}>{item}</MenuItem>
         })}
       </Select>
-      <Button onClick={() => addPantryItem()} disabled={!dropValue} variant="outlined">Add to pantry</Button>
-      <IngredientList list={list} listName={listName} setList={setList} list={list}/>
+      <Button onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="outlined">Add to pantry</Button>
+      <IngredientList list={list} listName={listName} setList={setList} />
     </Grid>
   );
 }

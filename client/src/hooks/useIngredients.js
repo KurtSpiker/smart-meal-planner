@@ -39,12 +39,13 @@ export default function useIngredients(setList, list) {
     });
   };
 
-  const addPantryItem = () => {
-    axios.post(`api/pantry/${searchTerm.id}`,{
-      name: searchTerm.ingredientName, quantity: measureValue, measure: dropValue, imageLink: searchTerm.imageURL
+  const addIngredientItem = (listName) => {
+    axios.post(`api/${listName}/add/${searchTerm.id}`,{
+      week: 1, name: searchTerm.ingredientName, quantity: measureValue, measure: dropValue, imageLink: searchTerm.imageURL
     })
     .then((result)=>{
       //sets the acive ingredient to be added. When this changes, the useEffect in PantryList re-loads the database content
+      console.log(result.data)
       setActive(result.data);
       //resets the unit and measure/quantity values
       setDropValue(false);
@@ -52,5 +53,5 @@ export default function useIngredients(setList, list) {
     });
   };
 
-  return { measureValue, setMeasureValue, dropValue, setDropValue, active, setActive, searchForIngredient, addPantryItem, ingredientSearchResults, searchTerm };
+  return { measureValue, setMeasureValue, dropValue, setDropValue, active, setActive, searchForIngredient, addIngredientItem, ingredientSearchResults, searchTerm };
 }
