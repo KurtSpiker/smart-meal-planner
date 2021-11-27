@@ -44,10 +44,7 @@ export default function DayMealsItem(props) {
         <IconButton onClick={onRemove}>
           <DeleteIcon />
         </IconButton>
-<<<<<<< HEAD
-=======
 
->>>>>>> a7c686c6548bdd1bbc6f4093aac8c831c2fb77cd
       </Grid>
 
     </Grid>
