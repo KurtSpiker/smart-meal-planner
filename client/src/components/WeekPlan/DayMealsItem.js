@@ -32,12 +32,7 @@ export default function DayMealsItem(props) {
       });
   };
 
-  //when a user cancels the delete action
-  const onRemove = () => {
-    transition(CONFIRM)
-    return;
-  }
-
+  //conditionally render the mode
   return (
     <Grid container justifyContent="center">
 
