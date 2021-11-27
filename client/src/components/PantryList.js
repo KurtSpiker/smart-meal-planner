@@ -36,8 +36,9 @@ const PantryList = function (props) {
       <Autocomplete
         disablePortal
         getOptionLabel={(option) => option.name}
-        onInputChange={(event, inputValue ) => {
-          searchForIngredient(inputValue)}
+        onInputChange={(event, inputValue) => {
+          searchForIngredient(inputValue)
+        }
         }
         id="combo-box-demo"
         options={ingredientSearchResults}
@@ -50,7 +51,7 @@ const PantryList = function (props) {
         })} */}
       </Select>
       <Button onClick={() => addPantryItem()} disabled={!active} variant="outlined">Add to pantry</Button>
-      <IngredientList list={list} listName={listName} setList={setList} list={list}/>
+      <IngredientList list={list} listName={listName} setList={setList} list={list} />
     </Grid>
   );
 }
