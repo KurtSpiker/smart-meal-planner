@@ -8,7 +8,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/search/ingredientTerm
   router.get("/ingredientTerm", (req, res) => {
 
-    let data = { searchTerm: "milk chocolate" }
+    let data = { searchTerm: "milk" }
     let ingredient = data.searchTerm
 
     axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${ingredient}`)
