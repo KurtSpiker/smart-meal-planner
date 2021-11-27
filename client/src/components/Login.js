@@ -1,8 +1,23 @@
-import { React, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { TextField, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import Logo from './Fork it Over-logos_transparent.png'
+import axios from "axios";
+import { mealContext } from '../providers/MealProvider'
 
 const Login = function (props) {
+
+  const { setCookie } = useContext(mealContext);
+
+  const login = function () {
+    axios.get(`/api/users/login/1`)
+      .then(() => {
+        setCookie(1)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
 
   return (
     <div className="login">
@@ -27,7 +42,7 @@ const Login = function (props) {
           type="password"
         />
 
-        <Button type="button" color="primary" className="form__custom-button">
+        <Button onClick={() => { login() }} type="button" color="primary" className="form__custom-button" component={Link} to={"/WeekPlan/"}>
           Login
         </Button>
       </form>
