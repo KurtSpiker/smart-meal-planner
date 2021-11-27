@@ -1,4 +1,5 @@
 import './index.css';
+import './importantStyles.css';
 import WeekPlan from './components/WeekPlan/'
 
 function App() {

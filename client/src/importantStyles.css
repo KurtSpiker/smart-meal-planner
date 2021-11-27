@@ -1,0 +1,44 @@
+/* mealtime and meal name */
+.css-c1wwjp-MuiStack-root {
+  margin-left: 50px !important;
+  max-width: 270px;
+}
+
+/* font properties for the joke inside a recipe */
+.css-nrdprl-MuiTypography-root {
+  font-style: italic !important;
+}
+
+/* meal list item when hover */
+.css-1g29skm-MuiPaper-root:hover {
+  box-shadow: rgb(112, 112, 112, 0.4) 5px 5px;
+}
+
+/* expand the button width to fill the sides */
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+  width: 100%;
+  font-weight: bold !important;
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+/* side buttons on hover */
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover{
+  background-color: rgba(83, 47, 0, 0.4) !important;
+
+}
+
+/* side bar  */
+.css-rel23w-MuiDrawer-docked .MuiDrawer-paper{
+/* set colour of background */
+ 
+}
+
+.css-wvkj6e-MuiDrawer-docked .MuiDrawer-paper{
+  margin-bottom: 50px !important;
+}
+
+/* keeps measure unit in a line */
+.ingredientMeasure {
+  display:inline;
+}

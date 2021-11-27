@@ -15,10 +15,6 @@ module.exports = (db) => {
     db.getGroceryListByUser(userId)
       .then((results) => {
 
-        return results;
-      })
-      .then((results) => {
-
         let arrayOfItems = [];
         for (const item of results) {
           arrayOfItems.push(item.quantity + " " + item.measure + " " + item.item_name);
