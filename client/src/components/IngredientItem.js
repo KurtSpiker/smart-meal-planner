@@ -5,26 +5,26 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 
 const IngredientItem = function (props) {
-  const { ingredient, listName, setList, list} = props;
+  const { ingredient, listName, setList, list } = props;
 
   const deleteRecipe = () => {
     axios.delete(`/api/${listName}/delete/${ingredient.spoonacular_ingredient_id}`,
-    {
-      spoonacularId: ingredient.spoonacular_ingredient_id, week: 1
-    })
-    .then(() => {
-      list.forEach((item, index) => {
-        if(item.spoonacular_ingredient_id === ingredient.spoonacular_ingredient_id) {
-          let listReplace = [...list]
-          listReplace.splice(index, 1)
-          setList(listReplace)
-          return
-        }
+      {
+        spoonacularId: ingredient.spoonacular_ingredient_id, week: 1
       })
-    })
-    .catch((err) => {
-      console.log(err.message)
-    });
+      .then(() => {
+        list.forEach((item, index) => {
+          if (item.spoonacular_ingredient_id === ingredient.spoonacular_ingredient_id) {
+            let listReplace = [...list]
+            listReplace.splice(index, 1)
+            setList(listReplace)
+            return
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err.message)
+      });
   }
 
 
@@ -43,14 +43,14 @@ const IngredientItem = function (props) {
         </Grid>
         <Grid container alignItems="center" justifyContent="flex-end">
           <Grid item>
-            <Counter 
-              quantity={ingredient.quantity} 
-              listName={listName} 
+            <Counter
+              quantity={ingredient.quantity}
+              listName={listName}
               ingredientId={ingredient.spoonacular_ingredient_id}
             />
-            {ingredient.measure}
+            <label className="ingredientMeasure">{ingredient.measure}</label>
             <IconButton onClick={() => deleteRecipe()}>
-              <DeleteIcon/>
+              <DeleteIcon />
             </IconButton>
           </Grid>
         </Grid>
