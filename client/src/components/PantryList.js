@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, TextField, Autocomplete } from '@mui/material';
+import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem } from '@mui/material';
 import IngredientList from "./IngredientList";
 import axios from 'axios'
-
+import useIngredients from "../hooks/useIngredients";
 
 const PantryList = function (props) {
 
-  const [list, setList] = useState([])
-  const [listName, setListName] = useState("")
+  const [list, setList] = useState([]);
+  const [listName, setListName] = useState("");
+
+  const { searchForIngredient, addPantryItem, ingredientSearchResults, active, searchTerm } = useIngredients(list, setList);
 
   useEffect(() => {
 
     axios.get(`/api/pantry`)
       .then((n) => {
-        console.log(n.data.result)
+        //console.log(n.data.result)
         setListName(n.data.key)
         setList(n.data.result);
+        console.log("list", list)
       })
       .catch(
         function (error) {
@@ -23,6 +26,7 @@ const PantryList = function (props) {
         }
       )
   }, []);
+
 
   return (
     <Grid container>
@@ -32,12 +36,21 @@ const PantryList = function (props) {
       <Autocomplete
         disablePortal
         getOptionLabel={(option) => option.name}
+        onInputChange={(event, inputValue ) => {
+          searchForIngredient(inputValue)}
+        }
         id="combo-box-demo"
-        options={[]}
+        options={ingredientSearchResults}
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
       />
-      <IngredientList list={list} listName={listName} />
+      <Select>
+        {/* {searchTerm.possibleUnits.map((item) => {
+          return <MenuItem key={item} value={item}>{item}</MenuItem>
+        })} */}
+      </Select>
+      <Button onClick={() => addPantryItem()} disabled={!active} variant="outlined">Add to pantry</Button>
+      <IngredientList list={list} listName={listName} setList={setList} list={list}/>
     </Grid>
   );
 }

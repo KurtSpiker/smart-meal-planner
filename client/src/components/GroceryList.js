@@ -14,8 +14,9 @@ const GroceryList = function (props) {
 
     axios.get(`/api/grocery_list/1`)
       .then((n) => {
-        setList(n.data.result);
+        console.log(n.data.result)
         setListName(n.data.key)
+        setList(n.data.result);
       })
       .catch(
         function (error) {
@@ -29,7 +30,7 @@ const GroceryList = function (props) {
       <Typography variant="h3">
         GroceryList
       </Typography>
-      <IngredientList list={list} listName={listName} />
+      <IngredientList list={list} listName={listName} setList={setList}/>
     </Grid>
   )
 }
