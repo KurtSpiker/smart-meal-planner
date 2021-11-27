@@ -27,7 +27,9 @@ ul.header li a {
   background-color: rgb(0 0 0 / 20%);
   padding: 20px;
   padding-left: 15%;
-  height: 95vh;
+  /* height: 95vh; */
+  height:auto;
+  min-height:95vh;
   
 }
 .content h2 {

@@ -15,26 +15,25 @@ const RecipeSearchItem = function (props) {
   const { setDayInformation } = useContext(mealContext)
 
   const handleShowChange = () => {
-    if(dialogShow) {
+    if (dialogShow) {
       setDialogShow(false)
       return
     }
-    setDialogShow(true) 
+    setDialogShow(true)
   }
 
 
   return (
     <Grid item>
-      {console.log("Its me" ,recipe.id)}
-      {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id}/>}
-      <Card sx={{ maxWidth: 250, minWidth: 250 }}>
+      {console.log("Its me", recipe.id)}
+      {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id} />}
+      <Card sx={{ maxWidth: 250, minWidth: 250, marginTop: '25px', borderRadius: '25px' }}>
         <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
           <CardMedia
             component="img"
             image={recipe.image}
             alt="image"
             height="250"
-            width="250"
           />
         </ButtonBase>
         <CardHeader
@@ -42,15 +41,15 @@ const RecipeSearchItem = function (props) {
           subheader={dietaryDisplay(recipe)}
           sx={{ textAlign: "center", paddingBottom: 0 }}
         />
-        <CardActions sx={{ justifyContent: "space-between", paddingTop: 0}}>
+        <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>
           </Checkbox>
           <IconButton>
-            <FoodBankIcon onClick={() => {handleShowChange()}}/>
+            <FoodBankIcon onClick={() => { handleShowChange() }} />
           </IconButton>
         </CardActions>
       </Card>
-    </Grid>
+    </Grid >
   )
 }
 
