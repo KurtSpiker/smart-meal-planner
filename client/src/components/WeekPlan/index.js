@@ -1,6 +1,7 @@
 import { Stack } from '@mui/material';
 import DayMeals from './DayMeals';
 import useWeeklyPlanData from '../../hooks/useWeeklyPlanData';
+import myWeekIcon from '../images//myweek.png'
 
 export default function WeekPlan() {
 
@@ -8,17 +9,20 @@ export default function WeekPlan() {
 
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return (
-    <Stack>
-      {daysOfWeek.map((day) => {
-        return (
-          <DayMeals
-            key={day}
-            meals={plan[day] ? plan[day] : {}} 
-            dayOfWeek={day} 
-            removeMeal={removeMeal}
-          />
-        )
-      })}
-    </Stack>
+    <>
+      <header class="mainPageHeaders"><img className="headerIcon" src={myWeekIcon} />My Week</header>
+      <Stack>
+        {daysOfWeek.map((day) => {
+          return (
+            <DayMeals
+              key={day}
+              meals={plan[day] ? plan[day] : {}}
+              dayOfWeek={day}
+              removeMeal={removeMeal}
+            />
+          )
+        })}
+      </Stack>
+    </>
   );
 };

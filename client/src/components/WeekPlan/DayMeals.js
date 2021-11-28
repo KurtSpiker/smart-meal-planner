@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
 import DayMealsItem from './DayMealsItem'
+import { styled } from '@mui/material/styles';
+import { DayMealItemPaper } from '../../customstyles/DayMealItemPaper';
 
 export default function DayMeals(props) {
   const mealTypes = ["breakfast", "lunch", "dinner"];
@@ -9,7 +11,7 @@ export default function DayMeals(props) {
   return (
     <Grid sx={{ paddingBottom: "20px" }}>
       <Grid>
-        <Typography align="center" variant="h4" component="div">
+        <Typography sx={{ textTransform: "capitalize", fontWeight: 'bold', fontSize: "30px", float: "left", marginLeft: "15px", marginTop: "15px" }} align="center" variant="h4" component="div">
           {dayOfWeek}
         </Typography>
       </Grid>
@@ -18,14 +20,14 @@ export default function DayMeals(props) {
           mealTypes.map((mealType) => {
             return (
               <Grid key={mealType} item xs={4}>
-                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1, borderRadius: '20px' }}>
+                <DayMealItemPaper>
                   <DayMealsItem
                     dayOfWeek={dayOfWeek}
                     meal={meals[mealType]}
                     mealType={mealType}
                     removeMeal={removeMeal}
                   />
-                </Paper>
+                </DayMealItemPaper>
               </Grid>
             );
           })

@@ -1,4 +1,5 @@
 import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem, Stack, Backdrop, CircularProgress } from '@mui/material';
+import { AddIngredientButton } from '../customstyles/AddIngredientButton';
 import IngredientList from "./IngredientList";
 import { useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
@@ -6,6 +7,7 @@ import axios from "axios";
 import useIngredients from "../hooks/useIngredients";
 import NumberFormat from 'react-number-format'
 import groceryListIcon from './images/grocery.png'
+
 
 
 const GroceryList = function (props) {
@@ -55,19 +57,8 @@ const GroceryList = function (props) {
 
   };
 
-  // custom colour button for entering item
-  const ColorButton = styled(Button)(({ theme }) => ({
-    fontWeight: "bold",
-    color: "rgb(78, 0, 0)",
-    backgroundColor: "rgb(247,191,80,0.65)",
-    '&:hover': {
-      backgroundColor: "#f7bf50",
-    },
-    height: "56px"
-  }));
-
   return (
-    <div>
+    <>
       {loading && (
         <Backdrop
           open={true}
@@ -79,8 +70,8 @@ const GroceryList = function (props) {
 
       {!loading && (
         <>
-          <Typography variant="h3">
-            <img className="groceryListPageIcon" src={groceryListIcon} />
+          <Typography variant="h3" className="mainPageHeaders">
+            <img className="headerIcon" src={groceryListIcon} />
             Grocery List
           </Typography>
           <Grid container alignItems="center" mt={3}>
@@ -95,11 +86,11 @@ const GroceryList = function (props) {
                 id="combo-box-demo"
                 options={ingredientSearchResults}
                 sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Search for an ingredient to add" />}
+                renderInput={(params) => <TextField  {...params} label="Search for an ingredient to add" />}
               />
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={8}>
               <Stack direction="row">
                 <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
                 <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
@@ -111,15 +102,19 @@ const GroceryList = function (props) {
                     return <MenuItem key={item} value={item}>{item}</MenuItem>
                   })}
                 </Select>
-                <ColorButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to Groceries</ColorButton>
-                <ColorButton onClick={() => updateGroceryList()} variant="outlined">Generate List</ColorButton>
+                <AddIngredientButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to Groceries</AddIngredientButton>
               </Stack>
             </Grid>
+
+            <Grid item xs={1}>
+              <AddIngredientButton onClick={() => updateGroceryList()} variant="outlined">Generate List</AddIngredientButton>
+            </Grid>
+
             <IngredientList list={list} listName={listName} setList={setList} />
           </Grid>
         </>
       )}
-    </div>
+    </>
   );
 }
 export default GroceryList

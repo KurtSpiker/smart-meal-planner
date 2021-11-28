@@ -1,18 +1,14 @@
 /* mealtime and meal name */
 .css-c1wwjp-MuiStack-root {
   margin-left: 50px !important;
-  max-width: 230px;
+  max-width: 220px;
+  /* background-color: rgb(218, 211, 117); */
 }
 
 
 /* font properties for the joke inside a recipe */
 .css-nrdprl-MuiTypography-root {
   font-style: italic !important;
-}
-
-/* meal list item when hover */
-.css-1g29skm-MuiPaper-root:hover {
-  box-shadow: rgb(112, 112, 112, 0.4) 5px 5px;
 }
 
 /* expand the button width to fill the sides */
@@ -30,6 +26,8 @@
 /* side buttons on hover */
 #linkDrawerButton.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover{
   background-color: #f7bf50  !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2.5px;
 }
 
 .buttonIcon{
@@ -64,3 +62,16 @@
   height: 50px;
   margin-right: 15px;
 }
+
+.mainPageHeaders{
+  display: flex;
+  justify-content: center;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 45px;
+}
+
+.headerIcon{
+  height: 50px;
+  margin-right: 15px;
+}
+

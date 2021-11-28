@@ -25,7 +25,6 @@ const Login = function (props) {
         <img className="fioLogoLogin" src={Logo} />
         <TextField sx={{ marginBottom: "8px", backgroundColor: "white" }}
           labelText="Email"
-          id="email"
           formControlProps={{
             fullWidth: true
           }}
@@ -34,7 +33,6 @@ const Login = function (props) {
         />
         <TextField sx={{ backgroundColor: "white" }}
           labelText="Password"
-          id="password"
           formControlProps={{
             fullWidth: true
           }}
