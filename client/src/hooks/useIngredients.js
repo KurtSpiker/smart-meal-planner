@@ -50,5 +50,15 @@ export default function useIngredients(setList, list) {
     });
   };
 
-  return { measureValue, setMeasureValue, dropValue, setDropValue, active, setActive, searchForIngredient, addIngredientItem, ingredientSearchResults, searchTerm };
-}
+  return { 
+    measureValue, 
+    setMeasureValue, 
+    dropValue, 
+    setDropValue, 
+    active, 
+    setActive, 
+    searchForIngredient, 
+    addIngredientItem, 
+    ingredientSearchResults, 
+    searchTerm };
+};
