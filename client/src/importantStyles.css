@@ -1,7 +1,7 @@
 /* mealtime and meal name */
 .css-c1wwjp-MuiStack-root {
   margin-left: 50px !important;
-  max-width: 270px;
+  max-width: 230px;
 }
 
 
@@ -48,6 +48,9 @@
 }
 
 .css-1q5tuht-MuiCardActions-root {
-
   max-height: 300px;
+}
+
+.css-le5do3-MuiPaper-root-MuiCard-root:hover{
+  box-shadow: rgb(112, 112, 112, 0.4) 5px 5px !important;
 }
