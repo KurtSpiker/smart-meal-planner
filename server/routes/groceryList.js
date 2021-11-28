@@ -76,14 +76,6 @@ module.exports = (db) => {
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
-    let data = {
-      name: 'elk meat',
-      week: 1,
-      quantity: '12',
-      measure: 'pound',
-      imageLink: 'beef-cubes-raw.png'
-    }
-
     // will be from req.body
     let data = { userId, name: req.body.name, quantity: req.body.quantity, week: req.body.week, measure: req.body.measure, spoonacularId, imageLink: req.body.imageLink };
 
