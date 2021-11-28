@@ -1,7 +1,16 @@
 import React, { Component, useEffect, useState, useContext } from "react";
 import { Grid, Toolbar, Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
+
 import Logo from './Fork it Over-logos.jpeg'
+import loginButtonIcon from './login.png'
+import recipeSearchIcon from './recipeSearch.png'
+import logoutIcon from './logout.png'
+import myWeekIcon from './myweek.png'
+import favouritesIcon from './favourites.png'
+import groceryListIcon from './grocery.png'
+import pantryIcon from './pantry.png'
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { mealContext } from '../providers/MealProvider'
@@ -39,25 +48,31 @@ const LinkDrawer = function (props) {
         // paddingRight={4}
         marginTop={7}
       >
-        {!cookie && <Button component={Link} to={"/login"}>
+        {!cookie && <Button id="linkDrawerButton" className="loginButton" component={Link} to={"/login"}>
+          <img className="buttonIcon" src={loginButtonIcon} />
           Login
         </Button>}
-        {cookie && <Button onClick={() => { logout(); setCookie(false); }} component={Link} to={"/login"}>
+        {cookie && <Button id="linkDrawerButton" className="logoutButton" onClick={() => { logout(); setCookie(false); }} component={Link} to={"/login"}><img className="buttonIcon" src={logoutIcon} />
           Logout
         </Button>}
-        {cookie && <Button className="button-my-week" component={Link} to={"/WeekPlan/"}>
+        {cookie && <Button id="linkDrawerButton" className="button-my-week" component={Link} to={"/WeekPlan/"}>
+          <img className="buttonIcon" src={myWeekIcon} />
           My Week
         </Button>}
-        {cookie && <Button component={Link} to={"/favourites"}>
-          My Favourites
+        {cookie && <Button id="linkDrawerButton" className="favouritesButton" component={Link} to={"/favourites"}>
+          <img className="buttonIcon" src={favouritesIcon} />
+          Favourites
         </Button>}
-        <Button component={Link} to={"/Recipe_search"}>
+        <Button id="linkDrawerButton" className="recipeSearchButton" component={Link} to={"/Recipe_search"}>
+          <img className="buttonIcon" src={recipeSearchIcon} />
           Recipes
         </Button>
-        {cookie && <Button component={Link} to={"/PantryList"} >
+        {cookie && <Button id="linkDrawerButton" className={"pantryListButton"} component={Link} to={"/PantryList"} >
+          <img className="buttonIcon" src={pantryIcon} />
           Pantry
         </Button>}
-        {cookie && <Button component={Link} to={"/GroceryList"}>
+        {cookie && <Button id="linkDrawerButton" component={Link} to={"/GroceryList"}>
+          <img className="buttonIcon" src={groceryListIcon} />
           Grocery List
         </Button>}
       </Grid>

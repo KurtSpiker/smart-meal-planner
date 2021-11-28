@@ -16,27 +16,30 @@
 }
 
 /* expand the button width to fill the sides */
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+#linkDrawerButton.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
   width: 100%;
   font-weight: bold !important;
   font-size: 1.1rem !important;
-  color: black !important;
+  margin-bottom: 7px !important;
+  background-color: rgb(247,191,80,0.65)  !important;
+  color: rgb(78, 0, 0) !important;
 }
 
 /* side buttons on hover */
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover{
-  background-color: rgba(83, 47, 0, 0.4) !important;
-
+#linkDrawerButton.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover{
+  background-color: #f7bf50  !important;
 }
 
-/* side bar  */
-.css-rel23w-MuiDrawer-docked .MuiDrawer-paper{
-/* set colour of background */
- 
+.buttonIcon{
+  height: 25px;
+  margin-right: 8px;
 }
+
 
 .css-wvkj6e-MuiDrawer-docked .MuiDrawer-paper{
-  margin-bottom: 50px !important;
+  /* margin-bottom: 50px !important; */
+  border: 20px;
+  border-right: 5px solid rgb(231, 179, 7) !important;
 }
 
 /* keeps measure unit in a line */
