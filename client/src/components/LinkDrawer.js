@@ -44,16 +44,13 @@ const LinkDrawer = function (props) {
         container
         direction="column"
         justifyContent="space-between"
-        alignItems="flex-end"
+        alignItems="center"
         // paddingRight={4}
         marginTop={7}
       >
         {!cookie && <Button id="linkDrawerButton" className="loginButton" component={Link} to={"/login"}>
           <img className="buttonIcon" src={loginButtonIcon} />
           Login
-        </Button>}
-        {cookie && <Button id="linkDrawerButton" className="logoutButton" onClick={() => { logout(); setCookie(false); }} component={Link} to={"/login"}><img className="buttonIcon" src={logoutIcon} />
-          Logout
         </Button>}
         {cookie && <Button id="linkDrawerButton" className="button-my-week" component={Link} to={"/WeekPlan/"}>
           <img className="buttonIcon" src={myWeekIcon} />
@@ -74,6 +71,9 @@ const LinkDrawer = function (props) {
         {cookie && <Button id="linkDrawerButton" component={Link} to={"/GroceryList"}>
           <img className="buttonIcon" src={groceryListIcon} />
           Grocery List
+        </Button>}
+        {cookie && <Button id="linkDrawerButton" className="logoutButton" onClick={() => { logout(); setCookie(false); }} component={Link} to={"/login"}><img className="buttonIcon" src={logoutIcon} />
+          Logout
         </Button>}
       </Grid>
     </Drawer >

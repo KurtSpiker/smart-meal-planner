@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Paper, IconButton, ButtonBase } from '@mui/material';
+import { Grid, Paper, IconButton, ButtonBase, Stack, Box } from '@mui/material';
 import Counter from './Counter';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
@@ -29,33 +29,37 @@ const IngredientItem = function (props) {
 
 
   return (
-    <Grid container padding="10px">
+    <Grid container paddingBottom="10px">
+
       <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex" }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item>
+          <Grid item xs={4}>
             <ButtonBase sx={{ width: "200px" }}>
               <img alt="ingredient" src={"https://spoonacular.com/cdn/ingredients_500x500/" + ingredient.image_link} style={{ "maxHeight": "70px" }} />
             </ButtonBase>
           </Grid>
-          <Grid item alignItems="center">
+          <Grid item xs={4} alignItems="center">
             {ingredient.item_name}
           </Grid>
-        </Grid>
-        <Grid container alignItems="center" justifyContent="flex-end">
-          <Grid item>
-            <Counter
-              quantity={ingredient.quantity}
-              listName={listName}
-              ingredientId={ingredient.spoonacular_ingredient_id}
-            />
-            <label className="ingredientMeasure">{ingredient.measure}</label>
-            <IconButton onClick={() => deleteRecipe()}>
-              <DeleteIcon />
-            </IconButton>
+
+          <Grid item xs={4}>
+            <Stack direction="row" spacing={2} justifyContent="space-between">
+              <Stack direction="row" spacing={2} alignItems="center" textAlign="right">
+                <Counter
+                  quantity={ingredient.quantity}
+                  listName={listName}
+                  ingredientId={ingredient.spoonacular_ingredient_id}
+                />
+                <label className="ingredientMeasure">{ingredient.measure}</label>
+              </Stack>
+              <IconButton onClick={() => deleteRecipe()}><DeleteIcon />
+              </IconButton>
+            </Stack>
           </Grid>
         </Grid>
-      </Paper>
-    </Grid>
+
+      </Paper >
+    </Grid >
   );
 };
 

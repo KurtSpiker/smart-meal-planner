@@ -17,12 +17,14 @@
 
 /* expand the button width to fill the sides */
 #linkDrawerButton.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
-  width: 100%;
+  width: 92%;
   font-weight: bold !important;
   font-size: 1.1rem !important;
   margin-bottom: 7px !important;
   background-color: rgb(247,191,80,0.65)  !important;
   color: rgb(78, 0, 0) !important;
+  border-radius: 15px;
+
 }
 
 /* side buttons on hover */
@@ -31,18 +33,21 @@
 }
 
 .buttonIcon{
-  height: 25px;
+  height: 23px;
   margin-right: 8px;
 }
 
-
+/* styling for the sidebar */
 .css-wvkj6e-MuiDrawer-docked .MuiDrawer-paper{
-  /* margin-bottom: 50px !important; */
-  border: 20px;
-  border-right: 5px solid rgb(231, 179, 7) !important;
+  border-right: 3px solid rgb(231, 179, 7) !important;
 }
 
 /* keeps measure unit in a line */
 .ingredientMeasure {
   display:inline;
+}
+
+.css-1q5tuht-MuiCardActions-root {
+
+  max-height: 300px;
 }
