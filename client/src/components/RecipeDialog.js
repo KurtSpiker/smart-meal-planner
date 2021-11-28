@@ -28,10 +28,6 @@ export default function RecipeDialog(props) {
     setMeal(event.target.value);
   };
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
   const handleClose = (event, reason) => {
     if (reason !== 'backdropClick') {
       setOpen(false);
@@ -46,16 +42,7 @@ export default function RecipeDialog(props) {
       mealName,
       meal,
       imageUrl
-    })
-      // .then(() => {
-      //   //next add the grocery items pertaining to the db
-      //   axios.post(`/api/grocery_list/1`)
-      // })
-      // .then(function (response) {
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
+    });
     handleClose();
   };
 
