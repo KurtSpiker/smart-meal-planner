@@ -31,7 +31,7 @@ const IngredientItem = function (props) {
   return (
     <Grid container paddingBottom="10px">
 
-      <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex" }}>
+      <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex", borderRadius: "15px" }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={4}>
             <ButtonBase sx={{ width: "200px" }}>

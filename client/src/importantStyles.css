@@ -54,3 +54,13 @@
 .css-le5do3-MuiPaper-root-MuiCard-root:hover{
   box-shadow: rgb(112, 112, 112, 0.4) 5px 5px !important;
 }
+
+.groceryListPageIcon{
+  height: 50px;
+  margin-right: 15px;
+}
+
+.pantryListPageIcon{
+  height: 50px;
+  margin-right: 15px;
+}

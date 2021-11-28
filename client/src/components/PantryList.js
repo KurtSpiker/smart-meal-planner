@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import pantryListIcon from './images/pantry.png'
 import IngredientList from "./IngredientList";
 import axios from 'axios'
 import useIngredients from "../hooks/useIngredients";
@@ -55,6 +56,7 @@ const PantryList = function (props) {
   return (
     <>
       <Typography variant="h3">
+        <img className="pantryListPageIcon" src={pantryListIcon} />
         Pantry List
       </Typography>
       <Grid container alignItems="center" mt={3}>

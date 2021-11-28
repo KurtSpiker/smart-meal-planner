@@ -2,14 +2,14 @@ import React, { Component, useEffect, useState, useContext } from "react";
 import { Grid, Toolbar, Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 
-import Logo from './Fork it Over-logos.jpeg'
-import loginButtonIcon from './login.png'
-import recipeSearchIcon from './recipeSearch.png'
-import logoutIcon from './logout.png'
-import myWeekIcon from './myweek.png'
-import favouritesIcon from './favourites.png'
-import groceryListIcon from './grocery.png'
-import pantryIcon from './pantry.png'
+import Logo from './images/Fork it Over-logos.jpeg'
+import loginButtonIcon from './images/login.png'
+import recipeSearchIcon from './images/recipeSearch.png'
+import logoutIcon from './images/logout.png'
+import myWeekIcon from './images/myweek.png'
+import favouritesIcon from './images/favourites.png'
+import groceryListIcon from './images/grocery.png'
+import pantryIcon from './images/pantry.png'
 
 import { Link } from "react-router-dom";
 import axios from "axios";

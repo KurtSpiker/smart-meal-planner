@@ -1,7 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
 import { TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import Logo from './Fork it Over-logos_transparent.png'
+import Logo from './images/Fork it Over-logos_transparent.png'
 import axios from "axios";
 import { mealContext } from '../providers/MealProvider'
 

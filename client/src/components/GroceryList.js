@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import axios from "axios";
 import useIngredients from "../hooks/useIngredients";
 import NumberFormat from 'react-number-format'
+import groceryListIcon from './images/grocery.png'
 
 
 const GroceryList = function (props) {
@@ -54,6 +55,7 @@ const GroceryList = function (props) {
   return (
     <>
       <Typography variant="h3">
+        <img className="groceryListPageIcon" src={groceryListIcon} />
         Grocery List
       </Typography>
       <Grid container alignItems="center" mt={3}>
