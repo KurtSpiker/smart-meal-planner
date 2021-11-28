@@ -42,7 +42,6 @@ const PantryList = function (props) {
   }, [active]);
 
   // custom colour button for entering item
-  // this also affects side bar
   const ColorButton = styled(Button)(({ theme }) => ({
     fontWeight: "bold",
     color: "rgb(78, 0, 0)",
@@ -50,6 +49,7 @@ const PantryList = function (props) {
     '&:hover': {
       backgroundColor: "#f7bf50",
     },
+    height: "56px"
   }));
 
   return (
@@ -79,9 +79,7 @@ const PantryList = function (props) {
             <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
               onChange={(event) => {
                 setDropValue(event.target.value)
-              }
-              }
-
+              }}
             >
               {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
                 return <MenuItem key={item} value={item}>{item}</MenuItem>
