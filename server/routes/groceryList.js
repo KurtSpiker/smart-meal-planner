@@ -225,7 +225,7 @@ module.exports = (db) => {
         return Promise.all(promises);
       })
       .then((result) => {
-        console.log("Resulting axios conversion for index 0 ->", result[0].data)
+        console.log("Resulting axios conversion for index 0 ->", (result.length > 0 ? result[0].data : []))
 
         let ingredientsToValidate = {}
         for (const itemIndex in result) {
