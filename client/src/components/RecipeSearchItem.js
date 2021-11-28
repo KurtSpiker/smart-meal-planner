@@ -14,7 +14,7 @@ const RecipeSearchItem = function (props) {
   const [dialogShow, setDialogShow] = useState(false)
 
   const { recipe } = props
-  const { setDayInformation } = useContext(mealContext)
+  const { setDayInformation, dayOfWeek, typeOfMeal } = useContext(mealContext)
 
   const handleShowChange = () => {
     if (dialogShow) {
@@ -39,8 +39,8 @@ const RecipeSearchItem = function (props) {
     <Grid item>
       {console.log("Its me", recipe.id)}
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id} />}
-      <Card sx={{ maxWidth: 250, minWidth: 250, marginTop: '25px', borderRadius: '25px', minHeight: "440px", maxHeight: "430px" }}>
-        <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
+      <Card sx={{ maxWidth: 250, minWidth: 250, marginTop: '25px', borderRadius: '25px' }}>
+        <ButtonBase onClick={() => setDayInformation(dayOfWeek, typeOfMeal, recipe.id)} component={Link} to={"/Recipe"}>
           <CardMedia
             component="img"
             image={recipe.image}

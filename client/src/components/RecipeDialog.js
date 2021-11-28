@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, MenuItem, InputLabel, Select, OutlinedInput, DialogActions, Box, FormControl, DialogContent } from "@mui/material"
+import { Card, Typography, Dialog, DialogTitle, MenuItem, InputLabel, Select, OutlinedInput, DialogActions, Box, FormControl, DialogContent, Popover, CardContent } from "@mui/material"
 import { useState, useEffect, useContext } from 'react'
 import Button from '@mui/material/Button';
 import { mealContext } from '../providers/MealProvider';
@@ -13,6 +13,7 @@ export default function RecipeDialog(props) {
   const [open, setOpen] = useState(false);
   const [day, setDay] = useState(dayOfWeek);
   const [meal, setMeal] = useState(typeOfMeal);
+  const [popUp, setPopUp] = useState(false)
 
   useEffect(() => {
     console.log()
@@ -33,6 +34,7 @@ export default function RecipeDialog(props) {
       setOpen(false);
     }
   };
+  
 
   const handleSendData = () => {
     //when user adds a recipe, add the recipe to their weekly list to the db
@@ -45,6 +47,13 @@ export default function RecipeDialog(props) {
     });
     handleClose();
   };
+
+  const togglePopUp = () => {
+    setPopUp(true)
+    setTimeout(function() {
+      setPopUp(false)
+    },3500)
+  }
 
   return (
     <div>
@@ -83,14 +92,23 @@ export default function RecipeDialog(props) {
           </Box>
         </DialogContent>
         <DialogActions sx={{ justifyContent: "space-between" }}>
-          <Button variant="contained" color="error" onClick={handleClose}>
+          <Button variant="contained" color="error" onClick={() => {handleClose()}}>
             Cancel
           </Button>
-          <Button variant="contained" color="success" onClick={handleSendData}>
+          <Button variant="contained" color="success" onClick={() => {handleSendData(); togglePopUp()}}>
             Ok
           </Button>
         </DialogActions>
       </Dialog>
+      { popUp && 
+        <Card sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: "tooltip", backgroundColor: "#2e7d32", boxShadow: 7 }}>
+          <CardContent>
+            <Typography fontWeightBold="700" color="white" variant="h6" textAlign="center" sx={{fontWeightBold: 700}}>
+              Your recipe has been saved!
+            </Typography>
+          </CardContent>
+        </Card>
+      }
     </div>
   );
 }
