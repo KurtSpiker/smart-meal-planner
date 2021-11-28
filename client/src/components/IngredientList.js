@@ -12,26 +12,25 @@ const IngredientList = function (props) {
   }
 
   return (
-    <Grid container>
-      <Grid container justifyContent="space-between">
-        <Grid item xs={2} >
-          <Typography>Item</Typography>
+    <>
+      <Grid container mt={6} ml={-10}>
+        <Grid item xs={5}>
+        </Grid>
+        <Grid item xs={4.2} >
+          <Typography sx={{ fontSize: "25px" }}>Item</Typography>
         </Grid>
         <Grid item xs={2}>
-          <Grid container justifyContent="space-between">
-            <Grid item>
-              <Typography>quantity</Typography>
-            </Grid>
-            <Grid item>
-              <Typography>Units</Typography>
-            </Grid>
-          </Grid>
+          <Typography sx={{ fontSize: "25px" }}>Quantity</Typography>
+        </Grid>
+        <Grid item xs={0.8}>
+          <Typography sx={{ fontSize: "25px" }}>Units</Typography>
         </Grid>
       </Grid>
 
-      {listItems(list)}
-
-    </Grid>
+      <Grid container mt={2}>
+        {listItems(list)}
+      </Grid>
+    </>
   )
 }
 export default IngredientList

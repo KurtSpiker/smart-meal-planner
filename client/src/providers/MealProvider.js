@@ -8,6 +8,7 @@ export default function MealProvider(props) {
   const [typeOfMeal, setTypeOfMeal] = useState("");
   const [weekNumber, setWeekNumber] = useState(1)
   const [mealId, setMealId] = useState(null)
+  const [cookie, setCookie] = useState(null)
 
   const setDayInformation = (day, type, id) => {
     setDayOfWeek(day)
@@ -15,7 +16,7 @@ export default function MealProvider(props) {
     setMealId(id)
   }
 
-  const mealData = { dayOfWeek, typeOfMeal, setDayInformation, weekNumber, mealId };
+  const mealData = { dayOfWeek, typeOfMeal, setDayInformation, weekNumber, mealId, setCookie, cookie };
 
   return (
     <mealContext.Provider value={mealData}>

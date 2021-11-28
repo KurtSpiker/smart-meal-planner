@@ -68,14 +68,13 @@ module.exports = (db) => {
   });
 
   // user adds a grocery list item
-  // http://localhost:4000/api/grocery_list/add/18019
+  // http://localhost:4000/api/grocery_list/add/17166
   router.post("/add/:id", (req, res) => {
     console.log(req.body)
     console.log(req.params.id)
 
     let userId = 1; // const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
-
 
     // will be from req.body
     let data = { userId, name: req.body.name, quantity: req.body.quantity, week: req.body.week, measure: req.body.measure, spoonacularId, imageLink: req.body.imageLink };
@@ -226,7 +225,7 @@ module.exports = (db) => {
         return Promise.all(promises);
       })
       .then((result) => {
-        console.log("Resulting axios conversion for index 0 ->", result[0].data)
+        console.log("Resulting axios conversion for index 0 ->", (result.length > 0 ? result[0].data : []))
 
         let ingredientsToValidate = {}
         for (const itemIndex in result) {

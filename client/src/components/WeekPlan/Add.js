@@ -5,16 +5,16 @@ import { Link } from "react-router-dom";
 import { mealContext } from '../../providers/MealProvider';
 
 export default function Load(props) {
-  
+
   const { mealType, dayOfWeek } = props
 
   const { setDayInformation } = useContext(mealContext);
 
   return (
-    
-    <ButtonBase onClick={() => setDayInformation(dayOfWeek, mealType)} component={Link} to={"/Recipe_search"}>
+
+    <ButtonBase sx={{ minHeight: "129px" }} onClick={() => setDayInformation(dayOfWeek, mealType)} component={Link} to={"/Recipe_search"}>
       <AddIcon />
     </ButtonBase>
-    
+
   );
 };

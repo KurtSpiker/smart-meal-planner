@@ -1,7 +1,4 @@
 body {
-  
-
-  
   margin: 0;
 }
 h1, h2, p, ul, li {
@@ -24,15 +21,13 @@ ul.header li a {
   display: inline-block;
 }
 .content {
-  /* background-color: rgb(0 0 0 / 20%); */
-
   padding: 20px;
   padding-left: 15%;
-  /* height: 95vh; */
   height:auto;
   min-height:95vh;
   background-image: url("https://i.ibb.co/N3fkCFN/tuxpi-com-1638005738.jpg");
   background-size: 1920px;
+  background-repeat: no-repeat;
   
 }
 .content h2 {
@@ -51,3 +46,39 @@ ul.header li a {
   height: 20%;
   object-fit: cover
 }
+
+.fioLogo{
+  border-radius: 50px;
+}
+
+
+
+/* login form css */
+.login {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.form {
+  max-width: 350px;
+  margin: -100px auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #f7bf50;
+ 
+}
+
+.form .form__custom-button {
+  margin-top: 10px;
+}
+
+.fioLogoLogin{
+  margin-bottom: 10px;
+  width:150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
