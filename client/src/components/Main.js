@@ -12,6 +12,7 @@ import RecipeSearch from "./RecipeSearch";
 import Recipe from "./Recipe";
 import Login from "./Login";
 import Favourites from "./Favourites";
+import AboutUs from "./AboutUs";
 
 
 export default function Main() {
@@ -28,7 +29,7 @@ export default function Main() {
             <Route exact path="/Recipe" element={<Recipe />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Favourites" element={<Favourites />} />
-
+            <Route exact path="/AboutUs" element={<AboutUs />} />
           </Routes>
           <Outlet />
         </div>

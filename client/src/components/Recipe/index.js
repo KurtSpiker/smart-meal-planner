@@ -66,8 +66,8 @@ export default function Recipe() {
                 </span>
               </Grid>
               <Grid item>
-                <Typography>
-                  {dietaryDisplay(recipe)}
+                <Typography className="dieteryHolderRecipeIndex">
+                  {dietaryDisplay(recipe).dieteryArray}
                 </Typography>
               </Grid>
               <Grid item>

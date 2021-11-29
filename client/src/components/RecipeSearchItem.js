@@ -9,6 +9,7 @@ import { useState, useContext } from "react"
 import { mealContext } from "../providers/MealProvider"
 import { Link } from "react-router-dom";
 import { dietaryDisplay } from "../helper/Dietary";
+import { RecipeCard } from "../customstyles/RecipeCard";
 
 const RecipeSearchItem = function (props) {
   const [dialogShow, setDialogShow] = useState(false)
@@ -34,32 +35,43 @@ const RecipeSearchItem = function (props) {
     },
   });
 
-
   return (
-    <Grid item>
+    <Grid item >
       {console.log("Its me", recipe.id)}
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id} />}
-      <Card sx={{ maxWidth: 250, minWidth: 250, marginTop: '25px', borderRadius: '25px' }}>
-        <ButtonBase onClick={() => setDayInformation(dayOfWeek, typeOfMeal, recipe.id)} component={Link} to={"/Recipe"}>
-          <CardMedia
+      <RecipeCard>
+        <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
+          <CardMedia sx={{
+            border: "2px solid rgb(231, 179, 7)", borderRadius: "20px", marginTop: "5px", marginLeft: "5px", width: "235px"
+          }}
             component="img"
             image={recipe.image}
             alt="image"
-            height="250"
+            height="240"
+
           />
         </ButtonBase>
         <RecipeToolTip title={recipe.title} >
-          <CardHeader
-            title={recipe.title}
-            sx={{
-              height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden"
-            }}
-          />
+          <div>
+            <CardHeader
+              title={recipe.title}
+              sx={{
+                height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden", marginTop: "-10px",
+              }}
+            />
+          </div>
         </RecipeToolTip>
-        <CardHeader
-          subheader={dietaryDisplay(recipe)}
-          sx={{ textAlign: "center", alignItems: "start", paddingBottom: 0, overflow: "hidden", height: "50px" }}
-        />
+
+        {dietaryDisplay(recipe).renderPusher ?
+          <div className="dieteryHolderSearchPusher">
+
+          </div>
+          :
+          <div className="dieteryHolderSearch">
+            {dietaryDisplay(recipe).dieteryArray}
+          </div>
+        }
+
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>
           </Checkbox>
@@ -67,7 +79,7 @@ const RecipeSearchItem = function (props) {
             <FoodBankIcon onClick={() => { handleShowChange() }} />
           </IconButton>
         </CardActions>
-      </Card>
+      </RecipeCard>
     </Grid >
   )
 }
