@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack } from '@mui/material';
+import { FormControl, InputLabel, Button, Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack } from '@mui/material';
 import { AddIngredientButton } from '../customstyles/AddIngredientButton';
 import pantryListIcon from './images/pantry.png'
 import IngredientList from "./IngredientList";
@@ -66,16 +66,19 @@ const PantryList = function (props) {
         <Grid item xs={8.5}>
           <Stack direction="row">
             <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
-            <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
-              onChange={(event) => {
-                setDropValue(event.target.value)
-              }}
-            >
-              {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
-                return <MenuItem key={item} value={item}>{item}</MenuItem>
-              })}
-            </Select>
-            <AddIngredientButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</AddIngredientButton>
+            <FormControl sx={{minWidth: 120}}>
+              <InputLabel id="Measure">Unit</InputLabel>
+              <Select disabled={!searchTerm.possibleUnits} labelId="Measure" label="Unit" value={dropValue}
+                onChange={(event) => {
+                  setDropValue(event.target.value)
+                }}
+              >
+                {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
+                  return <MenuItem key={item} value={item}>{item}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
+            <Button onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</Button>
           </Stack>
 
         </Grid>
