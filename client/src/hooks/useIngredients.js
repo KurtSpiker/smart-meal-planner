@@ -44,6 +44,7 @@ export default function useIngredients(setList, list) {
     })
       .then(() => {
         //resets the unit and measure/quantity values
+        setActive((prev) => !prev);
         setDropValue(false);
         setMeasureValue("");
       });
