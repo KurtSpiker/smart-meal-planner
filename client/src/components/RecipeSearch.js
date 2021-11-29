@@ -2,87 +2,77 @@ import { Grid, Typography, TextField } from "@mui/material";
 import { React, useState, useEffect } from "react";
 // import RecipeCarousel from "./RecipeCarousel";
 import RecipeSearchItem from "./RecipeSearchItem";
+import RecipeCarousel from "./RecipeCarousel";
 const axios = require('axios');
 
 const testRecipies = {
   "results": [
     {
-      "id": "633876",
-      "title": "Baked Ziti",
-      "image": "https://spoonacular.com/recipeImages/633876-312x231.jpg",
-      "imageType": "jpg",
-      "dieteryRestrictions": {
-        "vegetarian": true,
-        "vegan": true,
-        "glutenfree": true,
-        "dairyfree": true
-      }
+        "id": 661531,
+        "title": "Steak with lemon and capers",
+        "image": "https://spoonacular.com/recipeImages/661531-312x231.jpg",
+        "imageType": "jpg",
+        "dieteryRestrictions": {
+            "vegan": false,
+            "glutenFree": false,
+            "dairyFree": false,
+            "vegetarian": false
+        },
+        "favourite": false
     },
     {
-      "id": 663659,
-      "title": "Tomato-Zucchini Pie",
-      "image": "https://spoonacular.com/recipeImages/663659-312x231.jpg",
-      "imageType": "jpg",
-      "dieteryRestrictions": {
-        "vegetarian": true,
-        "vegan": true,
-        "glutenFree": true,
-        "dairyFree": true
-      },
-      "favourite": false
+        "id": 1096025,
+        "title": "Steak Salad with Chimichurri Sauce",
+        "image": "https://spoonacular.com/recipeImages/1096025-312x231.jpg",
+        "imageType": "jpg",
+        "dieteryRestrictions": {
+            "vegan": false,
+            "glutenFree": true,
+            "dairyFree": true,
+            "vegetarian": false
+        },
+        "favourite": false
     },
     {
-      "id": 633883,
-      "title": "Baked Ziti Casserole",
-      "image": "https://spoonacular.com/recipeImages/633883-312x231.jpg",
-      "imageType": "jpg"
+        "id": 661522,
+        "title": "Steak With Blue Cheese Sherry Sauce",
+        "image": "https://spoonacular.com/recipeImages/661522-312x231.jpg",
+        "imageType": "jpg",
+        "dieteryRestrictions": {
+            "vegan": false,
+            "glutenFree": true,
+            "dairyFree": false,
+            "vegetarian": false
+        },
+        "favourite": false
     },
     {
-      "id": 632781,
-      "title": "Arugula & Feta Pasta",
-      "image": "https://spoonacular.com/recipeImages/632781-312x231.jpg",
-      "imageType": "jpg"
+        "id": 661510,
+        "title": "Steak Salad With Roasted Potatoes and Fennel",
+        "image": "https://spoonacular.com/recipeImages/661510-312x231.jpg",
+        "imageType": "jpg",
+        "dieteryRestrictions": {
+            "vegan": false,
+            "glutenFree": true,
+            "dairyFree": true,
+            "vegetarian": false
+        },
+        "favourite": false
     },
     {
-      "id": 633884,
-      "title": "Baked Ziti Or Rigatoni",
-      "image": "https://spoonacular.com/recipeImages/633884-312x231.jpg",
-      "imageType": "jpg"
-    },
-    {
-      "id": 637591,
-      "title": "Cheese Tortellini Alfredo",
-      "image": "https://spoonacular.com/recipeImages/637591-312x231.jpg",
-      "imageType": "jpg"
-    },
-    {
-      "id": 644885,
-      "title": "Gluten Free Vegan Gnocchi",
-      "image": "https://spoonacular.com/recipeImages/644885-312x231.jpg",
-      "imageType": "jpg"
-    },
-    {
-      "id": 633752,
-      "title": "Baked Ravioli & Meat Sauce",
-      "image": "https://spoonacular.com/recipeImages/633752-312x231.jpg",
-      "imageType": "jpg"
-    },
-    {
-      "id": 654928,
-      "title": "Pasta With Italian Sausage",
-      "image": "https://spoonacular.com/recipeImages/654928-312x231.jpg",
-      "imageType": "jpg"
-    },
-    {
-      "id": 649718,
-      "title": "Lemon Pasta Alfredo (Vegan)",
-      "image": "https://spoonacular.com/recipeImages/649718-312x231.jpg",
-      "imageType": "jpg"
+        "id": 661500,
+        "title": "Steak And Pepper Rounds With Rose Horseradish Garlic Creme Sauce",
+        "image": "https://spoonacular.com/recipeImages/661500-312x231.jpg",
+        "imageType": "jpg",
+        "dieteryRestrictions": {
+            "vegan": false,
+            "glutenFree": false,
+            "dairyFree": false,
+            "vegetarian": false
+        },
+        "favourite": false
     }
-  ],
-  "offset": 0,
-  "number": 10,
-  "totalResults": 31
+  ]
 };
 
 const RecipeSearch = function (props) {
@@ -128,8 +118,7 @@ const RecipeSearch = function (props) {
         <RecipeSearchItem recipe={testRecipies.results[0]} test={true} />
       </Grid>
       <Grid container>
-        {/* <RecipeCarousel testRecipies={testRecipies}/>
-        <RecipeCarousel testRecipies={testRecipies}/> */}
+        <RecipeCarousel testRecipies={testRecipies.results}/>
       </Grid>
     </Grid>
   )
