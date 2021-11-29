@@ -17,13 +17,13 @@ const IngredientList = function (props) {
         <Grid item xs={5}>
         </Grid>
         <Grid item xs={4.2} >
-          <Typography sx={{ fontSize: "25px" }}>Item</Typography>
+          <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>Item</Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography sx={{ fontSize: "25px" }}>Quantity</Typography>
+          <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>Quantity</Typography>
         </Grid>
         <Grid item xs={0.8}>
-          <Typography sx={{ fontSize: "25px" }}>Units</Typography>
+          <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>Units</Typography>
         </Grid>
       </Grid>
 

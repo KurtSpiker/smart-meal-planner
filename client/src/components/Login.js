@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from './images/Fork it Over-logos_transparent.png'
 import axios from "axios";
 import { mealContext } from '../providers/MealProvider'
-import { AddIngredientButton } from '../customstyles/AddIngredientButton';
+import { AddIngredientButtonAlt } from '../customstyles/AddIngredientButton';
 
 const Login = function (props) {
 
@@ -44,9 +44,9 @@ const Login = function (props) {
           type="password"
         />
 
-        <AddIngredientButton onClick={() => { login() }} type="button" className="form__custom-button" component={Link} to={"/WeekPlan/"}>
+        <AddIngredientButtonAlt onClick={() => { login() }} type="button" className="form__custom-button" component={Link} to={"/WeekPlan/"}>
           Login
-        </AddIngredientButton>
+        </AddIngredientButtonAlt>
       </form>
     </div>
   );

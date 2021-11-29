@@ -43,12 +43,12 @@ const PantryList = function (props) {
 
   return (
     <>
-      <Typography variant="h3" className="mainPageHeaders">
+      <header className="mainPageHeaders">
         <img className="headerIcon" src={pantryListIcon} />
         Pantry List
-      </Typography>
+      </header>
       <Grid container alignItems="center" mt={3}>
-        <Grid item xs={3}>
+        <Grid item xs={2.5}>
           <Autocomplete
             disablePortal
             getOptionLabel={(option) => option.name}
@@ -63,7 +63,7 @@ const PantryList = function (props) {
           />
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={8.5}>
           <Stack direction="row">
             <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
             <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}

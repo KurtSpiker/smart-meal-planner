@@ -1,17 +1,14 @@
 import { Grid, Typography, TextField } from "@mui/material";
 import { React, useState, useEffect } from "react";
-// import RecipeCarousel from "./RecipeCarousel";
 import RecipeSearchItem from "./RecipeSearchItem";
+import favouritesHeaderIcon from './images/favourites.png'
 const axios = require('axios');
 
-
 const Favourites = function (props) {
-
 
   const [recipeContent, setRecipeContent] = useState([]);
 
   useEffect(() => {
-
     axios.get('/api/search/favourites')
       .then((result) => {
         setRecipeContent(() => {
@@ -29,15 +26,17 @@ const Favourites = function (props) {
 
   return (
     <Grid container justifyContent="center">
-      <Typography variant="h3" sx={{ mr: 1.5 }}>
+      <header className="mainPageHeaders">
+        <img className="headerIcon" src={favouritesHeaderIcon} />
         Favourites
-      </Typography>
+      </header>
 
       <Grid container justifyContent="center" spacing={2} >
         {
           recipeContent
         }
       </Grid>
+
     </Grid>
   )
 }
