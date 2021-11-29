@@ -1,5 +1,3 @@
-import { Stack } from '@mui/material';
-
 export function dietaryDisplay(recipe) {
   let subheaderTemplate = []
   if (recipe.dieteryRestrictions.vegetarian) {

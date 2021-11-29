@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem, Stack, InputLabel, FormControl } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { FormControl, InputLabel, ColorButton, Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack } from '@mui/material';
+import { AddIngredientButton } from '../customstyles/AddIngredientButton';
 import pantryListIcon from './images/pantry.png'
 import IngredientList from "./IngredientList";
 import axios from 'axios'
 import useIngredients from "../hooks/useIngredients";
 import NumberFormat from 'react-number-format'
-import { grey } from '@mui/material/colors';
 
 const PantryList = function (props) {
 
@@ -42,21 +41,10 @@ const PantryList = function (props) {
       )
   }, [active]);
 
-  // custom colour button for entering item
-  const ColorButton = styled(Button)(({ theme }) => ({
-    fontWeight: "bold",
-    color: "rgb(78, 0, 0)",
-    backgroundColor: "rgb(247,191,80,0.65)",
-    '&:hover': {
-      backgroundColor: "#f7bf50",
-    },
-    height: "56px"
-  }));
-
   return (
     <>
-      <Typography variant="h3">
-        <img className="pantryListPageIcon" src={pantryListIcon} />
+      <Typography variant="h3" className="mainPageHeaders">
+        <img className="headerIcon" src={pantryListIcon} />
         Pantry List
       </Typography>
       <Grid container alignItems="center" mt={3}>
@@ -75,7 +63,7 @@ const PantryList = function (props) {
           />
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={8}>
           <Stack direction="row">
             <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
             <FormControl sx={{minWidth: 120}}>
@@ -92,10 +80,8 @@ const PantryList = function (props) {
             </FormControl>
             <ColorButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</ColorButton>
           </Stack>
+
         </Grid>
-
-
-
         <IngredientList list={list} listName={listName} setList={setList} />
 
       </Grid>

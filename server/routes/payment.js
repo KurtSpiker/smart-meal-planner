@@ -8,7 +8,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/payment
   router.get("/", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let cost = 0;
     let objectToSend = {};
 
