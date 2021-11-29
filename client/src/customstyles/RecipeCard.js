@@ -6,10 +6,10 @@ export const RecipeCard = styled(Card)(({ theme }) => ({
   minWidth: 250,
   marginTop: '25px',
   borderRadius: '25px',
-  minHeight: "440px",
-  maxHeight: "430px",
-  border: "2px solid rgb(231, 179, 7)",
+  height: "360px",
+  border: "5px double grey",
   '&:hover': {
     boxShadow: "rgba(0, 0, 0, 0.45) 5px 5px"
   },
 }));
+

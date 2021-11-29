@@ -10,18 +10,12 @@ const RecipeToolTip = styled(({ className, ...props }) => (
   },
 });
 
-// <RecipeToolTip title={recipe.title} >
-// <CardHeader
-//   title={recipe.title}
-//   sx={{
-//     height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden"
-//   }}
-// />
-// </RecipeToolTip>
-
 export function dietaryDisplay(recipe) {
   let subheaderTemplate = []
+  let renderPusher = true;
+  let objectToReturn = {};
   if (recipe.dieteryRestrictions.vegetarian) {
+    renderPusher = false;
     subheaderTemplate.push(
       <RecipeToolTip title="Vegetarian" >
         <div>
@@ -31,6 +25,7 @@ export function dietaryDisplay(recipe) {
     )
   }
   if (recipe.dieteryRestrictions.vegan) {
+    renderPusher = false;
     subheaderTemplate.push(
       <RecipeToolTip title="Vegan" >
         <div>
@@ -40,6 +35,7 @@ export function dietaryDisplay(recipe) {
     )
   }
   if (recipe.dieteryRestrictions.glutenFree) {
+    renderPusher = false;
     subheaderTemplate.push(
       <RecipeToolTip title="Gluten Free" >
         <div>
@@ -49,6 +45,7 @@ export function dietaryDisplay(recipe) {
     )
   }
   if (recipe.dieteryRestrictions.dairyFree) {
+    renderPusher = false;
     subheaderTemplate.push(
       <RecipeToolTip title="Dairy Free" >
         <div>
@@ -57,5 +54,9 @@ export function dietaryDisplay(recipe) {
       </RecipeToolTip>
     )
   }
-  return subheaderTemplate
+
+  objectToReturn["dieteryArray"] = subheaderTemplate;
+  objectToReturn["renderPusher"] = renderPusher
+
+  return objectToReturn
 }

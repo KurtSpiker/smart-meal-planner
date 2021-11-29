@@ -49,16 +49,18 @@ ul.header li a {
   border-radius: 50px;
 }
 
+
+
 /* login form css */
 .login {
   font-family: sans-serif;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 150px;
 }
 
 .form {
   max-width: 350px;
-  margin: -100px auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   padding: 20px;

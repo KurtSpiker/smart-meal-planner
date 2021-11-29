@@ -4,13 +4,11 @@ import RecipeSearchItem from "./RecipeSearchItem";
 import favouritesHeaderIcon from './images/favourites.png'
 const axios = require('axios');
 
-
 const Favourites = function (props) {
 
   const [recipeContent, setRecipeContent] = useState([]);
 
   useEffect(() => {
-
     axios.get('/api/search/favourites')
       .then((result) => {
         setRecipeContent(() => {
@@ -38,6 +36,7 @@ const Favourites = function (props) {
           recipeContent
         }
       </Grid>
+
     </Grid>
   )
 }

@@ -41,11 +41,14 @@ const RecipeSearchItem = function (props) {
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id} />}
       <RecipeCard>
         <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
-          <CardMedia
+          <CardMedia sx={{
+            border: "2px solid rgb(231, 179, 7)", borderRadius: "20px", marginTop: "5px", marginLeft: "5px", width: "235px"
+          }}
             component="img"
             image={recipe.image}
             alt="image"
-            height="250"
+            height="240"
+
           />
         </ButtonBase>
         <RecipeToolTip title={recipe.title} >
@@ -53,14 +56,22 @@ const RecipeSearchItem = function (props) {
             <CardHeader
               title={recipe.title}
               sx={{
-                height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden"
+                height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden", marginTop: "-10px",
               }}
             />
           </div>
         </RecipeToolTip>
-        <div className="dieteryHolder">
-          {dietaryDisplay(recipe)}
-        </div>
+
+        {dietaryDisplay(recipe).renderPusher ?
+          <div className="dieteryHolderSearchPusher">
+
+          </div>
+          :
+          <div className="dieteryHolderSearch">
+            {dietaryDisplay(recipe).dieteryArray}
+          </div>
+        }
+
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>
           </Checkbox>

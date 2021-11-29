@@ -53,7 +53,6 @@ const GroceryList = function (props) {
       .catch((error) => {
         console.log(error.message);
       });
-
   };
 
   return (

@@ -125,9 +125,27 @@
   background-color: #80c3d8 !important;
 }
 
-.dieteryHolder{
+.dieteryHolderRecipeIndex{
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 15px;
+}
+
+/* decrease margin top to move higher, decrease margin bottom to move buttons higher */
+.dieteryHolderSearch{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: -125px;
+  margin-bottom: 72px;
+  z-index: 2;
+}
+
+.dieteryHolderSearchPusher{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: -125px;
+  margin-bottom: 120px;
 }

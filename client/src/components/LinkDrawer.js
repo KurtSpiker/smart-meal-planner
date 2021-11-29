@@ -33,7 +33,7 @@ const LinkDrawer = function (props) {
   }
 
   return (
-    <Drawer variant="permanent" anchor="left" sx={{ [`& .MuiDrawer-paper`]: { width: "12%", boxSizing: 'border-box', backgroundImage: `url(https://i.ibb.co/0BQtHm0/sidebarmovedleft.jpg)`, backgroundSize: "cover", borderRight: "3px solid rgb(231, 179, 7)", flexShrink: 0 } }}>
+    <Drawer variant="permanent" anchor="left" sx={{ [`& .MuiDrawer-paper`]: { width: "12%", minWidth: "240px", boxSizing: 'border-box', backgroundImage: `url(https://i.ibb.co/0BQtHm0/sidebarmovedleft.jpg)`, backgroundSize: "cover", borderRight: "3px solid rgb(231, 179, 7)", flexShrink: 0 } }}>
       <Toolbar />
       <Grid container paddingLeft={4}>
         <Grid item>
