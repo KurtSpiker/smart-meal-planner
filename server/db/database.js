@@ -92,7 +92,7 @@ exports.generateGroceryList = generateGroceryList;
 
 const getGroceryListByUser = function (userId, week) {
 
-  const sqlString = `SELECT * FROM grocery_list_items WHERE user_id = $1 AND week = $2;`;
+  const sqlString = `SELECT * FROM grocery_list_items WHERE user_id = $1 AND week = $2 ORDER BY item_name;`;
 
   return pool
     .query(sqlString, [userId, week])
@@ -218,7 +218,7 @@ exports.deleteGroceryListItem = deleteGroceryListItem;
 
 const getRecipesByUser = function (userId, week) {
 
-  const sqlString = `SELECT meal_name, meal_lists.id AS meal_list_id, day_of_week, user_id, spoonacular_id, meal, week, image_link FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2`;
+  const sqlString = `SELECT meal_name, meal_lists.id AS meal_list_id, day_of_week, user_id, spoonacular_id, meal, week, image_link FROM meal_lists JOIN users ON user_id = users.id WHERE users.id = $1 AND week = $2 ORDER BY meal_name`;
 
   return pool
     .query(sqlString, [userId, week])
@@ -269,7 +269,7 @@ exports.deleteRecipesForUser = deleteRecipesForUser;
 
 const getPantryByUser = function (userId) {
 
-  const sqlString = `SELECT * FROM pantry_ingredients WHERE user_id = $1`;
+  const sqlString = `SELECT * FROM pantry_ingredients WHERE user_id = $1 ORDER BY item_name`;
 
   return pool
     .query(sqlString, [userId])
@@ -385,7 +385,7 @@ exports.generateJoke = generateJoke;
 
 const getFavourites = function (userId) {
 
-  const sqlString = `SELECT * FROM favourites WHERE user_id = $1;`;
+  const sqlString = `SELECT * FROM favourites WHERE user_id = $1 ORDER BY spoonacular_id;`;
 
   return pool
     .query(sqlString, [userId])

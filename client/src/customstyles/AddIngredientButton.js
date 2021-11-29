@@ -11,3 +11,13 @@ export const AddIngredientButton = styled(Button)(({ theme }) => ({
   },
   height: "56px"
 }));
+
+export const AddIngredientButtonAlt = styled(Button)(({ theme }) => ({
+  fontWeight: "bold",
+  color: "rgb(78, 0, 0)",
+  backgroundColor: "rgb(247,191,80,0.65)",
+  '&:hover': {
+    backgroundColor: "#d1a03f",
+  },
+  height: "56px"
+}));

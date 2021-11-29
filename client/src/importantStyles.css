@@ -54,6 +54,9 @@
   justify-content: center;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .headerIcon{
@@ -63,4 +66,46 @@
 
 .quantityField{
   text-align: center;
+}
+
+
+.paragraphTitleContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.aboutUsParagraph{
+  font-size: 25px;
+  min-width: 800px;
+  max-width: 800px;
+}
+
+.profilePicture{
+  height: 300px;
+  border-radius: 100px;
+  border: 2px solid rgb(231, 179, 7);
+}
+
+.profileHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.individualProfile {
+  text-align: center;
+  margin: 30px;
+  font-size: 20px;
+}
+
+.linkedin{
+  height: 20px;
+  margin-right: 5px;
+}
+
+.iconAndLinkHolder{
+  display: flex;
+  justify-content: center;
 }
