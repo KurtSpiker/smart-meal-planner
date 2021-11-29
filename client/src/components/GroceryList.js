@@ -1,4 +1,4 @@
-import { Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack, Backdrop, CircularProgress } from '@mui/material';
+import { Grid, Typography, InputLabel, FormControl, TextField, Autocomplete, Select, MenuItem, Stack, Backdrop, CircularProgress } from '@mui/material';
 import { AddIngredientButton } from '../customstyles/AddIngredientButton';
 import IngredientList from "./IngredientList";
 import { useState, useEffect } from "react";
@@ -91,15 +91,18 @@ const GroceryList = function (props) {
             <Grid item xs={8.5}>
               <Stack direction="row">
                 <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
-                <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
-                  onChange={(event) => {
-                    setDropValue(event.target.value)
-                  }}
-                >
-                  {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
-                    return <MenuItem key={item} value={item}>{item}</MenuItem>
-                  })}
-                </Select>
+                <FormControl sx={{ minWidth: 120 }}>
+                  <InputLabel id="Measure">Unit</InputLabel>
+                  <Select disabled={!searchTerm.possibleUnits} label="Unit of measure" value={dropValue}
+                    onChange={(event) => {
+                      setDropValue(event.target.value)
+                    }}
+                  >
+                    {searchTerm.possibleUnits && searchTerm.possibleUnits.map((item) => {
+                      return <MenuItem key={item} value={item}>{item}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
                 <AddIngredientButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to Groceries</AddIngredientButton>
               </Stack>
             </Grid>

@@ -207,22 +207,13 @@ module.exports = (db) => {
 
 
 
-
-
-
-
-
-
-
-
-
   // // search for a recipe using keywords (improved?)
   // // http://localhost:4000/api/recipes?search=Nachos%20Grande
   router.get("/", (req, res) => {
 
     let userId = 1 // const userId = req.cookies["user_id"];
     let recipeStore = [];
-    let searchTerm = `&query=${req.query.search}`;
+    let searchTerm = `&query=${req.query.search}` + "%20";
     let numberDisplayed = `&number=5`;
     let favouritesArray = [];
 

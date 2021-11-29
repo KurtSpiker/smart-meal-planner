@@ -240,7 +240,7 @@ module.exports = (db) => {
           console.log("6. FINISHED LOOPING OVER RESULT DATA TO PUT DITERY NEEDS INTO RECIPE STORE");
         }
         // out of the 20 recipes (0 to 19) pick 5
-        let arrayNumbers = randomRecipes(10, 5);
+        let arrayNumbers = randomRecipes(9, 5);
         console.log("6. PICKED THE RANDOM NUMBERS", arrayNumbers);
         let arrayToSend = [];
 
