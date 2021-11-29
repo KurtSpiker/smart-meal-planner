@@ -3,6 +3,8 @@ import { React, useState, useEffect } from "react";
 // import RecipeCarousel from "./RecipeCarousel";
 import RecipeSearchItem from "./RecipeSearchItem";
 import RecipeCarousel from "./RecipeCarousel";
+import recipeSearchIcon from './images/recipeSearch.png'
+import SearchIcon from '@mui/icons-material/Search';
 const axios = require('axios');
 
 const testRecipies = {
@@ -106,16 +108,19 @@ const RecipeSearch = function (props) {
   }, [searchTextValue]);
 
   return (
-    <Grid container justifyContent="center">
-      <Typography variant="h3" sx={{ mr: 1.5 }}>
+    <Grid container>
+      <Typography variant="h2" sx={{ mr: 1.5 }}>
+        <img src={recipeSearchIcon} alt="recipe" width="60px"/>
         Search Recipes
       </Typography>
-      <TextField onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
+      <Grid item container justifyContent="center">
+        <TextField label={<h2><SearchIcon/>Search</h2>} variant="standard" onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
+      </Grid>
       <Grid container justifyContent="center" spacing={2} >
         {
           recipeContent
         }
-        <RecipeSearchItem recipe={testRecipies.results[0]} test={true} />
+        {/* <RecipeSearchItem recipe={testRecipies.results[0]} test={true} /> */}
       </Grid>
       <Grid container>
         <RecipeCarousel testRecipies={testRecipies.results}/>

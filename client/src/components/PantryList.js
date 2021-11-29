@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FormControl, InputLabel, ColorButton, Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack } from '@mui/material';
+import { FormControl, InputLabel, Button, Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack } from '@mui/material';
 import { AddIngredientButton } from '../customstyles/AddIngredientButton';
 import pantryListIcon from './images/pantry.png'
 import IngredientList from "./IngredientList";
@@ -78,7 +78,7 @@ const PantryList = function (props) {
                 })}
               </Select>
             </FormControl>
-            <ColorButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</ColorButton>
+            <Button onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</Button>
           </Stack>
 
         </Grid>

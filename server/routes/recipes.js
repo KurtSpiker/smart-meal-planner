@@ -8,66 +8,66 @@ module.exports = (db) => {
   // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&query=pasta&number=2
   // search for a recipe using keywords
   // http://localhost:4000/api/recipes?search=Nachos%20Grande
-  router.get("/", (req, res) => {
+  // router.get("/", (req, res) => {
 
-    const userId = req.cookies["user_id"];
-    let recipeStore = [];
-    // let recipeSend = []; //for sort function
-    let searchTerm = `&query=${req.query.search}`;
-    let numberDisplayed = `&number=5`;
-    let favouritesArray = [];
+  //   const userId = req.cookies["user_id"];
+  //   let recipeStore = [];
+  //   // let recipeSend = []; //for sort function
+  //   let searchTerm = `&query=${req.query.search}`;
+  //   let numberDisplayed = `&number=5`;
+  //   let favouritesArray = [];
 
-    db.getFavourites(userId)
-      .then((favourites) => {
-        favouritesArray = favourites.map((fav) => {
-          return fav.spoonacular_id;
-        })
-        return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
-      })
-      .then((response) => {
-        recipeStore = response.data.results;
-        let recipeIds = [];
-        for (const recipe of recipeStore) {
-          recipeIds.push(recipe.id);
-        }
-        return recipeIds;
-      })
-      .then((recipeIds) => {
-        // if it finds no recipes, gives [] to this section
-        let ids = recipeIds.join(",");
-        if (recipeIds.length > 0) {
+  //   db.getFavourites(userId)
+  //     .then((favourites) => {
+  //       favouritesArray = favourites.map((fav) => {
+  //         return fav.spoonacular_id;
+  //       })
+  //       return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
+  //     })
+  //     .then((response) => {
+  //       recipeStore = response.data.results;
+  //       let recipeIds = [];
+  //       for (const recipe of recipeStore) {
+  //         recipeIds.push(recipe.id);
+  //       }
+  //       return recipeIds;
+  //     })
+  //     .then((recipeIds) => {
+  //       // if it finds no recipes, gives [] to this section
+  //       let ids = recipeIds.join(",");
+  //       if (recipeIds.length > 0) {
 
-          // [ 646545, 633876, 638784 ]
-          // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=638784
-          return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
-        }
-      })
-      .then((allRecipeInfo) => {
+  //         // [ 646545, 633876, 638784 ]
+  //         // https://api.spoonacular.com/recipes/informationBulk?apiKey=44f44a53a6e64445a1156824595d2c98&ids=638784
+  //         return axios.get(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${process.env.API_KEY}&ids=${ids}`);
+  //       }
+  //     })
+  //     .then((allRecipeInfo) => {
 
-        if (allRecipeInfo) {
+  //       if (allRecipeInfo) {
 
-          for (const recipeDietery in allRecipeInfo.data) {
-            let dieteryRestrictions = {};
-            dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
-            dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
-            dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
-            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian;
-            recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+  //         for (const recipeDietery in allRecipeInfo.data) {
+  //           let dieteryRestrictions = {};
+  //           dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
+  //           dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
+  //           dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
+  //           dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian;
+  //           recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
 
-            if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
-              recipeStore[recipeDietery].favourite = true;
-            } else {
-              recipeStore[recipeDietery].favourite = false;
-            }
+  //           if (favouritesArray.includes(allRecipeInfo.data[recipeDietery].id)) {
+  //             recipeStore[recipeDietery].favourite = true;
+  //           } else {
+  //             recipeStore[recipeDietery].favourite = false;
+  //           }
 
-          }
-        }
-        res.send(recipeStore);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+  //         }
+  //       }
+  //       res.send(recipeStore);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // });
 
   // looking at a specific recipe using its spoonacular id 663641 648279
   // http://localhost:4000/api/recipes/715594
@@ -217,66 +217,66 @@ module.exports = (db) => {
 
 
   // // search for a recipe using keywords (improved?)
-  // // http://localhost:4000/api/recipes/?search=banana
-  // router.get("/", (req, res) => {
+  // // http://localhost:4000/api/recipes?search=Nachos%20Grande
+  router.get("/", (req, res) => {
 
-  //   let userId = 1 // const userId = req.cookies["user_id"];
-  //   let recipeStore = [];
-  //   let searchTerm = `&query=${req.query.search}`;
-  //   let numberDisplayed = `&number=5`;
-  //   let favouritesArray = [];
+    let userId = 1 // const userId = req.cookies["user_id"];
+    let recipeStore = [];
+    let searchTerm = `&query=${req.query.search}`;
+    let numberDisplayed = `&number=5`;
+    let favouritesArray = [];
 
-  //   let promises = [];
+    let promises = [];
 
-  //   db.getFavourites(userId)
-  //     .then((favourites) => {
-  //       favouritesArray = favourites.map((fav) => {
-  //         return fav.spoonacular_id;
-  //       })
-  //       return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
-  //     })
-  //     .then((response) => {
-  //       recipeStore = response.data;
-  //       let recipeIds = [];
-  //       for (const recipe of recipeStore.results) {
-  //         recipeIds.push(recipe.id);
-  //       }
-  //       return recipeIds;
-  //     })
-  //     .then((recipeIds) => {
-  //       // if it finds no recipes, gives [] to this section
-  //       if (recipeIds.length > 0) {
-  //         for (let i = 0; i < recipeIds.length; i++) {
-  //           promises.push(axios.get(`https://api.spoonacular.com/recipes/${recipeIds[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
-  //         }
-  //         return Promise.all(promises);
-  //       }
-  //     })
-  //     .then((allRecipeInfo) => {
-  //       // only if recipe info is found
-  //       if (allRecipeInfo) {
-  //         for (const recipeDietery in allRecipeInfo) {
-  //           let dieteryRestrictions = {};
-  //           dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
-  //           dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
-  //           dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;
-  //           dieteryRestrictions.dairyFree = allRecipeInfo[recipeDietery].data.dairyFree;
-  //           recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+    db.getFavourites(userId)
+      .then((favourites) => {
+        favouritesArray = favourites.map((fav) => {
+          return fav.spoonacular_id;
+        })
+        return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
+      })
+      .then((response) => {
+        recipeStore = response.data;
+        let recipeIds = [];
+        for (const recipe of recipeStore.results) {
+          recipeIds.push(recipe.id);
+        }
+        return recipeIds;
+      })
+      .then((recipeIds) => {
+        // if it finds no recipes, gives [] to this section
+        if (recipeIds.length > 0) {
+          for (let i = 0; i < recipeIds.length; i++) {
+            promises.push(axios.get(`https://api.spoonacular.com/recipes/${recipeIds[i]}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`))
+          }
+          return Promise.all(promises);
+        }
+      })
+      .then((allRecipeInfo) => {
+        // only if recipe info is found
+        if (allRecipeInfo) {
+          for (const recipeDietery in allRecipeInfo) {
+            let dieteryRestrictions = {};
+            dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
+            dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
+            dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;
+            dieteryRestrictions.dairyFree = allRecipeInfo[recipeDietery].data.dairyFree;
+            recipeStore.results[recipeDietery].dieteryRestrictions = dieteryRestrictions;
 
-  //           if (favouritesArray.includes(allRecipeInfo[recipeDietery].data.id)) {
-  //             recipeStore.results[recipeDietery].favourite = true;
-  //           } else {
-  //             recipeStore.results[recipeDietery].favourite = false;
-  //           }
+            if (favouritesArray.includes(allRecipeInfo[recipeDietery].data.id)) {
+              recipeStore.results[recipeDietery].favourite = true;
+            } else {
+              recipeStore.results[recipeDietery].favourite = false;
+            }
 
-  //         }
-  //       }
-  //       res.send(recipeStore.results);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // });
+          }
+        }
+        res.send(recipeStore.results);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
   return router;
 };

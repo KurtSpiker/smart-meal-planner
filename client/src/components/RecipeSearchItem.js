@@ -37,10 +37,9 @@ const RecipeSearchItem = function (props) {
 
   return (
     <Grid item >
-      {console.log("Its me", recipe.id)}
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id} />}
       <RecipeCard>
-        <ButtonBase onClick={() => setDayInformation('', '', recipe.id)} component={Link} to={"/Recipe"}>
+        <ButtonBase onClick={() => setDayInformation(dayOfWeek, typeOfMeal, recipe.id)} component={Link} to={"/Recipe"}>
           <CardMedia sx={{
             border: "2px solid rgb(231, 179, 7)", borderRadius: "20px", marginTop: "5px", marginLeft: "5px", width: "235px"
           }}
