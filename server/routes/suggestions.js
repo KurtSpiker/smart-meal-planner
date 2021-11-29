@@ -86,13 +86,13 @@ module.exports = (db) => {
   });
 
   // end point for generate recipes based on cuisine and choosing some randomly to display
-  // http://localhost:4000/api/suggestions/cuisine?cuisine=italian
+  // http://localhost:4000/api/suggestions/italian
   // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&cuisine=italian&number=10
-  router.get("/cuisine", (req, res) => {
+  router.get("/:id", (req, res) => {
 
     const userId = req.cookies["user_id"];
     let recipeStore = [];
-    let cuisine = `&cuisine=${req.query.cuisine}`;
+    let cuisine = `&cuisine=${req.params.id}`;
     let numberDisplayed = `&number=10`;
     let favouritesArray = [];
 

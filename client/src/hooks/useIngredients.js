@@ -46,6 +46,7 @@ export default function useIngredients(setList, list) {
         //resets the unit and measure/quantity values
         setDropValue(false);
         setMeasureValue("");
+        setActive((prev) => !prev);
       });
   };
 
