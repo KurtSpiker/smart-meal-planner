@@ -5,6 +5,7 @@ import RecipeSearchItem from "./RecipeSearchItem";
 import RecipeCarousel from "./RecipeCarousel";
 import recipeSearchIcon from './images/recipeSearch.png'
 import SearchIcon from '@mui/icons-material/Search';
+import useDebounce from "../hooks/useDebounce";
 const axios = require('axios');
 
 const testRecipies = {
@@ -81,10 +82,11 @@ const RecipeSearch = function (props) {
 
   const [recipes, setRecipes] = useState([]);
   const [searchTextValue, setSearchTextValue] = useState("");
-  const [recipeContent, setRecipeContent] = useState([]);
-
+  //debouce used to only fire api call after you are finished typing rather than every key stroke
+  const term = useDebounce(searchTextValue, 400);
+  
   useEffect(() => {
-
+    console.log('searchTextValue', searchTextValue);
     axios.get('/api/recipes', {
       params: {
         search: searchTextValue
@@ -93,19 +95,13 @@ const RecipeSearch = function (props) {
       .then((result) => {
         setRecipes(() => {
           return result.data;
-        })
-        setRecipeContent(() => {
-          return recipes.map((recipe) => {
-            return <RecipeSearchItem recipe={recipe} />;
-          })
-        })
+        });
       })
-      .catch(
-        function (error) {
-          console.log(error)
+      .catch((error) => {
+          console.log(error.message)
         }
       )
-  }, [searchTextValue]);
+  }, [term]);
 
   return (
     <Grid container>
@@ -118,9 +114,10 @@ const RecipeSearch = function (props) {
       </Grid>
       <Grid container justifyContent="center" spacing={2} >
         {
-          recipeContent
+          recipes.map((recipe) => {
+            return <RecipeSearchItem recipe={recipe} />;
+          })
         }
-        {/* <RecipeSearchItem recipe={testRecipies.results[0]} test={true} /> */}
       </Grid>
       <Grid container>
         <RecipeCarousel testRecipies={testRecipies.results}/>
