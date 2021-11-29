@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 
 module.exports = (db) => {
 
@@ -7,7 +8,11 @@ module.exports = (db) => {
   // http://localhost:4000/api/users/login/1
   router.get("/login/:id", (req, res) => {
 
-    res.cookie('user_id', req.params.id);
+    let idToSet = req.params.id[req.params.id.length - 1];
+    console.log("THIS IS REQ DOT PARAMS", req.params.id)
+    console.log("ID TO SET IS", idToSet)
+
+    res.cookie('user_id', idToSet);
     const userId = req.cookies["user_id"];
 
     db.getUserDetails(userId)
@@ -24,6 +29,7 @@ module.exports = (db) => {
   // logs out user
   // http://localhost:4000/api/users/logout
   router.get("/logout", (req, res) => {
+    console.log("Logged out user.")
     res.clearCookie('user_id');
     res.send("cleared cookie");
   })
@@ -33,7 +39,6 @@ module.exports = (db) => {
   router.post("/favourites", (req, res) => {
 
     let userId = 1;
-    let spoonacularId = req.body.spoonacularId;
 
     db.addFavourites(userId, spoonacularId)
       .then((results) => {

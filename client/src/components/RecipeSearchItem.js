@@ -1,4 +1,4 @@
-import { Grid, Card, CardMedia, CardHeader, CardActions, IconButton, Checkbox, ButtonBase, Fab } from "@mui/material";
+import { Grid, Card, CardMedia, CardHeader, CardActions, IconButton, Checkbox, ButtonBase } from "@mui/material";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import FoodBankIcon from '@mui/icons-material/FoodBank';
@@ -58,7 +58,7 @@ const RecipeSearchItem = function (props) {
         </RecipeToolTip>
         <CardHeader
           subheader={dietaryDisplay(recipe)}
-          sx={{ textAlign: "center", alignItems: "start", paddingBottom: 0, overflow: "hidden" }}
+          sx={{ textAlign: "center", alignItems: "start", paddingBottom: 0, overflow: "hidden", height: "50px" }}
         />
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>

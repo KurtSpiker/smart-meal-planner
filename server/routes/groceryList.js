@@ -8,7 +8,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/grocery_list/1
   router.get("/:id", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let week = req.params.id;
 
     db.getGroceryListByUser(userId, week)
@@ -29,7 +29,7 @@ module.exports = (db) => {
   router.post("/edit/:id", (req, res) => {
 
     let spoonacularId = req.params.id;
-    let userId = 1;// const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
 
     let data = { userId, spoonacularId, quantity: req.body.quantity, week: req.body.week };
 
@@ -50,8 +50,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/grocery_list/delete/12345
   router.delete("/delete/:id", (req, res) => {
 
-    // will be from req.body
-    let userId = 1;// const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
     let data = { userId, spoonacularId, week: 1 };
@@ -70,10 +69,8 @@ module.exports = (db) => {
   // user adds a grocery list item
   // http://localhost:4000/api/grocery_list/add/17166
   router.post("/add/:id", (req, res) => {
-    console.log(req.body)
-    console.log(req.params.id)
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
     // will be from req.body
@@ -94,7 +91,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/grocery_list/1
   router.post("/:id", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let week = req.params.id;
     let promises = [];
     let groceryListForDb = [];
@@ -229,6 +226,7 @@ module.exports = (db) => {
 
         let ingredientsToValidate = {}
         for (const itemIndex in result) {
+          console.log("INDEX IS " + itemIndex + " SUBTRACTING " + result[itemIndex].data.targetAmount + " FROM " + pantryStore[itemIndex].quantity)
 
           ingredientsToValidate[ingredientsToConvert[itemIndex]] =
           {
@@ -240,7 +238,7 @@ module.exports = (db) => {
             groceryListAmount: result[itemIndex].data.targetAmount,
             groceryListMeasure: result[itemIndex].data.targetUnit,
             // subtraction amount is what we really want
-            resultingSubtraction: result[itemIndex].data.targetAmount - pantryStore[itemIndex].quantity
+            resultingSubtraction: result[itemIndex].data.targetAmount - pantryStoreWithIdKeys[ingredientsToConvert[itemIndex]].quantity
           }
         }
         return ingredientsToValidate;

@@ -10,7 +10,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes?search=Nachos%20Grande
   router.get("/", (req, res) => {
 
-    let userId = 1 // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let recipeStore = [];
     // let recipeSend = []; //for sort function
     let searchTerm = `&query=${req.query.search}`;
@@ -43,29 +43,8 @@ module.exports = (db) => {
         }
       })
       .then((allRecipeInfo) => {
-        // only if recipe info is found
+
         if (allRecipeInfo) {
-
-          // keeping sort functions here incase its needed
-          // let sortedRecipes = allRecipeInfo.data.sort((recipeA, recipeB) => {
-          //   if (recipeA.id > recipeB.id) {
-          //     return 1;
-          //   } else if (recipeA.id < recipeB.id) {
-          //     return -1;
-          //   } else {
-          //     return 0;
-          //   }
-          // })
-
-          // recipeSend = recipeStore.sort((recipeA, recipeB) => {
-          //   if (recipeA.id > recipeB.id) {
-          //     return 1;
-          //   } else if (recipeA.id < recipeB.id) {
-          //     return -1;
-          //   } else {
-          //     return 0;
-          //   }
-          // })
 
           for (const recipeDietery in allRecipeInfo.data) {
             let dieteryRestrictions = {};
@@ -94,7 +73,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes/715594
   router.get("/:id", (req, res) => {
 
-    let userId = 1;
+    const userId = req.cookies["user_id"];
     let recipeId = req.params.id;
     let ingredientArray = [];
     let title = "";
@@ -176,7 +155,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes/649141
   router.post("/:id", (req, res) => {
 
-    let userId = 1;  // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
     let data = { ...req.body, spoonacularId, userId };
@@ -197,12 +176,9 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes
   router.delete("/", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
-    // let spoonacularId = req.params.id;
+    const userId = req.cookies["user_id"];
 
     let data = { ...req.body, userId };
-
-    // let data = { userId, week: 1, day: "monday", meal: "lunch", spoonacularId };
 
     db.deleteRecipesForUser(data)
       .then((result) => {
@@ -217,7 +193,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/recipes/mealList/1
   router.get("/mealList/:id", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let week = req.params.id;
 
     db.getRecipesByUser(userId, week)

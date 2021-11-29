@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Grid, Toolbar, Drawer } from '@mui/material';
 import Button from '@mui/material/Button';
 
@@ -20,10 +20,12 @@ const LinkDrawer = function (props) {
   const { setCookie, cookie } = useContext(mealContext);
 
   useEffect(() => {
-  }, [cookie])
-
+    setCookie(document.cookie.replace(/(?:(?:^|.*;\s*)user_id\s*\=\s*([^;]*).*$)|^.*$/, "$1"))
+  }, [])
 
   const logout = function () {
+
+    setCookie(false);
     axios.get('/api/users/logout')
       .catch((e) => {
         console.log(e)
@@ -31,7 +33,7 @@ const LinkDrawer = function (props) {
   }
 
   return (
-    <Drawer variant="permanent" anchor="left" sx={{ [`& .MuiDrawer-paper`]: { width: "12%", boxSizing: 'border-box', backgroundImage: `url(https://i.ibb.co/0BQtHm0/sidebarmovedleft.jpg)`, flexShrink: 0 } }}>
+    <Drawer variant="permanent" anchor="left" sx={{ [`& .MuiDrawer-paper`]: { width: "12%", boxSizing: 'border-box', backgroundImage: `url(https://i.ibb.co/0BQtHm0/sidebarmovedleft.jpg)`, backgroundSize: "cover", borderRight: "3px solid rgb(231, 179, 7)", flexShrink: 0 } }}>
       <Toolbar />
       <Grid container paddingLeft={4}>
         <Grid item>
@@ -49,30 +51,31 @@ const LinkDrawer = function (props) {
         marginTop={7}
       >
         {!cookie && <Button id="linkDrawerButton" className="loginButton" component={Link} to={"/login"}>
-          <img className="buttonIcon" src={loginButtonIcon} />
+          <img className="buttonIcon" alt="loginButton" src={loginButtonIcon} />
           Login
         </Button>}
         {cookie && <Button id="linkDrawerButton" className="button-my-week" component={Link} to={"/WeekPlan/"}>
-          <img className="buttonIcon" src={myWeekIcon} />
+          <img className="buttonIcon" alt="button-my-week" src={myWeekIcon} />
           My Week
         </Button>}
-        {cookie && <Button id="linkDrawerButton" className="favouritesButton" component={Link} to={"/favourites"}>
-          <img className="buttonIcon" src={favouritesIcon} />
+        {cookie && <Button id="linkDrawerButton" className="favouritesButton" component={Link} to={"/Favourites"}>
+          <img className="buttonIcon" alt="favouritesButton" src={favouritesIcon} />
           Favourites
         </Button>}
         <Button id="linkDrawerButton" className="recipeSearchButton" component={Link} to={"/Recipe_search"}>
-          <img className="buttonIcon" src={recipeSearchIcon} />
+          <img className="buttonIcon" alt="recipeSearchButton" src={recipeSearchIcon} />
           Recipes
         </Button>
         {cookie && <Button id="linkDrawerButton" className={"pantryListButton"} component={Link} to={"/PantryList"} >
-          <img className="buttonIcon" src={pantryIcon} />
+          <img className="buttonIcon" alt="pantryListButton" src={pantryIcon} />
           Pantry
         </Button>}
-        {cookie && <Button id="linkDrawerButton" component={Link} to={"/GroceryList"}>
-          <img className="buttonIcon" src={groceryListIcon} />
+        {cookie && <Button id="linkDrawerButton" className={"groceryListButton"} component={Link} to={"/GroceryList"}>
+          <img className="buttonIcon" alt="groceryListButton" src={groceryListIcon} />
           Grocery List
         </Button>}
-        {cookie && <Button id="linkDrawerButton" className="logoutButton" onClick={() => { logout(); setCookie(false); }} component={Link} to={"/login"}><img className="buttonIcon" src={logoutIcon} />
+        {cookie && <Button id="linkDrawerButton" className="logoutButton" onClick={() => { logout() }} component={Link} to={"/login"}>
+          <img className="buttonIcon" alt="logoutButton" src={logoutIcon} />
           Logout
         </Button>}
       </Grid>

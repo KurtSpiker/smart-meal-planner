@@ -16,7 +16,7 @@ module.exports = (db) => {
 
     // get data from front end
     let data = { numberToDisplay: 10, ignorePantry: true, ranking: 1 }
-    let userId = 1;
+    const userId = req.cookies["user_id"];
 
     // get pantry items from db
     let pantryArray = [];
@@ -90,7 +90,7 @@ module.exports = (db) => {
   // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&cuisine=italian&number=10
   router.get("/cuisine", (req, res) => {
 
-    let userId = 1;
+    const userId = req.cookies["user_id"];
     let recipeStore = [];
     let cuisine = `&cuisine=${req.query.cuisine}`;
     let numberDisplayed = `&number=10`;

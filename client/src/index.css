@@ -25,9 +25,7 @@ ul.header li a {
   padding-left: 15%;
   height:auto;
   min-height:95vh;
-  background-image: url("https://i.ibb.co/N3fkCFN/tuxpi-com-1638005738.jpg");
-  background-size: 1920px;
-  background-repeat: no-repeat;
+  background-image: url("background.jpg");
   
 }
 .content h2 {
@@ -50,8 +48,6 @@ ul.header li a {
 .fioLogo{
   border-radius: 50px;
 }
-
-
 
 /* login form css */
 .login {
