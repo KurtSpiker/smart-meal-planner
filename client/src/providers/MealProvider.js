@@ -8,7 +8,7 @@ export default function MealProvider(props) {
   const [typeOfMeal, setTypeOfMeal] = useState("");
   const [weekNumber, setWeekNumber] = useState(1)
   const [mealId, setMealId] = useState(null)
-  const [cookie, setCookie] = useState(null)
+  const [cookie, setCookie] = useState(false)
 
   const setDayInformation = (day, type, id) => {
     setDayOfWeek(day)

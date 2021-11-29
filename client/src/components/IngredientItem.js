@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Paper, IconButton, ButtonBase, Stack, Box } from '@mui/material';
+import { Grid, Paper, IconButton, Stack } from '@mui/material';
 import Counter from './Counter';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
@@ -31,14 +31,14 @@ const IngredientItem = function (props) {
   return (
     <Grid container paddingBottom="10px">
 
-      <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex", borderRadius: "15px" }}>
+      <Paper sx={{ p: 2, margin: 'auto', maxWidth: "100%", flexGrow: 1, display: "flex", borderRadius: "15px", border: "2px solid rgb(231, 179, 7)" }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={4}>
-            <ButtonBase sx={{ width: "200px" }}>
+            <Grid item sx={{ width: "200px", border: "4px double #888888", borderRadius: "10px", display: "flex", justifyContent: "center", alignItems: "center", height: "80px" }} >
               <img alt="ingredient" src={"https://spoonacular.com/cdn/ingredients_500x500/" + ingredient.image_link} style={{ "maxHeight": "70px" }} />
-            </ButtonBase>
+            </Grid>
           </Grid>
-          <Grid item xs={4} alignItems="center">
+          <Grid item xs={4} alignItems="center" sx={{ textTransform: "capitalize", fontSize: "18px" }}>
             {ingredient.item_name}
           </Grid>
 

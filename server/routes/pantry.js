@@ -8,7 +8,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/pantry
   router.get("/", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
 
     db.getPantryByUser(userId)
       .then((results) => {
@@ -25,7 +25,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/pantry/edit/1077
   router.post("/edit/:id", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
     let data = { userId, spoonacularId, quantity: req.body.quantity };
@@ -48,9 +48,9 @@ module.exports = (db) => {
   router.post("/add/:id", (req, res) => {
 
     let spoonacularId = req.params.id;
-    let userId = 1;
+    const userId = req.cookies["user_id"];
 
-    let data = { userId, name: req.body.name, quantity: req.body.quantity, measure: req.body.measure, spoonacularId , imageLink: req.body.imageLink };
+    let data = { userId, name: req.body.name, quantity: req.body.quantity, measure: req.body.measure, spoonacularId, imageLink: req.body.imageLink };
 
     db.addPantryItem(data)
       .then((results) => {
@@ -67,7 +67,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/pantry/delete/12345
   router.delete("/delete/:id", (req, res) => {
 
-    let userId = 1; // const userId = req.cookies["user_id"];
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.params.id;
 
     let data = { userId, spoonacularId };

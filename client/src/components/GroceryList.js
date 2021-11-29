@@ -1,8 +1,7 @@
-import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem, Stack, Backdrop, CircularProgress } from '@mui/material';
+import { Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack, Backdrop, CircularProgress } from '@mui/material';
 import { AddIngredientButton } from '../customstyles/AddIngredientButton';
 import IngredientList from "./IngredientList";
 import { useState, useEffect } from "react";
-import { styled } from '@mui/material/styles';
 import axios from "axios";
 import useIngredients from "../hooks/useIngredients";
 import NumberFormat from 'react-number-format'

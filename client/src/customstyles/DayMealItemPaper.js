@@ -12,5 +12,5 @@ export const DayMealItemPaper = styled(Paper)(({ theme }) => ({
     backgroundColor: "#f1e683"
   },
   height: "150px",
-  border: "2px solid rgb(231, 179, 7)"
+  border: "7px double rgb(231, 179, 7)"
 }));

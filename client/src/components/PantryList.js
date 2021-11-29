@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, TextField, Autocomplete, Button, Select, MenuItem, Stack } from '@mui/material';
+import { Grid, Typography, TextField, Autocomplete, Select, MenuItem, Stack } from '@mui/material';
 import { AddIngredientButton } from '../customstyles/AddIngredientButton';
-import { styled } from '@mui/material/styles';
 import pantryListIcon from './images/pantry.png'
 import IngredientList from "./IngredientList";
 import axios from 'axios'
 import useIngredients from "../hooks/useIngredients";
 import NumberFormat from 'react-number-format'
-import { grey } from '@mui/material/colors';
 
 const PantryList = function (props) {
 

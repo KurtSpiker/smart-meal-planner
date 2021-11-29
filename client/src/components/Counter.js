@@ -13,11 +13,12 @@ const Counter = function (props) {
   return (
     <ButtonGroup aria-label="small outlined button group" >
       <Button onClick={() => handleIncrement()}>+</Button>
-        <NumberFormat 
-          value={count}
-          onChange={(event) => setCount(event.target.value)}
-          width="70px"
-        />
+      <NumberFormat
+        className="quantityField"
+        value={count}
+        onChange={(event) => setCount(event.target.value)}
+        width="70px"
+      />
       <Button onClick={() => handleDecrement()}>-</Button>
     </ButtonGroup>
   );
