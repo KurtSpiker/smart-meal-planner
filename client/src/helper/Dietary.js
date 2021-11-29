@@ -29,7 +29,7 @@ export function dietaryDisplay(recipe) {
     subheaderTemplate.push(
       <RecipeToolTip title="Vegan" >
         <div>
-          <img src={process.env.PUBLIC_URL + "/vegan-symbol.png"} alt="vegan" width="45px" height="45px" style={{ "marginRight": "2px", "marginLeft": "2px" }} />
+          <img src={process.env.PUBLIC_URL + "/vegan-symbol.png"} alt="vegan" width="44px" height="45px" style={{ "marginRight": "2px", "marginLeft": "2px", "backgroundColor": "#00ff2a", "borderRadius": "100px", "border": "1px green solid" }} />
         </div>
       </RecipeToolTip>
     )
@@ -39,7 +39,7 @@ export function dietaryDisplay(recipe) {
     subheaderTemplate.push(
       <RecipeToolTip title="Gluten Free" >
         <div>
-          <img src={process.env.PUBLIC_URL + "/glutenfree.png"} alt="glutenfree" width="45px" height="45px" style={{ "marginRight": "2px", "marginLeft": "2px" }} />
+          <img src={process.env.PUBLIC_URL + "/glutenfree.png"} alt="glutenfree" width="45px" height="45px" style={{ "backgroundColor": "#ecf2aa", "borderRadius": "100px", "marginRight": "2px", "marginLeft": "2px" }} />
         </div>
       </RecipeToolTip>
     )
