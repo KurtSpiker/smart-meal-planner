@@ -90,13 +90,10 @@ const LinkDrawer = function (props) {
           </>
         }
 
-
         <Button id="linkDrawerButton" className="aboutUsButton" component={Link} to={"/AboutUs"}>
           <img className="buttonIcon" alt="aboutUsButton" src={aboutUsIcon} />
           About Us
         </Button>
-
-
 
       </Grid>
     </Drawer >

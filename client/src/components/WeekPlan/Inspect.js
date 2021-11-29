@@ -8,13 +8,13 @@ export default function Load() {
         Remove Recipe?
       </Grid>
       <Grid container justifyContent="space-evenly">
-        <Grid item>
+        <Grid item >
           <Button variant="outlined">Confirm</Button>
         </Grid>
         <Grid item>
-        <Button variant="outlined">Cancel</Button>
+          <Button variant="outlined">Cancel</Button>
         </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   );
 };
