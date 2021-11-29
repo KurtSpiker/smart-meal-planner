@@ -82,25 +82,28 @@ const RecipeSearch = function (props) {
 
   const [recipes, setRecipes] = useState([]);
   const [searchTextValue, setSearchTextValue] = useState("");
+
   //debouce used to only fire api call after you are finished typing rather than every key stroke
   const term = useDebounce(searchTextValue, 400);
   
   useEffect(() => {
-    console.log('searchTextValue', searchTextValue);
-    axios.get('/api/recipes', {
-      params: {
-        search: searchTextValue
-      }
-    })
-      .then((result) => {
-        setRecipes(() => {
-          return result.data;
-        });
-      })
-      .catch((error) => {
-          console.log(error.message)
+    setRecipes([])
+    if (term.length > 0) {
+      axios.get('/api/recipes', {
+        params: {
+          search: searchTextValue
         }
-      )
+      })
+        .then((result) => {
+          setRecipes(() => {
+            return result.data;
+          });
+        })
+        .catch((error) => {
+            console.log(error.message)
+          }
+        )
+    }
   }, [term]);
 
   return (
@@ -115,7 +118,7 @@ const RecipeSearch = function (props) {
       <Grid container justifyContent="center" spacing={2} >
         {
           recipes.map((recipe) => {
-            return <RecipeSearchItem recipe={recipe} />;
+            return <RecipeSearchItem key={recipe.id} recipe={recipe} />;
           })
         }
       </Grid>
