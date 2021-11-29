@@ -123,5 +123,11 @@
 
 .cancelDeleteButton:hover{
   background-color: #80c3d8 !important;
+}
 
+.dieteryHolder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
 }

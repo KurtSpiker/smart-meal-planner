@@ -49,17 +49,18 @@ const RecipeSearchItem = function (props) {
           />
         </ButtonBase>
         <RecipeToolTip title={recipe.title} >
-          <CardHeader
-            title={recipe.title}
-            sx={{
-              height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden"
-            }}
-          />
+          <div>
+            <CardHeader
+              title={recipe.title}
+              sx={{
+                height: "46px", textAlign: "center", alignItems: "start", overflow: "hidden"
+              }}
+            />
+          </div>
         </RecipeToolTip>
-        <CardHeader
-          subheader={dietaryDisplay(recipe)}
-          sx={{ textAlign: "center", alignItems: "start", paddingBottom: 0, overflow: "hidden", height: "50px" }}
-        />
+        <div className="dieteryHolder">
+          {dietaryDisplay(recipe)}
+        </div>
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>
           </Checkbox>
