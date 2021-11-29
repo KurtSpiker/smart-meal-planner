@@ -15,7 +15,7 @@ const RecipeSearchItem = function (props) {
   const [dialogShow, setDialogShow] = useState(false)
 
   const { recipe } = props
-  const { setDayInformation } = useContext(mealContext)
+  const { setDayInformation, dayOfWeek, typeOfMeal } = useContext(mealContext)
 
   const handleShowChange = () => {
     if (dialogShow) {
