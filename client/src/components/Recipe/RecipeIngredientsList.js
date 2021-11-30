@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Stack } from '@mui/material';
+import { Grid, Stack, Typography} from '@mui/material';
 import ListItem from './ListItem'
 
 
@@ -10,9 +10,9 @@ export default function RecipeList(props) {
   return (
     <Grid container>
       <Grid
-        sx={{margin:"auto"}}
-      >
-        <div class="ingredient-list"><h2>Ingredients</h2></div>
+        sx={{margin:"auto" }} padding="15px"
+      >  
+        <Typography sx={{borderBottom: "2px solid black"}} variant="h4" >Ingredients</Typography>
       </Grid>
       <Grid container>
         <Stack
