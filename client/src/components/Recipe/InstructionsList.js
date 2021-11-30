@@ -8,7 +8,7 @@ export default function RecipeInstructions(props) {
 
   return (
     <Grid container>
-      <Grid sx={{margin:"auto"}}>
+      <Grid sx={{margin:"auto", padding: "20px"}}>
         <div class="ingredient-list"><h2>Instructions</h2></div>
       </Grid>
       <Grid container>

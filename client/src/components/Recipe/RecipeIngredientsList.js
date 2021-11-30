@@ -10,7 +10,7 @@ export default function RecipeList(props) {
   return (
     <Grid container>
       <Grid
-        sx={{margin:"auto"}}
+        sx={{margin:"auto", padding:"20px"}}
       >
         <div class="ingredient-list"><h2>Ingredients</h2></div>
       </Grid>

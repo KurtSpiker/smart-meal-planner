@@ -50,36 +50,42 @@ export default function Recipe() {
         <CircularProgress color="inherit" />
       </Backdrop>)}
       {!loading && (<Grid container justifyContent="center">
-        <img src={recipe.image} alt="recipe" width="100%" />
-        <Card sx={{ position: "relative", top: "-150px", width: "95%" }}>
-          <Grid container>
-            <CardHeader
-              title={recipe.title}
-              subheader={joke}
-              sx={{ textAlign: "center", margin: "auto" }}
-            />
-            <Grid container justifyContent="space-evenly" textAlign="center">
-              <Grid item>
-                <span>
-                  <AccessTimeIcon />
-                  <p>{recipe.time} minutes</p>
-                </span>
+        <Card sx={{ position: "relative", width: "95%" }}>
+          <Grid container >
+            <Grid item container xs={6}>
+              <CardHeader
+                title={recipe.title}
+                subheader={joke}
+                sx={{ textAlign: "left", paddingLeft:"30px"}}
+                />
+              <Grid container spacing={4}  textAlign="center" sx={{paddingLeft: "30px"}}>
+                <Grid item>
+                  <span>
+                    <AccessTimeIcon />
+                    <p>{recipe.time} minutes</p>
+                  </span>
+                </Grid>
+                <Grid item>
+                  <Typography className="dieteryHolderRecipeIndex">
+                    {dietaryDisplay(recipe).dieteryArray}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <RestaurantIcon />
+                  <p>{recipe.servings} servings</p>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography className="dieteryHolderRecipeIndex">
-                  {dietaryDisplay(recipe).dieteryArray}
-                </Typography>
+              <Grid container>
+                <RecipeIngredientsList recipeItems={recipeItems} />
               </Grid>
-              <Grid item>
-                <RestaurantIcon />
-                <p>{recipe.servings} servings</p>
+              <Grid container>
+                <InstructionsList instructionItems={instructionItems} />
               </Grid>
             </Grid>
-            <Grid container>
-              <RecipeIngredientsList recipeItems={recipeItems} />
-            </Grid>
-            <Grid container>
-              <InstructionsList instructionItems={instructionItems} />
+            <Grid item container xs={6} >
+              <Grid item>
+                <img src={recipe.image} alt="recipe" style={{width: "100%", margin: "10px"}}/>
+              </Grid>
             </Grid>
           </Grid>
         </Card>
