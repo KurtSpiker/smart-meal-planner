@@ -71,8 +71,8 @@ module.exports = (db) => {
           recipeStore[recipeDietery] = {};
           recipeStore[recipeDietery].id = allRecipeInfo.data[recipeDietery].id;
           recipeStore[recipeDietery].title = allRecipeInfo.data[recipeDietery].title;
-          recipeStore[recipeDietery].image = allRecipeInfo.data[recipeDietery].image;
-          recipeStore[recipeDietery].imageType = allRecipeInfo.data[recipeDietery].imageType;
+
+          recipeStore[recipeDietery].image = `https://spoonacular.com/recipeImages/${allRecipeInfo.data[recipeDietery].id}-636x393.jpg`;
 
           let dieteryRestrictions = {};
           dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
@@ -83,7 +83,6 @@ module.exports = (db) => {
           recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
           recipeStore[recipeDietery].favourite = true;
         }
-
         res.send(recipeStore);
       })
 

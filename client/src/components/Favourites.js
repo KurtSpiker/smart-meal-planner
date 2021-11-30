@@ -2,18 +2,22 @@ import { Grid, Typography, TextField } from "@mui/material";
 import { React, useState, useEffect } from "react";
 import RecipeSearchItem from "./RecipeSearchItem";
 import favouritesHeaderIcon from './images/favourites.png'
+import useFavouritesRender from "../hooks/useFavoritesRender";
 const axios = require('axios');
 
 const Favourites = function (props) {
 
   const [recipeContent, setRecipeContent] = useState([]);
+  const [toggleRender, setToggleRender] = useState(false)
+  const { heart } = useFavouritesRender()
 
   useEffect(() => {
     axios.get('/api/search/favourites')
       .then((result) => {
         setRecipeContent(() => {
+          console.log("Favortite" ,result.data)
           return result.data.map((recipe) => {
-            return <RecipeSearchItem recipe={recipe} />;
+            return <RecipeSearchItem recipe={recipe} render={toggleRender} />;
           })
         })
       })
@@ -22,7 +26,7 @@ const Favourites = function (props) {
           console.log(error)
         }
       )
-  }, []);
+  }, [heart]);
 
   return (
     <Grid container justifyContent="center">

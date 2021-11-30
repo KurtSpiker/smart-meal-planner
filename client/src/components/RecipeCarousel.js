@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import RecipeSearchItem from "./RecipeSearchItem";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {  ThemeProvider, Card, IconButton, Grid, Typography, ButtonGroup, Button, Tabs, Tab, AppBar } from "@mui/material";
+import {  Backdrop, CircularProgress, ThemeProvider, Card, IconButton, Grid, Typography, ButtonGroup, Button, Tabs, Tab, AppBar } from "@mui/material";
 import axios from "axios";
 
 
@@ -11,14 +11,17 @@ const RecipeCarousel = function(props){
   const [recipes, setRecipes] = useState(testRecipies)
   const [currentRecipes, setCurrentRecipes] = useState(0)
   const [tabValue, setTabValue] = useState("")
+  const [loading , setLoading] = useState(false)
 
   useEffect(() => {
     console.log(recipes)
+    setLoading(true)
     axios.get(`/api/suggestions/${tabValue}`)
       .then((res) => {
         console.log("Results", res.data)
         setRecipes(res.data)
         setCurrentRecipes(0)
+        setLoading(false)
       })
       .catch((error)=> {
         console.log(error)
@@ -77,22 +80,25 @@ const RecipeCarousel = function(props){
             </Button>
           </ButtonGroup> */}
         </Grid>
-        <IconButton onClick={() => {
-          if (currentRecipes > 0) {
-            setCurrentRecipes(currentRecipes -1)
-          }
-        }}>
-          <ChevronLeftIcon/>
-        </IconButton>
-          <RecipeSearchItem recipe={recipes[currentRecipes]}/>
-          <RecipeSearchItem recipe={recipes[currentRecipes + 1]}/>
-          <RecipeSearchItem recipe={recipes[currentRecipes + 2]}/>
-        <IconButton onClick={() => {
-          if ((currentRecipes + 2) < (recipes.length) - 1)
-            setCurrentRecipes(currentRecipes + 1)
-        }}>
-          <ChevronRightIcon/>
-        </IconButton>
+        {loading && <CircularProgress size="100px" color="secondary" sx={{marginTop: "50px"}}/>}
+        {!loading && <Grid container justifyContent="center " spacing={2}>
+          <IconButton onClick={() => {
+            if (currentRecipes > 0) {
+              setCurrentRecipes(currentRecipes -1)
+            }
+          }}>
+            <ChevronLeftIcon/>
+          </IconButton>
+            <RecipeSearchItem recipe={recipes[currentRecipes]}/>
+            <RecipeSearchItem recipe={recipes[currentRecipes + 1]}/>
+            <RecipeSearchItem recipe={recipes[currentRecipes + 2]}/>
+          <IconButton onClick={() => {
+            if ((currentRecipes + 2) < (recipes.length) - 1)
+              setCurrentRecipes(currentRecipes + 1)
+          }}>
+            <ChevronRightIcon/>
+          </IconButton>
+        </Grid>}
       </Grid>
   )
 }
