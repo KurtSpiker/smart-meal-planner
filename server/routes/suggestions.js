@@ -31,10 +31,14 @@ module.exports = (db) => {
     db.getPantryByUser(userId)
       .then((results) => {
 
-        for (const pantryItem of results) {
-          pantryArray.push(pantryItem.item_name)
+        if (results.length > 0) {
+          for (const pantryItem of results) {
+            pantryArray.push(pantryItem.item_name)
+          }
+          return axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryArray.join(",")}${numberToDisplay}${ignorePantry}${ranking}`);
+        } else {
+          return axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=pasta${numberToDisplay}${ignorePantry}${ranking}`);
         }
-        return axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${pantryArray.join(",")}${numberToDisplay}${ignorePantry}${ranking}`);
       })
       .then((response) => {
         console.log("2. GOT RECIPES FROM API USING PANTRY");
@@ -252,6 +256,8 @@ module.exports = (db) => {
 
         res.send(arrayToSend);
         console.log("8. DONE");
+
+        console.log("SENDING THIS ARRAY", arrayToSend)
       })
       .catch((error) => {
         console.log(error);
