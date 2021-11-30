@@ -68,21 +68,23 @@ module.exports = (db) => {
       })
       .then((allRecipeInfo) => {
 
-        for (const recipeDietery in allRecipeInfo.data) {
-          recipeStore[recipeDietery] = {};
-          recipeStore[recipeDietery].id = allRecipeInfo.data[recipeDietery].id;
-          recipeStore[recipeDietery].title = allRecipeInfo.data[recipeDietery].title;
+        if (allRecipeInfo) {
+          for (const recipeDietery in allRecipeInfo.data) {
+            recipeStore[recipeDietery] = {};
+            recipeStore[recipeDietery].id = allRecipeInfo.data[recipeDietery].id;
+            recipeStore[recipeDietery].title = allRecipeInfo.data[recipeDietery].title;
 
-          recipeStore[recipeDietery].image = `https://spoonacular.com/recipeImages/${allRecipeInfo.data[recipeDietery].id}-636x393.jpg`;
+            recipeStore[recipeDietery].image = `https://spoonacular.com/recipeImages/${allRecipeInfo.data[recipeDietery].id}-636x393.jpg`;
 
-          let dieteryRestrictions = {};
-          dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
-          dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
-          dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
-          dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian;
+            let dieteryRestrictions = {};
+            dieteryRestrictions.vegan = allRecipeInfo.data[recipeDietery].vegan;
+            dieteryRestrictions.glutenFree = allRecipeInfo.data[recipeDietery].glutenFree;
+            dieteryRestrictions.dairyFree = allRecipeInfo.data[recipeDietery].dairyFree;
+            dieteryRestrictions.vegetarian = allRecipeInfo.data[recipeDietery].vegetarian;
 
-          recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
-          recipeStore[recipeDietery].favourite = true;
+            recipeStore[recipeDietery].dieteryRestrictions = dieteryRestrictions;
+            recipeStore[recipeDietery].favourite = true;
+          }
         }
         res.send(recipeStore);
       })

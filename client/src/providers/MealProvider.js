@@ -16,7 +16,7 @@ export default function MealProvider(props) {
     setMealId(id)
   }
 
-  const mealData = { dayOfWeek, typeOfMeal, setDayInformation, weekNumber, mealId, setCookie, cookie, setOnFav, onFav };
+  const mealData = { dayOfWeek, typeOfMeal, setDayInformation, weekNumber, mealId, setCookie, cookie };
 
   return (
     <mealContext.Provider value={mealData}>
