@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { Grid, Card, CardHeader, Backdrop, CircularProgress, Typography, Fab } from '@mui/material'
+import { Grid, Card, CardHeader, Backdrop, CircularProgress, Typography, Fab, CardMedia } from '@mui/material'
 import RecipeIngredientsList from './RecipeIngredientsList'
 import InstructionsList from './InstructionsList'
 // import { recipe } from '../../sampleRecipe'
@@ -49,43 +49,53 @@ export default function Recipe() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>)}
-      {!loading && (<Grid container justifyContent="center">
-        <img src={recipe.image} alt="recipe" width="100%" />
-        <Card sx={{ position: "relative", top: "-150px", width: "95%" }}>
+      {!loading && (<Grid container justifyContent="center" sx={{ width: "100%" }}>
+        <Card sx={{ position: "relative" }}>
           <Grid container>
-            <CardHeader
-              title={recipe.title}
-              subheader={joke}
-              sx={{ textAlign: "center", margin: "auto" }}
-            />
-            <Grid container justifyContent="space-evenly" textAlign="center">
-              <Grid item>
-                <span>
-                  <AccessTimeIcon />
-                  <p>{recipe.time} minutes</p>
-                </span>
+            <Grid item container width="60%" sx={{ paddingRight: 0 }}>
+              <Grid container>
+                <RecipeIngredientsList recipeItems={recipeItems} />
               </Grid>
-              <Grid item>
-                <Typography className="dieteryHolderRecipeIndex">
-                  {dietaryDisplay(recipe).dieteryArray}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <RestaurantIcon />
-                <p>{recipe.servings} servings</p>
+              <Grid container>
+                <InstructionsList instructionItems={instructionItems} />
               </Grid>
             </Grid>
-            <Grid container>
-              <RecipeIngredientsList recipeItems={recipeItems} />
-            </Grid>
-            <Grid container>
-              <InstructionsList instructionItems={instructionItems} />
+            <Grid item container width="40%" display="flex" flexDirection="column">
+              <Grid item sx={{ paddingTop: "20px" }}>
+                <img src={recipe.image} alt="recipe" width="98%" style={{ borderRadius: "20px" }} />
+              </Grid>
+
+              <CardHeader
+                justifyContent="center"
+                title={recipe.title}
+                subheader={joke}
+                sx={{ textAlign: "center" }}
+              />
+              <Grid container justifyContent="space-evenly" textAlign="center">
+                <Grid item>
+                  <span>
+                    <AccessTimeIcon />
+                    <p>{recipe.time} minutes</p>
+                  </span>
+                </Grid>
+                <Grid item>
+                  <Typography className="dieteryHolderRecipeIndex">
+                    {dietaryDisplay(recipe).dieteryArray}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <RestaurantIcon />
+                  <p>{recipe.servings} servings</p>
+                </Grid>
+              </Grid>
+
             </Grid>
           </Grid>
         </Card>
         <Fab onClick={() => { handleShowChange() }} color="primary" aria-label="edit" className="fixed" sx={{ position: "fixed", right: '5rem' }}><AddIcon /></Fab>
         <Fab color="secondary" aria-label="like" className="fixed" sx={{ position: "fixed" }}><FavoriteIcon /></Fab>
-      </Grid>)}
-    </div>
+      </Grid >)
+      }
+    </div >
   )
 };
