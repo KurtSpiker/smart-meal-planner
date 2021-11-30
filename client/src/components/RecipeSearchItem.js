@@ -19,6 +19,7 @@ const RecipeSearchItem = function (props) {
   const [dialogShow, setDialogShow] = useState(false)
   const { heart, handleFavorite, handleRender } = useFavouritesRender(recipe.id, recipe.favourite)
 
+
   const handleShowChange = () => {
     if (dialogShow) {
       setDialogShow(false)
@@ -36,7 +37,7 @@ const RecipeSearchItem = function (props) {
       fontSize: 18
     },
   });
-  
+
   return (
     <Grid item >
       {console.log("Recipe in question", recipe.title, recipe.image, recipe.id)}
@@ -75,7 +76,7 @@ const RecipeSearchItem = function (props) {
         }
 
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
-          <Checkbox onChange={() => {handleFavorite(); handleRender()}} checked={heart} icon={<Favorite />} checkedIcon={<Favorite color="blue" />}></Checkbox>
+          <Checkbox onChange={() => { handleFavorite() }} checked={heart} icon={<Favorite />} checkedIcon={<Favorite color="blue" />}></Checkbox>
           <IconButton>
             <FoodBankIcon onClick={() => { handleShowChange() }} />
           </IconButton>

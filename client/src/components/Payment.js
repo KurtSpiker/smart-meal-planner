@@ -3,7 +3,7 @@ import axios from "axios";
 import { mealContext } from '../providers/MealProvider'
 import purchaseHeaderIcon from './images/purchase.png'
 import { AddIngredientButton } from '../customstyles/AddIngredientButton';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop, CircularProgress, stepConnectorClasses } from '@mui/material';
 import AlertDialog from '../customstyles/AlertDialog';
 
 const Payment = function (props) {
@@ -20,6 +20,8 @@ const Payment = function (props) {
         setPayment(res.data.arrayOfItems);
         setTotal(res.data.priceTotal);
         setLoading(false)
+        console.log("THIS IS PAYMENT LENGTH", payment.length)
+        console.log(payment)
       })
       .catch((e) => {
         console.log(e)
@@ -34,7 +36,7 @@ const Payment = function (props) {
       setPaid(true);
       setLoading(false);
 
-    }, 3000);
+    }, 2000);
   }
 
   return (
@@ -90,12 +92,12 @@ const Payment = function (props) {
                   </tbody>
                 </table >
                 <div className="paymentTotal">
-
-                  <AlertDialog total={total} paying={paying}>></AlertDialog>
+                  <AlertDialog total={total} paying={paying}></AlertDialog>
                 </div>
               </>
             }
-            {payment.length < 0 &&
+
+            {payment.length < 1 &&
               <div>You have no grocery items to buy :(</div>
             }
             {(payment.length > 0 && paid === true) && <div>Thanks for your purchase! A receipt has been emailed to you!</div>}

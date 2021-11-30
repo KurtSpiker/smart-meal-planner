@@ -50,7 +50,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/search/favourites
   router.get("/favourites", (req, res) => {
 
-    const userId = 1;
+    const userId = req.cookies["user_id"];
     let recipeStore = [];
 
     db.getFavourites(userId)
