@@ -5,6 +5,7 @@ import RecipeSearchItem from "./RecipeSearchItem";
 import RecipeCarousel from "./RecipeCarousel";
 import recipeSearchIcon from './images/recipeSearch.png'
 import SearchIcon from '@mui/icons-material/Search';
+import useDebounce from "../hooks/useDebounce";
 const axios = require('axios');
 
 const testRecipies = {
@@ -81,38 +82,46 @@ const RecipeSearch = function (props) {
 
   const [recipes, setRecipes] = useState([]);
   const [searchTextValue, setSearchTextValue] = useState("");
-  const [recipeContent, setRecipeContent] = useState([]);
+
+  //debouce used to only fire api call after you are finished typing rather than every key stroke
+  const term = useDebounce(searchTextValue, 400);
 
   useEffect(() => {
-
-    axios.get('/api/recipes', {
-      params: {
-        search: searchTextValue
-      }
-    })
-      .then((result) => {
-        setRecipes(() => {
-          return result.data;
-        })
-        setRecipeContent(() => {
-          return recipes.map((recipe) => {
-            return <RecipeSearchItem recipe={recipe} />;
-          })
-        })
-      })
-      .catch(
-        function (error) {
-          console.log(error)
+    setRecipes([])
+    if (term.length > 0) {
+      axios.get('/api/recipes', {
+        params: {
+          search: searchTextValue
         }
-      )
-  }, [searchTextValue]);
+      })
+        .then((result) => {
+          setRecipes(() => {
+            return result.data;
+          });
+        })
+        .catch((error) => {
+          console.log(error.message)
+        }
+        )
+    }
+  }, [term]);
 
   return (
     <>
       <header className="mainPageHeaders">
         <img className="headerIcon" src={recipeSearchIcon} />
         Search Recipes
-      </header>
+      </Typography>
+      <Grid item container justifyContent="center">
+        <TextField label={<h2><SearchIcon />Search</h2>} variant="standard" onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
+      </Grid>
+      <Grid container justifyContent="center" spacing={2} >
+        {
+          recipes.map((recipe) => {
+            return <RecipeSearchItem key={recipe.id} recipe={recipe} />;
+          })
+        }
+      </Grid>
       <Grid container>
         <Grid item container justifyContent="center">
           <TextField label={<h2><SearchIcon />Search</h2>} variant="standard" onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>

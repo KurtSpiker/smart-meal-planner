@@ -136,6 +136,7 @@
 .dieteryHolderSearch{
   display: flex;
   justify-content: center;
+  align-items: flex-end;
   position: relative;
   margin-top: -125px;
   margin-bottom: 72px;

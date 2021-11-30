@@ -80,3 +80,40 @@ ul.header li a {
   margin-right: auto;
 }
 
+.paymentHolder{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 23px;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  background: white;
+  justify-content: center;
+  border: 2px solid rgb(231, 179, 7);
+  border-radius: 20px;
+  width:fit-content;
+  margin: auto;
+  padding: 20px;
+}
+
+.paymentColumn{
+  width: 180px;
+  border-bottom: black 2px solid;
+}
+
+.individualPaymentEntries{
+  /* border-top: black 2px solid; */
+  border-bottom: black 2px solid;  
+  text-align: right;
+  padding-right: 15px;
+}
+
+.table{
+  table-layout: fixed;
+  width: 200px;
+  margin: auto;
+}
+
+.paymentTotal{
+  margin-right:15px;
+  margin-top:15px;
+}

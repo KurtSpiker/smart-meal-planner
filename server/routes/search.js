@@ -50,11 +50,12 @@ module.exports = (db) => {
   // http://localhost:4000/api/search/favourites
   router.get("/favourites", (req, res) => {
 
-    const userId = req.cookies["user_id"];
+    const userId = 1;
     let recipeStore = [];
 
     db.getFavourites(userId)
       .then((result) => {
+        console.log(result)
 
         let recipeIds = result.map((favouriteRecipe) => {
           return favouriteRecipe.spoonacular_id;

@@ -6,6 +6,7 @@ import axios from "axios";
 import useIngredients from "../hooks/useIngredients";
 import NumberFormat from 'react-number-format'
 import groceryListIcon from './images/grocery.png'
+import { Link } from "react-router-dom";
 
 
 
@@ -88,7 +89,7 @@ const GroceryList = function (props) {
               />
             </Grid>
 
-            <Grid item xs={8.5}>
+            <Grid item xs={7}>
               <Stack direction="row">
                 <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
                 <FormControl sx={{ minWidth: 120 }}>
@@ -107,8 +108,12 @@ const GroceryList = function (props) {
               </Stack>
             </Grid>
 
-            <Grid item xs={1}>
+            <Grid item xs={1.25}>
               <AddIngredientButton onClick={() => updateGroceryList()} variant="outlined">Generate List</AddIngredientButton>
+            </Grid>
+
+            <Grid item xs={1.25} >
+              <AddIngredientButton variant="outlined" component={Link} to={"/Payment"}>Purchase Items</AddIngredientButton>
             </Grid>
 
             <IngredientList list={list} listName={listName} setList={setList} />

@@ -224,6 +224,7 @@ module.exports = (db) => {
         favouritesArray = favourites.map((fav) => {
           return fav.spoonacular_id;
         })
+        // https://api.spoonacular.com/recipes/complexSearch?apiKey=44f44a53a6e64445a1156824595d2c98&query=
         return axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.API_KEY}${searchTerm}${numberDisplayed}`);
       })
       .then((response) => {
