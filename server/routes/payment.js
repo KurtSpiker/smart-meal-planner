@@ -5,20 +5,20 @@ const axios = require('axios');
 module.exports = (db) => {
 
   // user presses order button and this generates prices
-  // http://localhost:4000/api/payment
-  router.get("/", (req, res) => {
+  // http://localhost:4000/api/payment/1
+  router.get("/:id", (req, res) => {
 
     const userId = req.cookies["user_id"];
     let cost = 0;
     let objectToSend = {};
 
-    db.getGroceryListByUser(userId)
+    db.getGroceryListByUser(userId, req.params.id)
       .then((results) => {
-
         let arrayOfItems = [];
         for (const item of results) {
           arrayOfItems.push(item.quantity + " " + item.measure + " " + item.item_name);
         }
+        console.log(arrayOfItems)
         return arrayOfItems;
       })
       .then((arrayOfItems) => {
@@ -35,26 +35,23 @@ module.exports = (db) => {
 
         let itemsToPay = [];
         cost = results.data.cost;
-
         for (const result of results.data["aisles"]) {
           // remove items from their aisles into one array
           itemsToPay = itemsToPay.concat(result["items"]);
         }
-
         for (const item of itemsToPay) {
           item.amount = item.measures.metric.amount;
           item.measure = item.measures.metric.unit;
-
           let newCost = item.cost / 100;
-          item.cost = newCost;
-
+          item.cost = newCost.toFixed(2);
           delete item.measures;
           delete item.pantryItem;
           delete item.aisle;
         }
 
         objectToSend.arrayOfItems = itemsToPay;
-        objectToSend.priceTotal = cost / 100;
+        let intermediatePrice = cost / 100;
+        objectToSend.priceTotal = intermediatePrice.toFixed(2);
 
         res.send(objectToSend);
         console.log("GET to /payment - Success.");

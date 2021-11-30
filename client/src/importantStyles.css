@@ -136,6 +136,7 @@
 .dieteryHolderSearch{
   display: flex;
   justify-content: center;
+  align-items: flex-end;
   position: relative;
   margin-top: -125px;
   margin-bottom: 72px;
@@ -148,4 +149,11 @@
   position: relative;
   margin-top: -125px;
   margin-bottom: 120px;
+}
+
+/* for custom dialog box when purchasing items */
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+  border-radius: 20px !important;
+  border: 3px solid rgb(231, 179, 7);
+
 }
