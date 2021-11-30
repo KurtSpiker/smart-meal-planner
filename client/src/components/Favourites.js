@@ -17,9 +17,9 @@ const Favourites = function (props) {
     axios.get('/api/search/favourites')
       .then((result) => {
         setRecipeContent(() => {
-          console.log("Favortite" ,result.data)
+          console.log("Favortite", result.data)
           return result.data.map((recipe) => {
-            return <RecipeSearchItem recipe={recipe}/>;
+            return <RecipeSearchItem recipe={recipe} />;
           })
         })
         setLoading(false)
@@ -29,7 +29,8 @@ const Favourites = function (props) {
           console.log(error)
         }
       )
-  }, [render]);
+  }, []);
+
 
   return (
     <Grid container justifyContent="center">
@@ -43,13 +44,11 @@ const Favourites = function (props) {
         <img className="headerIcon" src={favouritesHeaderIcon} />
         Favourites
       </header>
-
       <Grid container justifyContent="center" spacing={2} >
         {
           recipeContent
         }
       </Grid>
-
     </Grid>
   )
 }
