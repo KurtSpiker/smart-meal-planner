@@ -401,7 +401,7 @@ exports.getFavourites = getFavourites;
 
 const addFavourites = function (userId, spoonacularId) {
 
-  let sqlString = `INSERT INTO favourites (user_id, spoonacular_ingredient_id) VALUES ($1, $2)`;
+  let sqlString = `INSERT INTO favourites (user_id, spoonacular_id) VALUES ($1, $2)`;
 
   return pool
     .query(sqlString, [userId, spoonacularId])

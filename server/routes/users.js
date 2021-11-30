@@ -39,6 +39,9 @@ module.exports = (db) => {
   router.post("/favourites", (req, res) => {
 
     let userId = 1;
+    let spoonacularId = req.body.spoonacularId;
+
+    console.log("THIS IS SPOONACULAR ID WHEN ADDING A FAVOURITE", req.body.spoonacularId)
 
     db.addFavourites(userId, spoonacularId)
       .then((results) => {
@@ -57,6 +60,10 @@ module.exports = (db) => {
 
     let userId = 1;
     let spoonacularId = req.body.spoonacularId;
+
+    console.log("THIS IS SPOONACULAR ID WHEN DELETING A FAVOURITE", req.body.spoonacularId)
+
+    console.log(spoonacularId)
 
     db.deleteFavourites(userId, spoonacularId)
       .then((results) => {

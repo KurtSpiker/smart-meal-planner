@@ -222,8 +222,9 @@ module.exports = (db) => {
         console.log("5. FINISHED AXIOS CALL TO GET INFORMATION BULK FROM IDS");
         // only if recipe info is found
         if (allRecipeInfo) {
-          let dieteryRestrictions = {};
+
           for (const recipeDietery in allRecipeInfo) {
+            let dieteryRestrictions = {};
             dieteryRestrictions.vegetarian = allRecipeInfo[recipeDietery].data.vegetarian
             dieteryRestrictions.vegan = allRecipeInfo[recipeDietery].data.vegan;
             dieteryRestrictions.glutenFree = allRecipeInfo[recipeDietery].data.glutenFree;
