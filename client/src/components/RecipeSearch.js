@@ -111,7 +111,7 @@ const RecipeSearch = function (props) {
       <header className="mainPageHeaders">
         <img className="headerIcon" src={recipeSearchIcon} />
         Search Recipes
-      </Typography>
+      </header>
       <Grid item container justifyContent="center">
         <TextField label={<h2><SearchIcon />Search</h2>} variant="standard" onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
       </Grid>
@@ -123,15 +123,7 @@ const RecipeSearch = function (props) {
         }
       </Grid>
       <Grid container>
-        <Grid item container justifyContent="center">
-          <TextField label={<h2><SearchIcon />Search</h2>} variant="standard" onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
-        </Grid>
-        <Grid container justifyContent="center" spacing={2} >
-          {
-            recipeContent
-          }
-          {/* <RecipeSearchItem recipe={testRecipies.results[0]} test={true} /> */}
-        </Grid>
+
         <Grid container>
           <RecipeCarousel testRecipies={testRecipies.results} />
         </Grid>
