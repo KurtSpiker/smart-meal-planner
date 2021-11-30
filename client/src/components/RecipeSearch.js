@@ -1,4 +1,4 @@
-import { Grid, Typography, TextField } from "@mui/material";
+import { Grid, Typography, TextField, CircularProgress } from "@mui/material";
 import { React, useState, useEffect } from "react";
 // import RecipeCarousel from "./RecipeCarousel";
 import RecipeSearchItem from "./RecipeSearchItem";
@@ -82,6 +82,7 @@ const RecipeSearch = function (props) {
 
   const [recipes, setRecipes] = useState([]);
   const [searchTextValue, setSearchTextValue] = useState("");
+  const [loading, setLoading] = useState(false)
 
   //debouce used to only fire api call after you are finished typing rather than every key stroke
   const term = useDebounce(searchTextValue, 400);
@@ -89,12 +90,14 @@ const RecipeSearch = function (props) {
   useEffect(() => {
     setRecipes([])
     if (term.length > 0) {
+      setLoading(true)
       axios.get('/api/recipes', {
         params: {
           search: searchTextValue
         }
       })
         .then((result) => {
+          setLoading(false)
           setRecipes(() => {
             return result.data;
           });
@@ -107,7 +110,7 @@ const RecipeSearch = function (props) {
   }, [term]);
 
   return (
-    <>
+    <div>
       <header className="mainPageHeaders">
         <img className="headerIcon" src={recipeSearchIcon} />
         Search Recipes
@@ -115,20 +118,27 @@ const RecipeSearch = function (props) {
       <Grid item container justifyContent="center">
         <TextField label={<h2><SearchIcon />Search</h2>} variant="standard" onChange={(event) => { setSearchTextValue(event.target.value) }}></TextField>
       </Grid>
-      <Grid container justifyContent="center" spacing={2} >
-        {
-          recipes.map((recipe) => {
-            return <RecipeSearchItem key={recipe.id} recipe={recipe} />;
-          })
-        }
-      </Grid>
+      {loading && 
+        <Grid container justifyContent="center">
+          <CircularProgress size="100px" color="secondary" sx={{ margin: "auto", marginTop: "50px" }} />}
+        </Grid>
+      }
+      {!loading && ( 
+        <Grid container justifyContent="center" spacing={2} >
+          {
+            recipes.map((recipe) => {
+              return <RecipeSearchItem key={recipe.id} recipe={recipe} />;
+            })
+          }
+        </Grid> )
+      }
       <Grid container>
 
         <Grid container>
           <RecipeCarousel testRecipies={testRecipies.results} />
         </Grid>
       </Grid>
-    </>
+    </div>
   )
 }
 
