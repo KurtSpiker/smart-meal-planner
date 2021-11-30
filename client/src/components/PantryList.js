@@ -66,7 +66,8 @@ const PantryList = function (props) {
         <Grid item xs={8.5}>
           <Stack direction="row">
             <NumberFormat disabled={!searchTerm.possibleUnits} onChange={(event) => setMeasureValue(event.target.value)} value={measureValue} customInput={TextField} />
-            <FormControl sx={{minWidth: 120}}>
+
+            <FormControl sx={{ minWidth: 120 }}>
               <InputLabel id="Measure">Unit</InputLabel>
               <Select disabled={!searchTerm.possibleUnits} labelId="Measure" label="Unit" value={dropValue}
                 onChange={(event) => {
@@ -78,7 +79,8 @@ const PantryList = function (props) {
                 })}
               </Select>
             </FormControl>
-            <Button onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</Button>
+
+            <AddIngredientButton onClick={() => addIngredientItem(listName)} disabled={!dropValue} variant="contained" >Add to pantry</AddIngredientButton>
           </Stack>
 
         </Grid>

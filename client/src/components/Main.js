@@ -13,6 +13,7 @@ import Recipe from "./Recipe";
 import Login from "./Login";
 import Favourites from "./Favourites";
 import AboutUs from "./AboutUs";
+import Payment from "./Payment";
 
 
 export default function Main() {
@@ -29,7 +30,8 @@ export default function Main() {
             <Route exact path="/Recipe" element={<Recipe />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Favourites" element={<Favourites />} />
-            <Route exact path="/AboutUs" element={<AboutUs />} />
+            <Route exact path="/AboutUs" element={<AboutUs />} />.
+            <Route exact path="/Payment" element={<Payment />} />.
           </Routes>
           <Outlet />
         </div>
