@@ -3,6 +3,11 @@ import axios from 'axios';
 
 export default function useFavouritesRender(id, favStatus) {
   const [heart, setHeart] = useState(favStatus)
+  const [render, setRender] = useState(0)
+
+  const handleRender = () => {
+    setRender(render => render + 1)
+  }
 
   const handleFavorite = () => {
     if (!favStatus) {
@@ -26,5 +31,5 @@ export default function useFavouritesRender(id, favStatus) {
     }
   }
 
-  return { heart, handleFavorite };
+  return { heart, handleFavorite, render, setRender, handleRender };
 };

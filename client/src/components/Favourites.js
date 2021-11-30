@@ -9,7 +9,7 @@ const Favourites = function (props) {
 
   const [recipeContent, setRecipeContent] = useState([]);
   const [toggleRender, setToggleRender] = useState(false)
-  const { heart } = useFavouritesRender()
+  const { render } = useFavouritesRender()
 
   useEffect(() => {
     axios.get('/api/search/favourites')
@@ -17,7 +17,7 @@ const Favourites = function (props) {
         setRecipeContent(() => {
           console.log("Favortite" ,result.data)
           return result.data.map((recipe) => {
-            return <RecipeSearchItem recipe={recipe} render={toggleRender} />;
+            return <RecipeSearchItem recipe={recipe}/>;
           })
         })
       })
@@ -26,7 +26,7 @@ const Favourites = function (props) {
           console.log(error)
         }
       )
-  }, [heart]);
+  }, [render]);
 
   return (
     <Grid container justifyContent="center">

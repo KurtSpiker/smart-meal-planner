@@ -17,7 +17,7 @@ const RecipeSearchItem = function (props) {
   const { recipe } = props
   const { setDayInformation, dayOfWeek, typeOfMeal } = useContext(mealContext)
   const [dialogShow, setDialogShow] = useState(false)
-  const { heart, handleFavorite } = useFavouritesRender(recipe.id, recipe.favourite)
+  const { heart, handleFavorite, handleRender } = useFavouritesRender(recipe.id, recipe.favourite)
 
   const handleShowChange = () => {
     if (dialogShow) {
@@ -75,7 +75,7 @@ const RecipeSearchItem = function (props) {
         }
 
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
-          <Checkbox onChange={handleFavorite} checked={heart} icon={<Favorite />} checkedIcon={<Favorite color="blue" />}></Checkbox>
+          <Checkbox onChange={() => {handleFavorite(); handleRender()}} checked={heart} icon={<Favorite />} checkedIcon={<Favorite color="blue" />}></Checkbox>
           <IconButton>
             <FoodBankIcon onClick={() => { handleShowChange() }} />
           </IconButton>
