@@ -5,17 +5,19 @@ import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
 import RecipeDialog from "./RecipeDialog";
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { mealContext } from "../providers/MealProvider"
 import { Link } from "react-router-dom";
 import { dietaryDisplay } from "../helper/Dietary";
 import { RecipeCard } from "../customstyles/RecipeCard";
+import axios from "axios";
+import useFavouritesRender from "../hooks/useFavoritesRender";
 
 const RecipeSearchItem = function (props) {
-  const [dialogShow, setDialogShow] = useState(false)
-
   const { recipe } = props
   const { setDayInformation, dayOfWeek, typeOfMeal } = useContext(mealContext)
+  const [dialogShow, setDialogShow] = useState(false)
+  const { heart, handleFavorite, handleRender } = useFavouritesRender(recipe.id, recipe.favourite)
 
   const handleShowChange = () => {
     if (dialogShow) {
@@ -34,9 +36,10 @@ const RecipeSearchItem = function (props) {
       fontSize: 18
     },
   });
-
+  
   return (
     <Grid item >
+      {console.log("Recipe in question", recipe.title, recipe.image, recipe.id)}
       {/* {dialogShow && <RecipeDialog dialogSwitch={dialogShow}/>} */ <RecipeDialog dialogSwitch={dialogShow} mealName={recipe.title} imageUrl={recipe.image} recipeId={recipe.id} />}
       <RecipeCard>
         <ButtonBase onClick={() => setDayInformation(dayOfWeek, typeOfMeal, recipe.id)} component={Link} to={"/Recipe"}>
@@ -72,8 +75,7 @@ const RecipeSearchItem = function (props) {
         }
 
         <CardActions sx={{ justifyContent: "space-between", paddingTop: 0 }}>
-          <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />}>
-          </Checkbox>
+          <Checkbox onChange={() => {handleFavorite(); handleRender()}} checked={heart} icon={<Favorite />} checkedIcon={<Favorite color="blue" />}></Checkbox>
           <IconButton>
             <FoodBankIcon onClick={() => { handleShowChange() }} />
           </IconButton>
