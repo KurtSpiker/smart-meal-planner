@@ -32,7 +32,7 @@ const AboutUs = function (props) {
             <img className="profilePicture" src={spencer} />
             <div className="iconAndLinkHolder">
               <img className="linkedin" src={linkedinIcon} />
-              <a className="link" href="https://www.linkedin.com/in/spencer-malott-p-eng-aaba5992/">Spencer Mallot</a>
+              <a className="link" href="https://www.linkedin.com/in/spencer-malott-p-eng-aaba5992/">Spencer Malott</a>
             </div>
           </div>
 
