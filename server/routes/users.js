@@ -38,7 +38,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/users/favourites
   router.post("/favourites", (req, res) => {
 
-    let userId = 1;
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.body.spoonacularId;
 
     console.log("THIS IS SPOONACULAR ID WHEN ADDING A FAVOURITE", req.body.spoonacularId)
@@ -58,7 +58,7 @@ module.exports = (db) => {
   // http://localhost:4000/api/users/favourites
   router.delete("/favourites", (req, res) => {
 
-    let userId = 1;
+    const userId = req.cookies["user_id"];
     let spoonacularId = req.body.spoonacularId;
 
     console.log("THIS IS SPOONACULAR ID WHEN DELETING A FAVOURITE", req.body.spoonacularId)
