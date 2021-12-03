@@ -109,3 +109,4 @@ Favourites page
 - pg: ^8.5.0,
 - pg-native: ^3.0.0,
 - qs: ^6.10.1
+- Spoonacular API: https://spoonacular.com/
