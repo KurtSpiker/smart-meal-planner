@@ -1,6 +1,6 @@
 # Fork it Over
 
-Fork it over is a meal planning application that helps users plan out their weekly meal schedule and grocery shopping. The application is made up of 5 core features:
+Fork it over is a meal planning application that helps users plan out their weekly meal schedule and grocery shopping. The app is built with a React front end and Express Node.js back end. The application is made up of 5 core features:
 
   - Weekly Plan: A weekly calendar to keep track of meals you plan to eat on a given week
   - Search: A search function that allows users to look for recipes via the Spoonacular API
@@ -21,22 +21,22 @@ Fort it over uses a PostgreSQL database. Users are free to set up the database h
 3. `\c final -U labber`
 4. `\i db/schema/main_schema.sql`
 5. `\i db/seeds/main_seed.sql`
-
-In  a new tab:
-
-6. `$ cd server`
-7. `$ npm start`
+6. In a new tab `$ cd server`
+7. Install dependencies with `$ npm install`
+8. `$ npm start`
 
 ### Running the React App
 
-1. Enter the client directory with `cd client` from the root of the project folder
+1. In a new tab `cd client` 
 2. Install dependencies with `yarn install`
 3. Update the proxy in the package.json file to match the port number of your local database
-3. `$ yarn start`
+4. `$ yarn start`
 
 ** Note: to access any of the recipe information you will need to register for a Spoonacular API key and add it to the .env file **
 
 ## Screenshots
+
+
 
 ### Front-End Dependencies
 - @emotion/react: ^11.6.0,
