@@ -35,3 +35,39 @@ In  a new tab:
 3. `$ yarn start`
 
 ** Note: to access any of the recipe information you will need to register for a Spoonacular API key and add it to the .env file **
+
+## Screenshots
+
+### Front-End Dependencies
+- @emotion/react: ^11.6.0,
+- @emotion/styled: ^11.6.0,
+- @mui/icons-material: ^5.1.1,
+- @mui/material: ^5.1.1,
+- @mui/styles: ^5.2.1,
+- @testing-library/jest-dom: ^5.11.4,
+- @testing-library/react: ^11.1.0,
+- @testing-library/user-event: ^12.1.10,
+- axios: ^0.24.0,
+- cookie-parser: ^1.4.6,
+- qs: ^6.10.1,
+- react: ^17.0.2,
+- react-cookie: ^4.1.1,
+- react-dom: ^17.0.2,
+- react-number-format: ^4.8.0,
+- react-router-dom: ^6.0.2,
+- react-scripts: 4.0.3,
+- web-vitals: ^1.0.1
+
+### Back-End Dependencies
+- axios: ^0.23.0,
+- chalk: ^2.4.2,
+- cookie-parser: ^1.4.5,
+- cors: ^2.8.5,
+- dotenv: ^2.0.0,
+- ejs: ^2.6.2,
+- express: ^4.17.1,
+- morgan: ^1.9.1,
+- pg: ^8.5.0,
+- pg-native: ^3.0.0,
+- sass: ^1.35.1,
+- qs: ^6.10.1
