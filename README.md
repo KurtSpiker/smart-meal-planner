@@ -36,9 +36,50 @@ Fort it over uses a PostgreSQL database. Users are free to set up the database h
 
 ## Screenshots
 
+<img alt="weekly_menu" width="800" src="https://github.com/smalott16/smart-meal-planner/blob/main/client/public/Screen%20Shot%202021-12-03%20at%2010.57.48%20AM.png?raw=true"></img>
+
+<p align="center">
+Full page view of the weekly menu. Here users can add, edit, remove and veiw recipes they have planned for the week 
+</p>
+<br>
+
+<img alt="search" width="800" src="https://github.com/smalott16/smart-meal-planner/blob/main/client/public/Screen%20Shot%202021-12-03%20at%2010.56.59%20AM.png?raw=true"></img>
+
+<p align="center">
+Search page. Users also have suggested recipes based on the contents of their pantry and other cuisines. 
+</p>
+<br>
+
+<img alt="specific_search" width="800" src="https://github.com/smalott16/smart-meal-planner/blob/main/client/public/Screen%20Shot%202021-12-03%20at%2010.57.28%20AM.png?raw=true"></img>
+
+<p align="center">
+Specific recipe search
+</p>
+<br>
+
+<img alt="grocery" width="800" src="https://github.com/smalott16/smart-meal-planner/blob/main/client/public/Screen%20Shot%202021-12-03%20at%2010.58.54%20AM.png?raw=true"></img>
+
+<p align="center">
+Grocery List
+</p>
+<br>
+
+<img alt="pantry" width="800" src="https://github.com/smalott16/smart-meal-planner/blob/main/client/public/Screen%20Shot%202021-12-03%20at%2010.59.13%20AM.png?raw=true"></img>
+
+<p align="center">
+Pantry List
+</p>
+<br>
+
+<img alt="favourites" width="800" src="https://github.com/smalott16/smart-meal-planner/blob/main/client/public/Screen%20Shot%202021-12-03%20at%2010.59.33%20AM.png?raw=true"></img>
+
+<p align="center">
+Favourites page
+</p>
+<br>
 
 
-### Front-End Dependencies
+## Front-End Dependencies
 - @emotion/react: ^11.6.0,
 - @emotion/styled: ^11.6.0,
 - @mui/icons-material: ^5.1.1,
@@ -60,14 +101,11 @@ Fort it over uses a PostgreSQL database. Users are free to set up the database h
 
 ### Back-End Dependencies
 - axios: ^0.23.0,
-- chalk: ^2.4.2,
 - cookie-parser: ^1.4.5,
 - cors: ^2.8.5,
 - dotenv: ^2.0.0,
-- ejs: ^2.6.2,
 - express: ^4.17.1,
 - morgan: ^1.9.1,
 - pg: ^8.5.0,
 - pg-native: ^3.0.0,
-- sass: ^1.35.1,
 - qs: ^6.10.1
